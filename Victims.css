@@ -1,0 +1,181 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Georgia', serif;
+  }
+
+
+body {
+    margin: 0;
+    padding: 0 0 50px 0; /* Add bottom padding for empty space */
+    background-image: url('../Images/VictimsBG.png');
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    padding: 30px 0;
+    background-color: transparent; /* dark transparent overlay */
+   
+  }
+ 
+  .navbar ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+    font-size: 1.5rem;
+  }
+ 
+  .navbar li {
+    cursor: pointer;
+    position: relative;
+    color: white;
+  }
+ 
+  .navbar li.active::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: red;
+    bottom: -5px;
+    left: 0;
+  }
+
+.navbar a {
+    text-decoration: none; /* Remove underline */
+    color: white; /* Set text color to white */
+    transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+    color: red; /* Add hover effect */
+}
+
+.victimsHeaderContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 20vh; /* Full viewport height */
+    background-color: transparent; /* Dark transparent overlay */
+}
+
+.subheader {
+    text-align: center;
+    font-size: 1.2rem;
+    color: white;
+    margin-top: 10px;
+}
+
+.image-list {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.image-list li {
+    cursor: pointer;
+}
+
+.image-list img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.image-list img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.victimsHeader {
+    text-align: center;
+    font-size: 2.5rem;
+    color: white;
+    margin-top: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.victimsSubheader {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #f0f0f0;
+    margin-top: 10px;
+    font-style: italic;
+}
+
+.victimsImages {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    gap: 200px; /* Increase the gap between images */
+    margin: 30px 0;
+}
+
+.victimsImages li {
+    cursor: pointer;
+}
+
+.victimsImages img {
+    width: 200px; /* Increase the width */
+    height: 200px; /* Increase the height */
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.victimsImages img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.victimsSynopsis {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    gap: 200px; /* Match the gap with .victimsImages */
+    margin-top: 20px;
+    text-align: center;
+    color: white;
+    font-size: 1rem;
+}
+
+.victimsSynopsis li {
+    width: 200px; /* Match the width of the images */
+    line-height: 1.5;
+}
+
+.victimsTitles {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    gap: 200px; /* Match the gap with .victimsImages */
+    margin-top: 20px;
+    text-align: center;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.victimsTitles li {
+    width: 200px; /* Match the width of the images */
+    line-height: 1.5;
+}
+
+
+
+
+
+
+

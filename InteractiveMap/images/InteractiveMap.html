@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japanese Occupation in the Philippines - Interactive Map</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', serif;
+        }
+        
+        body {
+            color: white;
+            background-color: black;
+            background-image: url('pictures/bg.png');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        /*  NAVIGATION BAR  */
+        .navbar {
+            display: flex;
+            justify-content: center;
+            padding: 30px 0;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        
+        .navbar ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            font-size: 1.5rem;
+        }
+        
+        .navbar li {
+            cursor: pointer;
+            position: relative;
+            color: white;
+        }
+        
+        .navbar li a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .navbar li.active::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: red;
+            bottom: -5px;
+            left: 0;
+        }
+        
+        /*  MAIN CONTENT CONTAINER  */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /*  PAGE HEADER  */
+        header {
+            background-color: rgba(92, 27, 26, 0.8);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #8B0000;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-style: italic;
+            margin-top: 10px;
+            color: #d4c9a8;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        /*  MAP CONTAINER  */
+        .map-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border: 2px solid #5c1b1a;
+            box-shadow: 0 0 20px rgba(92, 27, 26, 0.5);
+        }
+        
+        .philippine-map {
+            width: 100%;
+            height: auto;
+            display: block;
+            border: 1px solid #5c1b1a;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+        }
+        
+        /*  MAP MARKERS  */
+        .location {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease;
+            z-index: 10;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .location:hover {
+            transform: translate(-50%, -50%) scale(1.8);
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9));
+        }
+        
+        .location.bataan { top: 30%; left: 45.5%; background-image: url('marker-bataan.png'); }
+        .location.manila { top: 30%; left: 48%; background-image: url('marker-manila.png'); }
+        .location.lingayen { top: 18%; left: 44.3%; background-image: url('marker-lingayen.png'); }
+        .location.corregidor { top: 32%; left: 45.5%; background-image: url('marker-corregidor.png'); }
+        .location.central-luzon { top: 25%; left: 47%; background-image: url('marker-central-luzon.png'); }
+        .location.leyte { top: 53%; left: 61%; background-image: url('marker-leyte.png'); }
+        .location.visayas { top: 54%; left: 58%; background-image: url('marker-visayas.png'); }
+        .location.mindanao { top: 79%; left: 63%; background-image: url('marker-mindanao.png'); }
+        
+        .tooltip {
+            position: absolute;
+            background-color: rgba(30, 30, 30, 0.95);
+            border: 2px solid #8B0000;
+            border-radius: 3px;
+            padding: 15px;
+            width: 250px;
+            box-shadow: 0 0 20px rgba(139, 0, 0, 0.7);
+            z-index: 100;
+            display: none;
+            pointer-events: none;
+        }
+        
+        .tooltip img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            margin-bottom: 12px;
+            border: 1px solid #5c1b1a;
+        }
+        
+        .tooltip h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+            color: #d4c9a8;
+            border-bottom: 1px solid #8B0000;
+            padding-bottom: 5px;
+        }
+        
+        .tooltip p {
+            margin: 0;
+            font-size: 0.9em;
+            color: #eee;
+            line-height: 1.5;
+        }
+        
+        .tooltip p strong {
+            color: #d4c9a8;
+        }
+        
+        .legend {
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border: 2px solid #5c1b1a;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+            padding: 8px 15px;
+            background-color: rgba(30, 30, 30, 0.8);
+            border: 1px solid #5c1b1a;
+            border-radius: 3px;
+        }
+        
+        .legend-color {
+            width: 18px;
+            height: 18px;
+            margin-right: 12px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            border: 1px solid #5c1b1a;
+            border-radius: 2px;
+        }
+        
+        /*FOOTER STYLES*/
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-top: 3px solid #8B0000;
+        }
+        
+        footer p {
+            margin: 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        @media (max-width: 768px) {
+            .navbar ul {
+                font-size: 1.2rem;
+                gap: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .legend {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .legend-item {
+                margin-right: 0;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .map-container {
+                padding: 10px;
+            }
+            
+            .tooltip {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVIGATION SECTION -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="/HomePage/HomePage.html">Home</a></li>
+            <li class="active"><a href="/InteractiveMap/images/InteractiveMap.html">HistoMap</a></li>
+            <li><a href="developers.html">Developers</a></li>
+            <li><a href="victims.html">Victims</a></li>
+        </ul>
+    </nav>
+    
+    <!-- PAGE HEADER SECTION -->
+    <header>
+        <div class="container">
+            <h1>Japanese Occupation in the Philippines</h1>
+            <div class="subtitle">Interactive Historical Map</div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="map-container">
+            <img src="ph-07.png" alt="Philippine Map" class="philippine-map" id="philippineMap">
+            
+            <!-- MAP MARKERS -->
+            <div class="location bataan" data-event="bataan"></div>
+            <div class="location manila" data-event="manila"></div>
+            <div class="location lingayen" data-event="lingayen"></div>
+            <div class="location corregidor" data-event="corregidor"></div>
+            <div class="location central-luzon" data-event="central-luzon"></div>
+            <div class="location leyte" data-event="leyte"></div>
+            <div class="location visayas" data-event="visayas"></div>
+            <div class="location mindanao" data-event="mindanao"></div>
+            
+            <div class="tooltip" id="mapTooltip"></div>
+        </div>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background-image: url('marker-bataan.png')"></div>
+                <span>Bataan Peninsula</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-image: url('marker-manila.png')"></div>
+                <span>Manila</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-image: url('marker-lingayen.png')"></div>
+                <span>Lingayen Gulf</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-image: url('marker-corregidor.png')"></div>
+                <span>Corregidor Island</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-image: url('marker-central-luzon.png')"></div>
+                <span>Central Luzon</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-image: url('marker-leyte.png')"></div>
+                <span>Leyte</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-image: url('marker-visayas.png')"></div>
+                <span>Visayas Region</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-image: url('marker-mindanao.png')"></div>
+                <span>Mindanao Region</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- FOOTER SECTION -->
+    <footer>
+        <div class="container">
+            <p>© 2023 Japanese Occupation in the Philippines Interactive Map</p>
+        </div>
+    </footer>
+    
+    <script>
+        // LOCATION PAGE LINKS
+        const eventData = {
+            bataan: {
+                title: "Bataan Peninsula",
+                events: "Fall of Bataan, Bataan Death March",
+                image: "bataan.png",
+                description: "Site of the famous last stand and subsequent death march of American and Filipino prisoners of war.",
+                pageUrl: "/Location Pages/bataan/bataan.html"
+            },
+            manila: {
+                title: "Manila",
+                events: "Battle of Manila, Japanese Occupation, Atrocities",
+                image: "manila.jpg",
+                description: "Capital city that suffered devastating destruction and civilian casualties during the 1945 battle.",
+                pageUrl: "/Location Pages/manila/manila.html"
+            },
+            lingayen: {
+                title: "Lingayen Gulf",
+                events: "Japanese Landings in 1941",
+                image: "lingayen-gulf.jpg",
+                description: "Primary landing site for Japanese invasion forces in December 1941.",
+                pageUrl: "lingayen.html"
+            },
+            corregidor: {
+                title: "Corregidor Island",
+                events: "Fall of Corregidor",
+                image: "corregidor.jpg",
+                description: "Island fortress that was the last American stronghold to fall in 1942.",
+                pageUrl: "corregidor.html"
+            },
+            "central-luzon": {
+                title: "Central Luzon",
+                events: "Hukbalahap Guerrilla Movement",
+                image: "central-luzon.jpg",
+                description: "Region where the communist Hukbalahap guerrilla movement was most active.",
+                pageUrl: "central-luzon.html"
+            },
+            leyte: {
+                title: "Leyte",
+                events: "MacArthur's Return, Battle of Leyte Gulf",
+                image: "leyte.jpg",
+                description: "Site of MacArthur's famous return and the largest naval battle in history.",
+                pageUrl: "leyte.html"
+            },
+            visayas: {
+                title: "Visayas Region",
+                events: "Resistance Activities",
+                image: "visayas.jpg",
+                description: "Various guerrilla groups operated throughout the central islands.",
+                pageUrl: "visayas.html"
+            },
+            mindanao: {
+                title: "Mindanao Region",
+                events: "Guerrilla Activities",
+                image: "mindanao.jpg",
+                description: "Though less documented, resistance movements were active in the southern islands.",
+                pageUrl: "mindanao.html"
+            }
+        };
+        
+        function positionTooltip(marker, mouseX, mouseY) {
+            const markerRect = marker.getBoundingClientRect();
+            const mapRect = map.getBoundingClientRect();
+            
+            let top = markerRect.top - mapRect.top - 10;
+            let left = markerRect.left - mapRect.left;
+            
+            if (left + 250 > mapRect.width) left = mapRect.width - 250;
+            if (left < 0) left = 10;
+            
+            if (markerRect.top - mapRect.top > mapRect.height / 2) {
+                top = markerRect.top - mapRect.top - 200;
+            } else {
+                top = markerRect.top - mapRect.top + 40;
+            }
+            
+            tooltip.style.top = `${top}px`;
+            tooltip.style.left = `${left}px`;
+        }
+        
+        function showTooltip(event, marker) {
+            const eventType = marker.getAttribute('data-event');
+            const data = eventData[eventType];
+            
+            tooltip.innerHTML = `
+                <img src="${data.image}" alt="${data.title}">
+                <h3>${data.title}</h3>
+                <p><strong>Events:</strong> ${data.events}</p>
+                <p>${data.description}</p>
+            `;
+            
+            positionTooltip(marker, event.clientX, event.clientY);
+            tooltip.style.display = 'block';
+        }
+        
+        function redirectToEventPage(eventType) {
+            const pageUrl = eventData[eventType].pageUrl;
+            if (pageUrl) window.location.href = pageUrl;
+            else console.error(`No page URL defined for ${eventType}`);
+        }
+        
+        const map = document.getElementById('philippineMap');
+        const tooltip = document.getElementById('mapTooltip');
+        const locations = document.querySelectorAll('.location');
+        
+        locations.forEach(location => {
+            const eventType = location.getAttribute('data-event');
+            
+            location.addEventListener('mouseenter', (e) => showTooltip(e, location));
+            location.addEventListener('mouseleave', () => tooltip.style.display = 'none');
+            location.addEventListener('mousemove', (e) => positionTooltip(location, e.clientX, e.clientY));
+            location.addEventListener('click', () => redirectToEventPage(eventType));
+        });
+    </script>
+</body>
+</html>

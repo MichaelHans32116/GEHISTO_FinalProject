@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bataan & Manila Quiz</title>
+    <link rel="stylesheet" href="/Quiz/Apiado.Quiz/Quiz.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+<body>
+    <h1>Quiz Time!</h1>
+    <h2>The quiz consists of 10 items</h2>
+    
+    <div class="container">
+        Q1: When did the Bataan Death March begin?<br>
+        <input type="radio" name="question1">April 6, 1942<br>
+        <input type="radio" name="question1" id="correct1">April 9, 1942<br>
+        <input type="radio" name="question1">March 30, 1942<br>
+        <input type="radio" name="question1">May 1, 1942<br>
+        <button class="next" onclick="next(1)">NEXT</button>
+    </div>
+
+    <div class="container">
+        Q2: How many kilometers approximately was the Bataan Death March?<br>
+        <input type="radio" name="question2">50 km<br>
+        <input type="radio" name="question2">80 km<br>
+        <input type="radio" name="question2" id="correct2">102 km<br>
+        <input type="radio" name="question2">150 km<br>
+        <button class="next" onclick="next(2)">NEXT</button>
+    </div>
+
+    <div class="container">
+        Q3: Who ordered the forced march of prisoners in Bataan?<br>
+        <input type="radio" name="question3">Douglas MacArthur<br>
+        <input type="radio" name="question3">Hideki Tojo<br>
+        <input type="radio" name="question3" id="correct3">Masaharu Homma<br>
+        <input type="radio" name="question3">Isoroku Yamamoto<br>
+        <button class="next" onclick="next(3)">NEXT</button>
+    </div>
+
+    <div class="container">
+        Q4: What event occurred in Manila in 1945?<br>
+        <input type="radio" name="question4">Battle of Leyte Gulf<br>
+        <input type="radio" name="question4">Fall of Bataan<br>
+        <input type="radio" name="question4">Bataan Death March<br>
+        <input type="radio" name="question4" id="correct4">Manila Massacre<br>
+        <button class="next" onclick="next(4)">NEXT</button>
+    </div>
+
+    <div class="container">
+        Q5: Who were the victims of the Manila Massacre?<br>
+        <input type="radio" name="question5">Japanese soldiers<br>
+        <input type="radio" name="question5" id="correct5">Civilians<br>
+        <input type="radio" name="question5">American POWs<br>
+        <input type="radio" name="question5">Only government officials<br>
+        <button class="next" onclick="next(5)">NEXT</button>
+    </div>
+
+    <div class="container">
+        Q6: Which army surrendered that led to the Bataan Death March?<br>
+        <input type="radio" name="question6">American 5th Fleet<br>
+        <input type="radio" name="question6">Japanese Imperial Army<br>
+        <input type="radio" name="question6">Filipino Revolutionary Army<br>
+        <input type="radio" name="question6" id="correct6">United States Army Forces in the Far East (USAFFE)<br>
+        <button class="next" onclick="next(6)">NEXT</button>
+    </div>
+
+    <div class="container">
+        Q7: Where did the Bataan Death March end?<br>
+        <input type="radio" name="question7">Clark Field<br>
+        <input type="radio" name="question7">Baguio<br>
+        <input type="radio" name="question7">Intramuros<br>
+        <input type="radio" name="question7" id="correct7">Camp O'Donnell<br>
+        <button class="next" onclick="next(7)">NEXT</button>
+    </div>
+
+    <div class="container">
+        Q8: How many estimated people died in the Bataan Death March?<br>
+        <input type="radio" name="question8">1000<br>
+        <input type="radio" name="question8">5000<br>
+        <input type="radio" name="question8">7500<br>
+        <input type="radio" name="question8" id="correct8">Around 10,000<br>
+        <button class="next" onclick="next(8)">NEXT</button>
+    </div>
+
+    <div class="container">
+        Q9: What year did the Manila Massacre happen?<br>
+        <input type="radio" name="question9">1941<br>
+        <input type="radio" name="question9">1942<br>
+        <input type="radio" name="question9" id="correct9">1945<br>
+        <input type="radio" name="question9">1946<br>
+        <button class="next" onclick="next(9)">NEXT</button>
+    </div>
+
+    <div class="container">
+        Q10: The Bataan Death March is commemorated in the Philippines every...<br>
+        <input type="radio" name="question10">March 1<br>
+        <input type="radio" name="question10" id="correct10">April 9<br>
+        <input type="radio" name="question10">June 12<br>
+        <input type="radio" name="question10">December 8<br>
+        <button onclick="result()">Submit Quiz</button>
+    </div>
+
+    <script src="/Quiz/Apiado.Quiz/Quiz.js"></script>
+</body>
+</html>

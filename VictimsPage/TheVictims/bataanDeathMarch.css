@@ -1,0 +1,131 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Georgia', serif;
+  }
+
+  body {
+    margin: 0;
+    padding: 0 0 50px 0; /* Add bottom padding for empty space */
+    background-image: url('../Images/VictimsBG.png');
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.backButton {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    z-index: 10;
+}
+
+.backButton:hover {
+    color: red;
+}
+
+img {
+    margin-top: 100px; /* Add spacing to separate from the back button */
+    max-width: 30%;
+    height: auto;
+    display: block;
+    margin: 100px auto 20px auto; /* Center the image with spacing */
+    border-radius: 10px; /* Optional: Add rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+}
+
+h1, h2, h3 {
+    text-align: center;
+    color: white;
+    margin-top: 50px;
+    margin-bottom: 30px; /* Add a short gap below the title */
+    font-size: 2.5em; /* Adjust size as needed */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Optional: Add text shadow */
+}
+
+p {
+    text-align: justify;
+    color: white;
+    margin: 20px 50px;
+    line-height: 1.6;
+    font-size: 1.2em; /* Adjust size as needed */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Optional: Add text shadow */
+}
+
+/* Center the minigame section */
+/* Center the minigame section */
+#minigame {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Full viewport height */
+    text-align: center;
+    font-size: 0.7rem;
+    position: relative; /* Set relative positioning for child elements */
+    z-index: 1;
+}
+
+/* Progress Bar Container */
+/* Progress Bar Container */
+#progress-container {
+    width: 50%; /* Make the progress bar smaller */
+    max-width: 400px; /* Set a maximum width */
+    height: 20px; /* Reduce the height */
+    background-color: #dddddd38;
+    opacity: 0.5; /* Make it slightly transparent */
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px 0;
+    position: relative; /* Set relative positioning for the progress bar */
+    overflow: visible; 
+}
+
+/* Progress Bar */
+#progress-bar {
+    width: 0;
+    height: 100%;
+    background-color: #880808;
+    position: relative; /* Set relative positioning for the icon */
+    transition: width 0.1s ease-in-out;
+}
+
+/* Progress Icon Inside */
+#progress-icon-inside {
+    width: 30px; /* Set the width of the image */
+    height: 30px; /* Set the height of the image */
+    position: absolute; /* Position the icon relative to the progress bar */
+    top: calc(50% - 105px); /* Vertically center the icon */
+    left: 0; /* Start at the beginning of the progress bar */
+    transform: translate(-50%, -50%); /* Adjust for proper centering */
+    pointer-events: none;
+}
+
+/* Progress Bar */
+#progress-bar {
+    width: 0;
+    height: 100%;
+    background-color: #880808;
+    position: relative; /* Set relative positioning for the icon */
+    transition: width 0.1s ease-in-out;
+}
+/* Progress Icon */
+/* Progress Icon */
+#progress-icon {
+    width: 40px; /* Set the width of the image */
+    height: 40px; /* Set the height of the image */
+    object-fit: contain; /* Ensure the image scales proportionally */
+    position: absolute; /* Position the icon relative to the #minigame container */
+    top: calc(50% - 75px); /* Vertically center the icon relative to the progress bar */
+    left: calc(50% + 200px); /* Position the icon to the right of the progress bar */
+    transform: translateY(-50%); /* Adjust for vertical centering */
+    z-index: 10; /* Ensure the icon is above other elements */
+}

@@ -117,34 +117,34 @@ body {
 
 .victimsImages {
     display: flex;
-    justify-content: center;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
     list-style: none;
-    gap: 200px; /* Increase the gap between images */
+    gap: 30px; /* Add spacing between items */
     margin: 30px 0;
 }
 
 .victimsImages li {
+    display: flex;
+    flex-direction: column; /* Stack image and text vertically */
+    align-items: center; /* Center image and text */
+    gap: 10px; /* Add spacing between image and text */
     cursor: pointer;
 }
 
 .victimsImages img {
-    width: 200px; /* Increase the width */
-    height: 200px; /* Increase the height */
+    width: 500px; /* Increase the width */
+    height: 500px; /* Increase the height */
     object-fit: cover;
     border-radius: 10px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.victimsImages img:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }
 
 .victimsSynopsis {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     list-style: none;
-    gap: 200px; /* Match the gap with .victimsImages */
+    gap: 30px; /* Match the gap with .victimsImages */
     margin-top: 20px;
     text-align: center;
     color: white;
@@ -158,13 +158,14 @@ body {
 
 .victimsTitles {
     display: flex;
-    justify-content: center;
+    flex-direction: column; /* Stack titles vertically */
+    align-items: center; /* Center titles */
     list-style: none;
-    gap: 200px; /* Match the gap with .victimsImages */
+    gap: 30px; /* Add spacing between titles */
     margin-top: 20px;
     text-align: center;
     color: white;
-    font-size: 1.2rem;
+    font-size: 1.5rem; /* Increase font size */
     font-weight: bold;
 }
 
@@ -173,9 +174,98 @@ body {
     line-height: 1.5;
 }
 
+.flip-card {
+    background-color: transparent;
+    width: 500px;
+    height: 500px;
+    perspective: 1000px; /* Creates the 3D effect */
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px; /* Ensure rounded corners match the image */
+    overflow: hidden; /* Prevent content overflow */
+}
+
+.flip-card-front {
+    background-color: transparent; /* Set to transparent to avoid white corners */
+}
+
+.flip-card-back {
+    background-image: "../Images/VictimsBG.png"; /* Set the background image */
+    color: white;
+    transform: rotateY(180deg);
+    text-align: justify; /* Justify the text */
+    padding: 20px; /* Add padding for better spacing */
+    font-size: 2rem; /* Adjust font size for readability */
+}
 
 
+@keyframes slideInFromLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
 
+@keyframes slideOutToLeft {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+
+.slide-in {
+    opacity: 0; /* Initially hidden */
+    transform: translateX(-100%); /* Start off-screen */
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+.slide-in.visible {
+    animation: slideInFromLeft 1s ease forwards; /* Slide in when visible */
+}
+
+.slide-in:not(.visible) {
+    animation: slideOutToLeft 1s ease forwards; /* Slide out when not visible */
+}
+
+/* Remove underline from all links */
+a {
+    text-decoration: none;
+    color: inherit; /* Optional: Inherit the text color from the parent */
+}
+
+/* Optional: Add hover effect for links */
+a:hover {
+    text-decoration: underline; /* Add underline only on hover, if desired */
+}
 
 
 

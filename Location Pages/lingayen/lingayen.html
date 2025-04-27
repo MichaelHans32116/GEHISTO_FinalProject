@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lingayen Gulf - Historical Landmark</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- NAVIGATION SECTION -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="/HomePage/HomePage.html">Home</a></li>
+            <li><a href="/InteractiveMap/images/InteractiveMap.html">HistoMap</a></li>
+            <li><a href="/developers.html">Developers</a></li>
+            <li><a href="/victims.html">Victims</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- HEADER SECTION -->
+        <section class="header-section" data-aos="fade-up" data-aos-duration="1000">
+            <div class="header-overlay"></div>
+            <div class="header-content">
+                <h1 data-aos="fade-up" data-aos-delay="300">Lingayen Gulf</h1>
+                <p data-aos="fade-up" data-aos-delay="500">Japanese Invasion and Occupation (1941–1945)</p>
+            </div>
+        </section>
+
+        <!-- TIMELINE SECTION -->
+        <section class="timeline-section">
+            <div class="timeline-container">
+                <h2 data-aos="fade-up">Historical Timeline</h2>
+
+                <div class="timeline-item" data-aos="fade-right" data-aos-duration="800">
+                    <div class="timeline-image">
+                        <img src="images/landing.jpg" alt="Japanese Landings">
+                    </div>
+                    <div class="timeline-content">
+                        <h3>Japanese Landings (December 1941)</h3>
+                        <p>On December 22, 1941, the Japanese 14th Army, under Lieutenant General Masaharu Homma, initiated landings at multiple points along the eastern shore of Lingayen Gulf, including San Fernando, Bauang, Caba, Aringay, Agoo, and Santo Tomas. Despite encountering logistical challenges due to bad weather and rough seas, the Japanese forces managed to establish a foothold, facing minimal resistance from the ill-prepared and poorly equipped American and Filipino defenders.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-left" data-aos-duration="800">
+                    <div class="timeline-image">
+                        <img src="images/invasion.jpg" alt="Japanese Occupation">
+                    </div>
+                    <div class="timeline-content">
+                        <h3>Occupation and Strategic Importance</h3>
+                        <p>Following the successful landings, Japanese forces advanced inland, capturing key locations and eventually leading to the fall of Manila. Lingayen Gulf remained under Japanese control for over three years, serving as a vital logistical hub for their operations in the Philippines.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-right" data-aos-duration="800">
+                    <div class="timeline-image">
+                        <img src="images/liberation.jpg" alt="Liberation Landings">
+                    </div>
+                    <div class="timeline-content">
+                        <h3>Liberation Landings (January 1945)</h3>
+                        <p>On January 9, 1945, the U.S. 6th Army launched a massive amphibious assault to retake Lingayen Gulf. Approximately 68,000 troops landed on the first day, with the total number reaching over 200,000 in subsequent days. The operation faced fierce resistance, including kamikaze attacks that resulted in significant Allied naval losses.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+    </script>
+</body>
+</html>

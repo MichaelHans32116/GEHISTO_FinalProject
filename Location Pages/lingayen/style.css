@@ -1,0 +1,185 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Georgia', serif;
+}
+
+body {
+    background-image: url('/Location Pages/lingayen/images/backgr.png');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    min-height: 100vh;
+    color: #e0e0e0;
+}
+
+/* NAVIGATION BAR */
+.navbar {
+    display: flex;
+    justify-content: center;
+    padding: 30px 0;
+}
+
+.navbar ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+    font-size: 1.5rem;
+}
+
+.navbar li a {
+    color: white;
+    text-decoration: none;
+}
+
+/* HEADER SECTION */
+.header-section {
+    position: relative;
+    height: 80vh;
+    background-image: url('images/lingayen-gulf.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    overflow: hidden;
+}
+
+.header-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
+}
+
+.header-content {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    padding: 0 2rem;
+}
+
+.header-content h1 {
+    font-size: 5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: linear-gradient(45deg, #ffffff, #d4c9a8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+.header-content p {
+    font-size: 2rem;
+    font-style: italic;
+    color: #d4c9a8;
+    margin-top: 1rem;
+}
+
+/* ANIMATIONS */
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
+                    0 0 20px rgba(255, 255, 255, 0.3);
+    }
+    to {
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.8),
+                    0 0 30px rgba(255, 255, 255, 0.6);
+    }
+}
+
+/* TIMELINE SECTION */
+.timeline-section {
+    padding: 4rem 2rem;
+    background-color: rgba(30, 30, 30, 0.85);
+    margin: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.timeline-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.timeline-container h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: #ffffff;
+}
+
+.timeline-item {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: rgba(40, 40, 40, 0.6);
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.timeline-item:hover {
+    transform: translateY(-5px);
+}
+
+.timeline-image {
+    flex: 1 1 300px;
+    min-width: 300px;
+}
+
+.timeline-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.timeline-content {
+    flex: 2 1 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+}
+
+.timeline-content h3 {
+    font-size: 1.8rem;
+    color: #ffffff;
+    margin-bottom: 1rem;
+}
+
+.timeline-content p {
+    font-size: 1.1rem;
+    color: #cccccc;
+    max-width: 700px;
+    line-height: 1.6;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .header-content h1 {
+        font-size: 3rem;
+    }
+
+    .header-content p {
+        font-size: 1.5rem;
+    }
+    
+    .timeline-item {
+        flex-direction: column;
+    }
+    
+    .timeline-image,
+    .timeline-content {
+        flex: 1 1 100%;
+    }
+}

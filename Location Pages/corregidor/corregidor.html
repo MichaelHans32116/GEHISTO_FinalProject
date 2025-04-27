@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corregidor Island - Historical Landmark</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- NAVIGATION SECTION -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="/HomePage/HomePage.html">Home</a></li>
+            <li><a href="/InteractiveMap/images/InteractiveMap.html">HistoMap</a></li>
+            <li><a href="/developers.html">Developers</a></li>
+            <li><a href="/victims.html">Victims</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- HEADER SECTION -->
+        <section class="header-section" data-aos="fade-up" data-aos-duration="1000">
+            <div class="header-overlay"></div>
+            <div class="header-content">
+                <h1 data-aos="fade-up" data-aos-delay="300">Corregidor Island</h1>
+                <p data-aos="fade-up" data-aos-delay="500">The Fall and Recapture</p>
+            </div>
+        </section>
+
+        <!-- TIMELINE SECTION -->
+        <section class="timeline-section">
+            <div class="timeline-container">
+                <h2 data-aos="fade-up">Historical Timeline</h2>
+
+                <div class="timeline-item" data-aos="fade-right" data-aos-duration="800">
+                    <div class="timeline-image">
+                        <img src="images/TheFall.jpg" alt="Fall of Corregidor">
+                    </div>
+                    <div class="timeline-content">
+                        <h3>The Fall of Corregidor (May 1942)</h3>
+                        <p>After the fall of Bataan, Corregidor was the last stronghold of the Allied forces in the Philippines. Despite a valiant defense, the island surrendered to Japanese forces on May 6, 1942, marking a dark chapter in the Pacific War.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-left" data-aos-duration="800">
+                    <div class="timeline-image">
+                        <img src="images/JapaneseOccupation.jpg" alt="Japanese Occupation">
+                    </div>
+                    <div class="timeline-content">
+                        <h3>Japanese Occupation</h3>
+                        <p>Following its capture, the Japanese fortified Corregidor to secure control of Manila Bay. The tunnels and fortifications were repurposed for the Japanese Imperial Army's strategic operations in the Philippines.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-right" data-aos-duration="800">
+                    <div class="timeline-image">
+                        <img src="images/recapture.jpg" alt="Recapture of Corregidor">
+                    </div>
+                    <div class="timeline-content">
+                        <h3>Recapture of Corregidor (February 1945)</h3>
+                        <p>In a daring combined assault of paratroopers and amphibious forces, U.S. troops retook Corregidor in February 1945. This victory reopened Manila Bay to Allied shipping and marked a symbolic reversal of Japan's earlier triumph.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+    </script>
+</body>
+</html>

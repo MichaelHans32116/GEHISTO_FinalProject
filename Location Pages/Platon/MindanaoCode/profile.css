@@ -1,0 +1,206 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: url('/GEHISTO_FinalProject/Location Pages/Platon/MindanaoCode/Mindanao.pictures/background.png') no-repeat center center/cover;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'League Spartan', Arial, sans-serif;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.container {
+  text-align: center;
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+}
+
+label {
+  display: block;
+}
+
+h1 {
+  font-size: 150px;
+  font-weight: bold;
+  border-left: 8px solid white;
+  border-right: 8px solid white;
+  padding: 10px 170px;
+  text-align: center;
+  color: white;
+  text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.7);
+  white-space: nowrap;
+  transition: all 0.5s ease;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: 0px;
+  margin: 50px auto;
+  font-family: 'Oswald', sans-serif;
+}
+
+h1:hover {
+   color: red;
+  text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.9);
+  transform: translate(-50%, -50%) scale(1.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+#toggle {
+  display: none;
+}
+
+#toggle:checked + label h1 {
+  top: 80px;
+  transform: translate(-50%, 0);
+  font-size: 130px;
+  white-space: nowrap;
+  transition: top 1s ease, transform 1s ease, font-size 1s ease;
+}
+
+.info-box {
+  position: absolute;
+  top: 350px;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  width: 60%;
+  margin: 20px auto 0 auto;
+  padding: 20px;
+  color: white;
+  transition: opacity 0.5s ease, max-height 0.5s ease;
+}
+
+#toggle:checked ~ .info-box {
+  opacity: 1;
+  max-height: 350px;
+  overflow-y: auto;
+  transition: opacity 0.5s ease, max-height 0.5s ease;
+}
+
+.info-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.image img {
+  width: 300px;
+  height: 300px;
+  border-radius: 10px;
+  object-fit: cover;
+  object-position: top;
+  transform: scaleX(-1);
+}
+
+.guerilla-img + .caption {
+  width: 300px;
+  height: 300px;
+  border-radius: 10px;
+  object-fit: cover;
+  object-position: top;
+  position: relative;
+  margin-bottom: 190px; 
+}
+
+.macarthur-img {
+  margin-top: -180px; 
+  position: relative;
+}
+
+.caption {
+  font-size: 15px; 
+  color: white; 
+  margin-top: 10px;
+  font-weight: bold; 
+  text-align: center;
+}
+
+.text p {
+  font-size: 33px;
+  line-height: 1.6;
+  margin: 20px;
+  color: #fff;
+  text-align: justify;
+  font-family: 'times new roman', sans-serif;
+}
+
+.footer-banner {
+  margin-top: 840px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  text-align: center;
+  color: white;
+  font-family: 'Oswald', sans-serif;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.footer-banner .quote {
+  font-size: 24px;
+  font-style: italic;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.footer-banner {
+  display: none; 
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+#toggle:checked ~ .footer-banner {
+  display: block; 
+  opacity: 1;
+}
+
+.back {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  padding: 10px 50px;
+  border: 2px solid #fff;
+  color: #fff;
+  text-decoration: none;
+  font-size: 17px;
+  transition: background-color 0.3s ease;
+}
+  
+.back:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+.done-button-container {
+  display: none; 
+  position: absolute;
+  bottom: 110px;
+  right: 40px;
+}
+
+#toggle:checked ~ .done-button-container {
+  display: block; 
+}
+
+.done {
+  padding: 10px 48px;
+  border: 2px solid #fff;
+  color: #fff;
+  text-decoration: none;
+  font-size: 17px;
+  transition: background-color 0.3s ease;
+}
+
+.done:hover {
+  background-color: #fff;
+  color: #000;
+  cursor: pointer;
+}

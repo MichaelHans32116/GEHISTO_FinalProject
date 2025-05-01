@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  background: url('/GEHISTO_FinalProject/Location Pages/Platon/VisayasCode/Visayas.picture/background1.png') no-repeat center center/cover;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  font-family: 'League Spartan', Arial, sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+
+.content {
+  position: absolute;
+  left: 550px;
+  text-align: left;
+  color: white;
+  text-shadow: 0 0 10px white;
+  transition: transform 1s ease;
+}
+
+.general {
+  font-size: 180px; 
+  font-weight: bold;
+  text-shadow: 0 0 13px white;
+  margin-bottom: -75px; 
+}
+
+.mindanao {
+  font-size: 90px; 
+  color: red; 
+  text-shadow: 0 0 13px red;
+  margin-bottom: 20px;
+  padding: 23px;
+  display: inline-block;
+  margin-left: -50px;
+}
+
+.region {
+  font-size: 90px; 
+  color: white; 
+  text-shadow: 0 0 13px white;
+  margin-top: 20px;
+  padding: 10px;
+  display: inline-block;
+}
+
+.general:hover {
+  color: red; 
+  text-shadow: 0 0 13px red; 
+}
+
+.region:hover {
+  color: red; 
+  text-shadow: 0 0 13px red; 
+}
+
+.visayas:hover {
+  color: white; 
+  text-shadow: 0 0 13px white; 
+}
+
+.information {
+  position: absolute;
+  right: 150px;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 700px;
+  color: white;
+  text-align: justify;
+  opacity: 0;
+  transform: translateX(100px);
+  transition: transform 1s ease, opacity 1s ease;
+}
+
+.information h2 {
+  font-size: 60px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-family: 'Oswald', sans-serif;
+  text-shadow: 0 0 10px rgb(26, 20, 20);
+}
+
+.information p {
+  font-size: 25px;
+  line-height: 1.6;
+}
+
+.Guerrilla-Movement {
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255,255,255,0.1);
+  transition: background-color 0.3s ease;
+  margin-left: 150px;
+  margin-top: 20px;
+}
+
+.Guerrilla-Movement:hover {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.6); 
+  transition: transform 0.3s ease, text-shadow 0.3s ease; 
+}
+
+.black-army:hover {
+  background-color: #222;
+}
+
+.back {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  padding: 10px 50px;
+  border: 2px solid #fff;
+  color: #fff;
+  text-decoration: none;
+  font-size: 20px;
+  transition: background-color 0.3s ease;
+}
+  
+.back:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+body:hover .content {
+  transform: translateX(-400px);
+}
+
+body:hover .information {
+  opacity: 1;
+  transform: translateX(0);
+}

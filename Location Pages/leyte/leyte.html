@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MacArthur's Return: Battle of Leyte Gulf</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="/InteractiveMap/images/InteractiveMap.html" class="back-button">← Back</a>
+            <div class="header-titles">
+                <h1>MACARTHUR'S RETURN</h1>
+                <h2>The Battle of Leyte Gulf - October 1944</h2>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#prelude" class="active">Prelude</a></li>
+            <li><a href="#battle">The Battle</a></li>
+            <li><a href="#landing">The Landing</a></li>
+            <li><a href="#aftermath">Aftermath</a></li>
+            <li><a href="#timeline">Timeline</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="prelude" class="content-section">
+            <h3>Prelude to Battle</h3>
+            <div class="content-wrapper">
+                <img src="leyte.jpg" alt="MacArthur landing" class="section-img">
+                <p>After being forced to leave the Philippines in 1942 with his famous promise "I shall return," General Douglas MacArthur spent two years planning his comeback. The Battle of Leyte Gulf was the largest naval battle of World War II and paved the way for MacArthur's dramatic return to Philippine soil.</p>
+                <button class="interactive-btn" onclick="showFact('prelude')">Show Strategic Importance</button>
+                <p id="prelude-fact" class="hidden-fact"></p>
+            </div>
+        </section>
+
+        <section id="battle" class="content-section">
+            <h3>The Naval Battle</h3>
+            <div class="content-wrapper">
+                <img src="navalBattle.jpg" alt="Battle of Leyte Gulf" class="section-img">
+                <p>Fought from October 23-26, 1944, the Battle of Leyte Gulf was the largest naval battle in history. It involved nearly 300 ships and marked the first use of organized kamikaze attacks by Japanese forces.</p>
+                <div class="battle-stats">
+                    <div class="stat-box">
+                        <h4>Allied Forces</h4>
+                        <p>1 light carrier</p>
+                        <p>2 escors carriers</p>
+                        <p>2 detroyers</p>
+                        <p>1 detroyer escort</p>
+                    </div>
+                    <div class="stat-box">
+                        <h4>Japanese Forces</h4>
+                        <p>3 battleships</p>
+                        <p>1 large carrier</p>
+                        <p>3 light carrier</p>
+                        <p>6 heavy cruisers</p>
+                        <p>4 light cruisers</p>
+                        <p>9 destroyers</p>
+                    </div>
+                </div>
+                <button class="interactive-btn" onclick="showFact('battle')">Show Battle Outcome</button>
+                <p id="battle-fact" class="hidden-fact"></p>
+            </div>
+        </section>
+
+        <section id="landing" class="content-section">
+            <h3>The Landing at Leyte</h3>
+            <div class="content-wrapper">
+                <img src="return2.jpg" alt="MacArthur landing" class="section-img">
+                <p>On October 20, 1944, MacArthur waded ashore at Leyte to fulfill his promise. His famous speech "People of the Philippines, I have returned" marked a turning point in the Pacific War.</p>
+                <button id="speech-btn" class="interactive-btn">Play MacArthur's Speech</button>
+                <audio id="speech-audio" src="speech.mp3"></audio>
+                <button class="interactive-btn" onclick="showFact('landing')">Show Landing Details</button>
+                <p id="landing-fact" class="hidden-fact"></p>
+            </div>
+        </section>
+
+        <section id="aftermath" class="content-section">
+            <h3>Aftermath</h3>
+            <div class="content-wrapper">
+                <img src="aftermath.jpg" alt="Aftermath" class="section-img">
+                <p>The Allied victory at Leyte Gulf effectively destroyed what remained of Japanese naval power. It secured the beachhead for the liberation of the Philippines and cut off Japan from its occupied territories in Southeast Asia.</p>
+                <button class="interactive-btn" onclick="showFact('aftermath')">Show Consequences</button>
+                <p id="aftermath-fact" class="hidden-fact"></p>
+            </div>
+        </section>
+
+        <section id="timeline" class="content-section">
+            <h3>Timeline of Events</h3>
+            <div class="timeline-container">
+                <div class="timeline-event">
+                    <div class="timeline-date">March 1942</div>
+                    <div class="timeline-content">General Douglas MacArthur was ordered to evacuate the Philippines as Japanese forces advanced, famously vowing "I shall return" before departing by PT boat for Australia where he assumed command of Allied forces in the Southwest Pacific.</div>
+                </div>
+                <div class="timeline-event">
+                    <div class="timeline-date">Oct 17, 1944</div>
+                    <div class="timeline-content">U.S. Army Rangers made the first Allied landing in the Philippines since 1942 by capturing Suluan Island, securing the eastern entrance to Leyte Gulf and allowing minesweepers to clear paths for the main invasion force.</div>
+                </div>
+                <div class="timeline-event">
+                    <div class="timeline-date">Oct 20, 1944</div>
+                    <div class="timeline-content">The U.S. Navy landed four Sixth Army divisions ashore on Leyte on October 20, 1944.   Japanese aerial counter-attacks damage USS Sangamon (CVE-26) and a few other ships, but do not hinder the landings.   Later in the day, General Douglas A. MacArthur, USA, gave his "I have returned" radio message to the Philippine people.</div>
+                </div>
+                <div class="timeline-event">
+                    <div class="timeline-date">Oct 23-26, 1944</div>
+                    <div class="timeline-content"> Japanese units attacked U.S. forces and shipping on 23 October. On 24 October, they launched multiple air raids: morning, afternoon, and night attacks with bombers. The U.S. deployed 36 fighters (plus 16 ready) - 28 for attack forces, 8 for beach patrol. That day, 150-200 Japanese planes (mostly bombers) struck Leyte. U.S. forces shot down 66 (18 probable) using 50 planes, losing 3. Most U.S. aircraft targeted the Japanese fleet, not air defense.</div>
+                </div>
+                <div class="timeline-event">
+                    <div class="timeline-date">Dec 1944</div>
+                    <div class="timeline-content">On 25 December, when elements of the 77th Division had seized Palompon, the last important port on Leyte, General MacArthur declared that all organized resistance had ended. He said in a message to General Krueger: 'Heartiest congratulations on capture of Palompon. This closes a campaign that has had few counterparts in the utter destruction of the enemy's forces with a maximum conservation of our own. It has been a magnificent performance on the part of all concerned.'</div>
+                </div>
+            </div>
+            <button class="interactive-btn" onclick="zoomTimeline()">Zoom Timeline</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>© No Copyright Infringement Intended</p>
+        <p>Sources:</p>
+        <p>https://www.govinfo.gov/content/pkg/GOVPUB-D114-PURL-gpo107815/pdf/GOVPUB-D114-PURL-gpo107815.pdf</p>
+        <p>https://www.nationalww2museum.org/war/articles/macarthur-returns-philippines</p>
+        <p>https://www.ibiblio.org/hyperwar/USA/USA-P-Return/USA-P-Return-13.html</p>
+        <p>https://www.history.navy.mil/content/history/museums/nmusn/explore/photography/wwii/wwii-pacific/leyte/leyte-invasion.html</p>
+        <p>https://goforbroke.org/leyte/</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

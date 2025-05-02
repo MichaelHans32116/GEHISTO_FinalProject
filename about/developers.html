@@ -2,26 +2,69 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>BSIT Warrior Codes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BSIT Warrior Codes - Developers</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Georgia', serif;
+    }
+
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #111;
       color: white;
+      background-color: black;
+      background-image: url('pictures/bg.png');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
     }
-    @media (max-width: 768px) {
-  .dev-cards {
-    flex-direction: column;
-    align-items: center;
-  }
 
-  .dev-card {
-    width: 90%; /* Adjust width for smaller screens */
-  }
-}
+    /* Navigation from HomePage.css */
+    .navbar {
+      display: flex;
+      justify-content: center;
+      padding: 30px 0;
+      background-color: rgba(0, 0, 0, 0.6); /* dark transparent overlay */
+    }
+    
+    .navbar ul {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+      font-size: 1.5rem;
+    }
+    
+    .navbar li {
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .navbar li a {
+      color: white;
+      text-decoration: none;
+      position: relative;
+    }
+    
+    .navbar li a:hover {
+      color: red;
+    }
+    
+    .navbar li a.active::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background: red;
+      bottom: -5px;
+      left: 0;
+    }
 
-    header {
+    /* Header styles */
+    header.dev-header {
       background: url('bg.jpg') center/cover no-repeat;
       height: 300px;
       text-align: center;
@@ -29,53 +72,28 @@
       color: white;
     }
 
-
-    header h1 {
+    header.dev-header h1 {
       font-size: 3em;
       margin-bottom: 0;
     }
 
-
-    header p {
+    header.dev-header p {
       margin-top: 5px;
       font-size: 1.1em;
       letter-spacing: 2px;
     }
 
-
-    nav {
-      background-color: #222;
-      padding: 15px;
-      text-align: center;
-    }
-
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin: 0 15px;
-      font-size: 1.1em;
-      position: relative;
-    }
-
-
-    nav a:hover {
-      color: red;
-    }
-
-
+    /* Developer section styles */
     .dev-section {
       padding: 40px 20px;
       text-align: center;
       background: linear-gradient(to bottom, #333, #111);
     }
 
-
     .dev-section h2 {
       font-size: 2em;
       margin-bottom: 30px;
     }
-
 
     .dev-cards {
       display: flex;
@@ -83,7 +101,6 @@
       justify-content: center;
       gap: 25px;
     }
-
 
     .dev-card {
       background-color: #222;
@@ -93,7 +110,6 @@
       box-shadow: 0 4px 8px rgba(0,0,0,0.5);
     }
 
-
     .dev-card img {
       width: 100%;
       height: 150px;
@@ -101,89 +117,101 @@
       border-radius: 10px;
     }
 
-
     .dev-card h3 {
       margin: 10px 0 5px;
     }
-
 
     .dev-card p {
       margin: 0;
       font-size: 0.9em;
       color: #bbb;
     }
+    
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .dev-cards {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .dev-card {
+        width: 90%; /* Adjust width for smaller screens */
+      }
+    }
   </style>
 </head>
 <body>
-
-
-  <nav>
-    <a href="/HomePage/HomePage.html">Home</a>
-    <a href="/InteractiveMap/images/InteractiveMap.html">HistoMap</a>
-    <a href="#">Developers</a>
-    <a href="/VictimsPage/Victims.html">Victims</a>
-  </nav>
-
-
   <header>
-    <p>JAPANESE INVATION &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MC ARTHUR DOUGLAS</p>
+    <nav class="navbar">
+      <ul>
+        <li><a href="/HomePage/HomePage.html">Home</a></li>
+        <li><a href="/InteractiveMap/images/InteractiveMap.html">HistoMap</a></li>
+        <li><a href="/about/developers.html" class="active">Developers</a></li>
+        <li><a href="/VictimsPage/Victims.html">Victims</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <header class="dev-header">
+    <p>JAPANESE INVASION</p>
     <h1>THE BSIT WARRIOR CODES</h1>
     <p>PHILIPPINES HISTORY</p>
   </header>
 
-
   <section class="dev-section">
     <h2>Meet the Developers</h2>
     <div class="dev-cards">
-            <div class="dev-card">
-              <img src="hans.jpg" alt="Hans">
-              <h3>Hans</h3>
-              <p>DEVELOPER</p>
-            </div>
-            <div class="dev-card">
-              <img src="alex.jpg" alt="Alex">
-              <h3>Alex</h3>
-              <p>DEVELOPER</p>
-            </div>
-            <div class="dev-card">
-              <img src="kiel.jpg" alt="Kiel">
-              <h3>Kiel</h3>
-              <p>DEVELOPER</p>
-            </div>
-            <div class="dev-card">
-              <img src="june.jpg" alt="June">
-              <h3>June</h3>
-              <p>DEVELOPER</p>
-            </div>
-            <div class="dev-card">
-              <img src="miro.jpg" alt="Miro">
-              <h3>Miro</h3>
-              <p>DEVELOPER</p>
-            </div>
-            <div class="dev-card">
-              <img src="lio.jpg" alt="Lio">
-              <h3>Lio</h3>
-              <p>DEVELOPER</p>
-            </div>
-            <div class="dev-card">
-              <img src="lexter.jpg" alt="Lexter">
-              <h3>Lexter</h3>
-              <p>DEVELOPER</p>
-            </div>
-            <div class="dev-card">
-              <img src="joaquin.jpg" alt="Joaquin">
-              <h3>Joaquin</h3>
-              <p>DEVELOPER</p>
-            </div>
-            <div class="dev-card">
-              <img src="jazric.jpg" alt="Jazric">
-              <h3>Jazric</h3>
-              <p>DEVELOPER</p>
-            </div>
-            <div class="dev-card">
-              <img src="rob.jpg" alt="Rob">
-              <h3>Rob</h3>
-              <p>DEVELOPER</p>
-            </div>
-          </div>
-
+      <div class="dev-card">
+        <img src="hans.jpeg" alt="Hans">
+        <h3>Hans</h3>
+        <p>DEVELOPER</p>
+      </div>
+      <div class="dev-card">
+        <img src="alex.jpg" alt="Alex">
+        <h3>Alex</h3>
+        <p>DEVELOPER</p>
+      </div>
+      <div class="dev-card">
+        <img src="kiel.jpg" alt="Kiel">
+        <h3>Kiel</h3>
+        <p>DEVELOPER</p>
+      </div>
+      <div class="dev-card">
+        <img src="june.jpeg" alt="June">
+        <h3>June</h3>
+        <p>DEVELOPER</p>
+      </div>
+      <div class="dev-card">
+        <img src="miro.jpg" alt="Miro">
+        <h3>Miro</h3>
+        <p>DEVELOPER</p>
+      </div>
+      <div class="dev-card">
+        <img src="lio.jpg" alt="Lio">
+        <h3>Lio</h3>
+        <p>DEVELOPER</p>
+      </div>
+      <div class="dev-card">
+        <img src="lexter.jpg" alt="Lexter">
+        <h3>Lexter</h3>
+        <p>DEVELOPER</p>
+      </div>
+      <div class="dev-card">
+        <img src="joaquin.jpeg" alt="Joaquin">
+        <h3>Joaquin</h3>
+        <p>DEVELOPER</p>
+      </div>
+      <div class="dev-card">
+        <img src="jazric.jpg" alt="Jazric">
+        <h3>Jazric</h3>
+        <p>DEVELOPER</p>
+      </div>
+      <div class="dev-card">
+        <img src="rob.jpeg" alt="Rob">
+        <h3>Rob</h3>
+        <p>DEVELOPER</p>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

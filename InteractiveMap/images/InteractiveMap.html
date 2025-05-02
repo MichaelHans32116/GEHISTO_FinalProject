@@ -22,14 +22,13 @@
             background-position: center;
         }
         
-        /*  NAVIGATION BAR  */
         .navbar {
             display: flex;
             justify-content: center;
             padding: 30px 0;
-            
+
         }
-        
+
         .navbar ul {
             display: flex;
             list-style: none;
@@ -40,32 +39,34 @@
         .navbar li {
             cursor: pointer;
             position: relative;
-            color: white;
         }
         
         .navbar li a {
             color: white;
             text-decoration: none;
+            position: relative;
         }
         
-        .navbar li.active::after {
+        .navbar li a:hover {
+            color: red;
+        }
+        
+        .navbar li a.active::after {
             content: "";
             position: absolute;
             width: 100%;
             height: 2px;
-            background: none; 
+            background: red;
             bottom: -5px;
             left: 0;
         }
         
-        /*  MAIN CONTENT CONTAINER  */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
         
-        /*  PAGE HEADER  */
         header {
             display: none;
         }
@@ -74,26 +75,22 @@
             display: none; 
         }
         
-        /*  MAP CONTAINER  */
         .map-container {
             position: relative;
             width: 100%;
-            max-width: 800px;
+            max-width: 875px;
             margin: 0 auto;
-            padding: 20px;
             border: none; 
         }
         
         .philippine-map {
-            width: 130%;
+            width: 100%;
             height: auto;
             display: block;
             position: relative;
-            left: -700px; 
-            
+            left: -580px; 
         }
         
-        /*  MAP MARKERS  */
         .location {
             position: absolute;
             width: 20px;
@@ -112,26 +109,44 @@
             filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9));
         }
         
-        .location.bataan { top: 30%; left: -29%; background-image: url('marker-bataan.png'); }
-        .location.manila { top: 29%; left: -25.7%; background-image: url('marker-manila.png'); }
-        .location.lingayen { top: 18.8%; left: -30.2%; background-image: url('marker-lingayen.png'); }
-        .location.corregidor { top: 32%; left: -29%; background-image: url('marker-corregidor.png'); }
-        .location.central-luzon { top: 23%; left: -27%; background-image: url('marker-central-luzon.png'); }
-        .location.leyte { top: 52%; left: -9%; background-image: url('marker-leyte.png'); }
-        .location.visayas { top: 57%; left: -13%; background-image: url('marker-visayas.png'); }
-        .location.mindanao { top: 75%; left: -7%; background-image: url('marker-mindanao.png'); }
+        .location.bataan { top: 26%; left: -22%; background-image: url('marker-bataan.png'); }
+        .location.manila { top: 28%; left: -18.7%; background-image: url('marker-manila.png'); }
+        .location.lingayen { top: 15.8%; left: -22.2%; background-image: url('marker-lingayen.png'); }
+        .location.corregidor { top: 29%; left: -21%; background-image: url('marker-corregidor.png'); }
+        .location.central-luzon { top: 20%; left: -19%; background-image: url('marker-central-luzon.png'); }
+        .location.leyte { top: 49%; left: -3%; background-image: url('marker-leyte.png'); }
+        .location.visayas { top: 54%; left: -7%; background-image: url('marker-visayas.png'); }
+        .location.mindanao { top: 76%; left: -4%; background-image: url('marker-mindanao.png'); }
         
-        .tooltip {
-            position: absolute;
-            background-color: rgba(30, 30, 30, 0.7);
-            border: none;
-            border-radius: 3px;
-            padding: 15px;
-            width: 550px;
-            box-shadow: 0 0 20px rgba(139, 0, 0, 0.7);
-            z-index: 100;
+        .tooltip-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            width: 100%;
+            height: 100%;
             display: none;
             pointer-events: none;
+            justify-content: center;
+            align-items: center;
+            background-color: transparent;
+        }
+        
+        .tooltip {
+            background-color: rgba(30, 30, 30, 0.9);
+            border: none;
+            border-radius: 5px;
+            padding: 25px;
+            width: 550px;
+            box-shadow: 0 0 30px rgba(139, 0, 0, 0.8);
+            pointer-events: none;
+            animation: fadeIn 0.2s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
         
         .tooltip img {
@@ -139,12 +154,13 @@
             height: 340px;
             object-fit: cover;
             margin-bottom: 12px;
-            border: none; 
+            border: none;
+            border-radius: 3px;
         }
         
         .tooltip h3 {
             margin: 0 0 10px 0;
-            font-size: 1.2em;
+            font-size: 1.4em;
             color: #d4c9a8;
             padding-bottom: 5px;
             border-bottom: none;
@@ -152,13 +168,18 @@
         
         .tooltip p {
             margin: 0;
-            font-size: 0.9em;
+            font-size: 1em;
             color: #eee;
             line-height: 1.5;
         }
         
         .tooltip p strong {
             color: #d4c9a8;
+        }
+        
+        
+        .tooltip-content {
+            position: relative;
         }
         
         .legend {
@@ -169,7 +190,6 @@
             gap: 20px;
             padding: 20px;
             border: none;
-            
         }
         
         .legend-item {
@@ -192,20 +212,20 @@
             border-radius: 2px;
         }
         
-        /*FOOTER STYLES*/
         footer {
             text-align: center;
-            margin-top: 50px;
-            padding: 30px;
+            margin-top: 30px;
+            padding: 15px;
             color: white;
-            border-top: none; 
+            border-top: none;
         }
-        
+
         footer p {
             margin: 0;
+            font-size: 0.8rem;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
-        
+
         @media (max-width: 768px) {
             .navbar ul {
                 font-size: 1.2rem;
@@ -229,17 +249,22 @@
             }
             
             .tooltip {
-                width: 200px;
+                width: 90%;
+                max-width: 550px;
+                padding: 15px;
+            }
+            
+            .tooltip img {
+                height: 200px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- NAVIGATION SECTION -->
     <nav class="navbar">
         <ul>
             <li><a href="/HomePage/HomePage.html">Home</a></li>
-            <li class="active"><a href="/InteractiveMap/images/InteractiveMap.html">HistoMap</a></li>
+            <li><a href="/InteractiveMap/images/InteractiveMap.html" class="active">HistoMap</a></li>
             <li><a href="/about/developers.html">Developers</a></li>
             <li><a href="/VictimsPage/Victims.html">Victims</a></li>
         </ul>
@@ -249,7 +274,6 @@
         <div class="map-container">
             <img src="ph-07.png" alt="Philippine Map" class="philippine-map" id="philippineMap">
             
-            <!-- MAP MARKERS -->
             <div class="location bataan" data-event="bataan"></div>
             <div class="location manila" data-event="manila"></div>
             <div class="location lingayen" data-event="lingayen"></div>
@@ -258,55 +282,22 @@
             <div class="location leyte" data-event="leyte"></div>
             <div class="location visayas" data-event="visayas"></div>
             <div class="location mindanao" data-event="mindanao"></div>
-            
-            <div class="tooltip" id="mapTooltip"></div>
         </div>
         
-        <div class="legend">
-            <div class="legend-item">
-                <div class="legend-color" style="background-image: url('marker-bataan.png')"></div>
-                <span>Bataan Peninsula</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background-image: url('marker-manila.png')"></div>
-                <span>Manila</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background-image: url('marker-lingayen.png')"></div>
-                <span>Lingayen Gulf</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background-image: url('marker-corregidor.png')"></div>
-                <span>Corregidor Island</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background-image: url('marker-central-luzon.png')"></div>
-                <span>Central Luzon</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background-image: url('marker-leyte.png')"></div>
-                <span>Leyte</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background-image: url('marker-visayas.png')"></div>
-                <span>Visayas Region</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background-image: url('marker-mindanao.png')"></div>
-                <span>Mindanao Region</span>
+        <div class="tooltip-container" id="tooltipContainer">
+            <div class="tooltip" id="mapTooltip">
+                <div class="tooltip-content"></div>
             </div>
         </div>
     </div>
     
-    <!-- FOOTER SECTION -->
     <footer>
         <div class="container">
             <p>© 2023 Interactive Map</p>
         </div>
     </footer>
-    
+
     <script>
-        // LOCATION PAGE LINKS
         const eventData = {
             bataan: {
                 title: "Bataan Peninsula",
@@ -351,56 +342,48 @@
                 pageUrl: "/Location Pages/leyte/leyte.html"
             },
             visayas: {
-                title: "General Visayas Region",
-                events: "Resistance Activity",
-                image: "visayas.jpg",
-                description: "In the Visayas, the Black Army carried out guerrilla operations against Japanese forces during World War II, engaging in ambushes, sabotage, and intelligence gathering to aid the Allied forces.",
-                pageUrl: "/GEHISTO_FinalProject/Location Pages/Platon/VisayasCode/Visayas.html"
+                title: "Visayas Region",
+                events: "Resistance Activities",
+                image: "visayass.jpg",
+                description: "Various guerrilla groups operated throughout the central islands.",
+                pageUrl: "/Location Pages/Platon/VisayasCode/Visayas.html"
             },
             mindanao: {
-                title: "General Mindanao Region",
-                events: "Guerrilla Activity",
+                title: "Mindanao Region",
+                events: "Guerrilla Activities",
                 image: "mindanao.jpg",
-                description: "In Mindanao, a large guerrilla movement resisted Japanese forces during World War II, organizing local fighters for sabotage, ambushes, and intelligence gathering, while coordinating efforts with the Allied command.",
-                pageUrl: "/GEHISTO_FinalProject/Location Pages/Platon/MindanaoCode/Mindanao.html"
+                description: "Though less documented, resistance movements were active in the southern islands.",
+                pageUrl: "/Location Pages/Platon/MindanaoCode/Mindanao.html"
             }
         };
     
-        const map = document.getElementById('philippineMap');
+        const tooltipContainer = document.getElementById('tooltipContainer');
         const tooltip = document.getElementById('mapTooltip');
+        const tooltipContent = document.querySelector('.tooltip-content');
         const locations = document.querySelectorAll('.location');
-    
-        function positionTooltip(marker, mouseX, mouseY) {
-            const markerRect = marker.getBoundingClientRect();
-            const mapRect = map.getBoundingClientRect();
-            
-            let top = markerRect.top - mapRect.top + 20;
-            let left = markerRect.left - mapRect.left;
-            
-            if (left + 250 > mapRect.width) left = mapRect.width - 260;
-            if (left < 0) left = 10;
-            
-            if (markerRect.top - mapRect.top > mapRect.height / 2) {
-                top = markerRect.top - mapRect.top - 220;
-            }
-    
-            tooltip.style.top = `${top}px`;
-            tooltip.style.left = `${left}px`;
-        }
-    
-        function showTooltip(event, marker) {
+        
+        function showTooltip(marker) {
             const eventType = marker.getAttribute('data-event');
             const data = eventData[eventType];
     
-            tooltip.innerHTML = `
+            tooltipContent.innerHTML = `
                 <img src="${data.image}" alt="${data.title}">
                 <h3>${data.title}</h3>
                 <p><strong>Events:</strong> ${data.events}</p>
-                <p>${data.description}</p>
+                <p style="margin-top: 15px;">${data.description}</p>
             `;
     
-            positionTooltip(marker, event.clientX, event.clientY);
-            tooltip.style.display = 'block';
+            tooltipContainer.style.display = 'flex';
+            
+            // Add fade-in animation
+            tooltip.style.animation = 'none';
+            setTimeout(() => {
+                tooltip.style.animation = 'fadeIn 0.2s ease-out';
+            }, 10);
+        }
+    
+        function hideTooltip() {
+            tooltipContainer.style.display = 'none';
         }
     
         function redirectToEventPage(eventType) {
@@ -412,15 +395,14 @@
             }
         }
     
+        // Event listeners for markers using hover
         locations.forEach(location => {
             const eventType = location.getAttribute('data-event');
     
-            location.addEventListener('mouseenter', (e) => showTooltip(e, location));
-            location.addEventListener('mouseleave', () => tooltip.style.display = 'none');
-            location.addEventListener('mousemove', (e) => positionTooltip(location, e.clientX, e.clientY));
+            location.addEventListener('mouseenter', () => showTooltip(location));
+            location.addEventListener('mouseleave', hideTooltip);
             location.addEventListener('click', () => redirectToEventPage(eventType));
         });
-    </script>
-    
+    </script>    
 </body>
 </html>

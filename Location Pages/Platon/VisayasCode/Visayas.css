@@ -3,7 +3,7 @@
 body {
   margin: 0;
   padding: 0;
-  background: url('/Location Pages/Platon/VisayasCode/Visayas.picture/background1.png') no-repeat center center/cover;
+  background: url('/GEHISTO_FinalProject/Location Pages/Platon/VisayasCode/Visayas.picture/background1.png') no-repeat center center/cover;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -141,15 +141,13 @@ body:hover .information {
   opacity: 0;
   z-index: 0;
   transition: opacity 1s ease;
-  pointer-events: none; /* ensures it doesn't block any hover events */
+  pointer-events: none; 
 }
 
-/* Make content appear above the image */
 .content {
   z-index: 1;
 }
 
-/* On hover, show the image */
 body:hover .human-img {
   opacity: 0.3;
   .human-img {
@@ -157,20 +155,91 @@ body:hover .human-img {
   left: 570px;
   top: 50%;
   transform: translateY(-50%);
-  width: 400px; /* adjust size as needed */
+  width: 400px;
   opacity: 0;
   z-index: 0;
   transition: opacity 1s ease;
-  pointer-events: none; /* ensures it doesn't block any hover events */
+  pointer-events: none; 
 }
 
-/* Make content appear above the image */
 .content {
   z-index: 1;
 }
 
-/* On hover, show the image */
 body:hover .human-img {
   opacity: 0.3;
 }
+}
+
+@media (max-width: 1200px) {
+  .general {
+    font-size: 150px; 
+  }
+
+  .visayas, .region {
+    font-size: 70px; 
+    padding: 15px;
+  }
+
+  .information {
+    right: 150px; 
+    max-width: 500px; 
+    padding: 20px;
+  }
+
+  .human-img {
+    width: 1000px; 
+  }
+}
+
+@media (max-width: 768px) {
+  .general {
+    font-size: 120px; 
+  }
+
+  .visayas, .region {
+    font-size: 50px;
+    padding: 10px;
+  }
+
+  .information {
+    right: 50px; 
+    max-width: 400px; 
+    padding: 15px;
+  }
+
+  .human-img {
+    width: 800px; 
+  }
+
+  .back {
+    font-size: 16px; 
+    padding: 8px 30px; 
+  }
+}
+
+@media (max-width: 480px) {
+  .general {
+    font-size: 90px; 
+  }
+
+  .visayas, .region {
+    font-size: 40px; 
+    padding: 5px;
+  }
+
+  .information {
+    right: 20px; 
+    max-width: 300px;
+    padding: 10px;
+  }
+
+  .human-img {
+    width: 600px; 
+  }
+
+  .back {
+    font-size: 14px;
+    padding: 6px 20px; 
+  }
 }

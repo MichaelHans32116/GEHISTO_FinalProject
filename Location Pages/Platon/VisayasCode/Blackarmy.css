@@ -196,3 +196,61 @@ h1:hover {
   cursor: pointer;
 }
 
+
+@media (max-width: 1200px) {
+  h1 {
+    font-size: 120px; 
+    padding: 10px 100px;
+  }
+
+  .container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 90px; 
+    padding: 10px 50px;
+  }
+
+  .info-box {
+    width: 90%; 
+    padding: 15px;
+  }
+
+  .image img {
+    width: 250px; 
+    height: 250px;
+  }
+
+  .text p {
+    font-size: 25px; 
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 70px; 
+    padding: 10px 30px;
+  }
+
+  .info-box {
+    width: 100%; 
+    padding: 10px;
+  }
+
+  .image img {
+    width: 200px;
+    height: 200px;
+  }
+
+  .text p {
+    font-size: 20px;
+  }
+
+  .back, .done {
+    font-size: 14px; 
+    padding: 8px 20px; 
+  }
+}

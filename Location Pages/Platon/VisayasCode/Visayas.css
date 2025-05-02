@@ -14,35 +14,35 @@ body {
 
 .content {
   position: absolute;
-  left: 570px;
-  text-align: left;
+  left: 440px;
+  text-align: center;
   color: white;
   text-shadow: 0 0 10px white;
   transition: transform 1s ease;
 }
 
 .general {
-  font-size: 180px; 
+  font-size: 120px; 
   font-weight: bold;
   text-shadow: 0 0 13px white;
   margin-bottom: -75px; 
 }
 
 .visayas {
-  font-size: 90px; 
+  font-size: 80px; 
   color: red; 
   text-shadow: 0 0 13px red;
-  margin-bottom: 20px;
-  padding: 23px;
+  margin-bottom: 0px;
+  padding: 5px;
   display: inline-block;
 }
 
 .region {
-  font-size: 90px; 
+  font-size: 80px; 
   color: white; 
   text-shadow: 0 0 13px white;
   margin-top: 20px;
-  padding: 20px;
+  padding: 15px;
   display: inline-block;
 }
 
@@ -63,7 +63,7 @@ body {
 
 .information {
   position: absolute;
-  right: 250px;
+  right: 150px;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 30px;
   border-radius: 15px;
@@ -76,7 +76,7 @@ body {
 }
 
 .information h2 {
-  font-size: 60px;
+  font-size: 40px;
   margin-top: 0;
   margin-bottom: 20px;
   font-family: 'Oswald', sans-serif;
@@ -84,7 +84,7 @@ body {
 }
 
 .information p {
-  font-size: 25px;
+  font-size: 21px;
   line-height: 1.6;
 }
 
@@ -150,6 +150,8 @@ body:hover .information {
 
 body:hover .human-img {
   opacity: 0.3;
+}
+
   .human-img {
   position: absolute;
   left: 570px;
@@ -168,78 +170,4 @@ body:hover .human-img {
 
 body:hover .human-img {
   opacity: 0.3;
-}
-}
-
-@media (max-width: 1200px) {
-  .general {
-    font-size: 150px; 
-  }
-
-  .visayas, .region {
-    font-size: 70px; 
-    padding: 15px;
-  }
-
-  .information {
-    right: 150px; 
-    max-width: 500px; 
-    padding: 20px;
-  }
-
-  .human-img {
-    width: 1000px; 
-  }
-}
-
-@media (max-width: 768px) {
-  .general {
-    font-size: 120px; 
-  }
-
-  .visayas, .region {
-    font-size: 50px;
-    padding: 10px;
-  }
-
-  .information {
-    right: 50px; 
-    max-width: 400px; 
-    padding: 15px;
-  }
-
-  .human-img {
-    width: 800px; 
-  }
-
-  .back {
-    font-size: 16px; 
-    padding: 8px 30px; 
-  }
-}
-
-@media (max-width: 480px) {
-  .general {
-    font-size: 90px; 
-  }
-
-  .visayas, .region {
-    font-size: 40px; 
-    padding: 5px;
-  }
-
-  .information {
-    right: 20px; 
-    max-width: 300px;
-    padding: 10px;
-  }
-
-  .human-img {
-    width: 600px; 
-  }
-
-  .back {
-    font-size: 14px;
-    padding: 6px 20px; 
-  }
 }

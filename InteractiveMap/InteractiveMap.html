@@ -109,14 +109,14 @@
             filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9));
         }
         
-        .location.bataan { top: 27.5%; left: -0.4%; background-image: url('marker-bataan.png'); }
-        .location.manila { top: 30%; left: 2.8%; background-image: url('marker-manila.png'); }
-        .location.lingayen { top: 18%; left: -1.3%; background-image: url('marker-lingayen.png'); }
-        .location.corregidor { top: 30%; left: -.4%; background-image: url('marker-corregidor.png'); }
-        .location.central-luzon { top: 22%; left: 1.5%; background-image: url('marker-central-luzon.png'); }
-        .location.leyte { top: 47%; left: 18%; background-image: url('marker-leyte.png'); }
-        .location.visayas { top: 56%; left: 13%; background-image: url('marker-visayas.png'); }
-        .location.mindanao { top: 76%; left: 18%; background-image: url('marker-mindanao.png'); }
+        .location.bataan { top: 27.5%; left: -0.4%; background-image: url('images/marker-bataan.png'); }
+        .location.manila { top: 30%; left: 2.8%; background-image: url('images/marker-manila.png'); }
+        .location.lingayen { top: 18%; left: -1.3%; background-image: url('images/marker-lingayen.png'); }
+        .location.corregidor { top: 30%; left: -.4%; background-image: url('images/marker-corregidor.png'); }
+        .location.central-luzon { top: 22%; left: 1.5%; background-image: url('images/marker-central-luzon.png'); }
+        .location.leyte { top: 47%; left: 18%; background-image: url('images/marker-leyte.png'); }
+        .location.visayas { top: 56%; left: 13%; background-image: url('images/marker-visayas.png'); }
+        .location.mindanao { top: 76%; left: 18%; background-image: url('images/marker-mindanao.png'); }
         
         .tooltip-container {
             position: fixed;
@@ -264,7 +264,7 @@
     <nav class="navbar">
         <ul>
             <li><a href="/HomePage/HomePage.html">Home</a></li>
-            <li><a href="/InteractiveMap/images/InteractiveMap.html" class="active">HistoMap</a></li>
+            <li><a href="/InteractiveMap/InteractiveMap.html" class="active">HistoMap</a></li>
             <li><a href="/about/developers.html">Developers</a></li>
             <li><a href="/VictimsPage/Victims.html">Victims</a></li>
         </ul>
@@ -272,7 +272,7 @@
     
     <div class="container">
         <div class="map-container">
-            <img src="ph-07.png" alt="Philippine Map" class="philippine-map" id="philippineMap">
+            <img src="images/ph-07.png" alt="Philippine Map" class="philippine-map" id="philippineMap">
             
             <div class="location bataan" data-event="bataan"></div>
             <div class="location manila" data-event="manila"></div>
@@ -302,58 +302,58 @@
             bataan: {
                 title: "Bataan Peninsula",
                 events: "Fall of Bataan, Bataan Death March",
-                image: "bataan.png",
+                image: "images/bataan.png",
                 description: "Site of the famous last stand and subsequent death march of American and Filipino prisoners of war.",
-                pageUrl: "/Location Pages/bataan/bataan.html"
+                pageUrl: "../Location Pages/bataan/bataan.html"
             },
             manila: {
                 title: "Manila",
                 events: "Battle of Manila, Japanese Occupation, Atrocities",
-                image: "manila.jpg",
+                image: "images/manila.jpg",
                 description: "Capital city that suffered devastating destruction and civilian casualties during the 1945 battle.",
-                pageUrl: "/Location Pages/manila/manila.html"
+                pageUrl: "../Location Pages/manila/manila.html"
             },
             lingayen: {
                 title: "Lingayen Gulf",
                 events: "Japanese Landings in 1941",
-                image: "lingayen-gulf.jpg",
+                image: "images/lingayen-gulf.jpg",
                 description: "Primary landing site for Japanese invasion forces in December 1941.",
-                pageUrl: "/Location Pages/lingayen/lingayen.html"
+                pageUrl: "../Location Pages/lingayen/lingayen.html"
             },
             corregidor: {
                 title: "Corregidor Island",
                 events: "Fall of Corregidor",
-                image: "corregidor.jpg",
+                image: "images/corregidor.jpg",
                 description: "Island fortress that was the last American stronghold to fall in 1942.",
-                pageUrl: "/Location Pages/corregidor/corregidor.html"
+                pageUrl: "../Location Pages/corregidor/corregidor.html"
             },
             "central-luzon": {
                 title: "Central Luzon",
                 events: "Hukbalahap Guerrilla Movement",
-                image: "central-luzon.jpg",
+                image: "images/central-luzon.jpg",
                 description: "Region where the communist Hukbalahap guerrilla movement was most active.",
-                pageUrl: "/Location Pages/central-luzon/central-luzon.html"
+                pageUrl: "../Location Pages/central-luzon/central-luzon.html"
             },
             leyte: {
                 title: "Leyte",
                 events: "MacArthur's Return, Battle of Leyte Gulf",
-                image: "leyte.jpg",
+                image: "images/leyte.jpg",
                 description: "Site of MacArthur's famous return and the largest naval battle in history.",
-                pageUrl: "/Location Pages/leyte/leyte.html"
+                pageUrl: "../Location Pages/leyte/leyte.html"
             },
             visayas: {
                 title: "Visayas Region",
                 events: "Resistance Activities",
-                image: "visayass.jpg",
+                image: "images/visayass.jpg",
                 description: "Various guerrilla groups operated throughout the central islands.",
-                pageUrl: "/Location Pages/Platon/VisayasCode/Visayas.html"
+                pageUrl: "../Location Pages/Platon/VisayasCode/Visayas.html"
             },
             mindanao: {
                 title: "Mindanao Region",
                 events: "Guerrilla Activities",
-                image: "mindanao.jpg",
+                image: "images/mindanao.jpg",
                 description: "Though less documented, resistance movements were active in the southern islands.",
-                pageUrl: "/Location Pages/Platon/MindanaoCode/Mindanao.html"
+                pageUrl: "../Location Pages/Platon/MindanaoCode/Mindanao.html"
             }
         };
     

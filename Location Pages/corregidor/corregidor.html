@@ -1,79 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Corregidor Island - Historical Landmark</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Corregidor Island - Historical Landmark</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css"/>
 </head>
+<body data-scroll-container>
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress" data-scroll data-scroll-sticky data-scroll-target="#main">
+    <div class="scroll-progress-bar"></div>
+  </div>
 
-<body>
-    <!-- NAVIGATION SECTION -->
-    <nav class="navbar">
-        <ul>
-            <li><a href="/HomePage/HomePage.html">Home</a></li>
-            <li><a href="/InteractiveMap/images/InteractiveMap.html">HistoMap</a></li>
-            <li><a href="/developers.html">Developers</a></li>
-            <li><a href="/victims.html">Victims</a></li>
-        </ul>
-    </nav>
+  <!-- NAVIGATION -->
+  <nav class="navbar" data-scroll data-scroll-sticky data-scroll-target="#main">
+    <ul>
+      <li><a href="/HomePage/HomePage.html" data-scroll data-scroll-speed="0.5">Home</a></li>
+      <li><a href="/InteractiveMap/InteractiveMap.html" data-scroll data-scroll-speed="0.5">HistoMap</a></li>
+      <li><a href="/about/developers.html" data-scroll data-scroll-speed="0.5">Developers</a></li>
+      <li><a href="/VictimsPage/Victims.html" data-scroll data-scroll-speed="0.5">Victims</a></li>
+    </ul>
+  </nav>
 
-    <main>
-        <!-- HEADER SECTION -->
-        <section class="header-section" data-aos="fade-up" data-aos-duration="1000">
-            <div class="header-overlay"></div>
-            <div class="header-content">
-                <h1 data-aos="fade-up" data-aos-delay="300">Corregidor Island</h1>
-                <p data-aos="fade-up" data-aos-delay="500">The Fall and Recapture</p>
+  <main id="main">
+    <!-- HEADER -->
+    <section class="header-section" data-scroll-section>
+      <div class="header-overlay" data-scroll data-scroll-speed="-1"></div>
+      <div class="header-content">
+        <h1 data-scroll data-scroll-speed="1" data-scroll-direction="horizontal" data-scroll-call="fadeIn">Corregidor Island</h1>
+        <p data-scroll data-scroll-speed="2" data-scroll-direction="horizontal" data-scroll-call="fadeIn">The Fall and Recapture</p>
+        <div class="scroll-indicator" data-scroll data-scroll-speed="3" data-scroll-call="fadeIn">
+          <span>Scroll to explore</span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14M19 12l-7 7-7-7"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="timeline-section" data-scroll-section>
+      <div class="timeline-container">
+        <h2 data-scroll data-scroll-speed="1" data-scroll-direction="horizontal" data-scroll-call="fadeIn">Historical Timeline</h2>
+
+        <!-- ITEM 1 -->
+        <div class="timeline-item visible" data-scroll data-scroll-speed="0.5">
+          <div class="timeline-image" data-scroll data-scroll-speed="-0.5">
+            <img src="images/TheFall.jpg" alt="Fall of Corregidor" />
+          </div>
+          <div class="timeline-drag-handle">
+            <span class="handle-icon">&gt;</span>
+            <span class="handle-tip">Show Info</span>
+          </div>
+          <div class="timeline-content">
+            <div class="timeline-header" data-scroll-ignore>
+              <h3 data-scroll data-scroll-speed="0.3" data-scroll-call="fadeIn">The Fall of Corregidor <br>(May 1942)</h3>
+              <span class="toggle-indicator">+</span>
             </div>
-        </section>
-
-        <!-- TIMELINE SECTION -->
-        <section class="timeline-section">
-            <div class="timeline-container">
-                <h2 data-aos="fade-up">Historical Timeline</h2>
-
-                <div class="timeline-item" data-aos="fade-right" data-aos-duration="800">
-                    <div class="timeline-image">
-                        <img src="images/TheFall.jpg" alt="Fall of Corregidor">
-                    </div>
-                    <div class="timeline-content">
-                        <h3>The Fall of Corregidor (May 1942)</h3>
-                        <p>After the fall of Bataan, Corregidor was the last stronghold of the Allied forces in the Philippines. Despite a valiant defense, the island surrendered to Japanese forces on May 6, 1942, marking a dark chapter in the Pacific War.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item" data-aos="fade-left" data-aos-duration="800">
-                    <div class="timeline-image">
-                        <img src="images/JapaneseOccupation.jpg" alt="Japanese Occupation">
-                    </div>
-                    <div class="timeline-content">
-                        <h3>Japanese Occupation</h3>
-                        <p>Following its capture, the Japanese fortified Corregidor to secure control of Manila Bay. The tunnels and fortifications were repurposed for the Japanese Imperial Army's strategic operations in the Philippines.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item" data-aos="fade-right" data-aos-duration="800">
-                    <div class="timeline-image">
-                        <img src="images/recapture.jpg" alt="Recapture of Corregidor">
-                    </div>
-                    <div class="timeline-content">
-                        <h3>Recapture of Corregidor (February 1945)</h3>
-                        <p>In a daring combined assault of paratroopers and amphibious forces, U.S. troops retook Corregidor in February 1945. This victory reopened Manila Bay to Allied shipping and marked a symbolic reversal of Japan's earlier triumph.</p>
-                    </div>
-                </div>
-
+            <div class="timeline-description">
+              <p data-scroll data-scroll-speed="0.2" data-scroll-call="fadeIn">After the fall of Bataan, Corregidor was the last stronghold of the Allied forces in the Philippines. Despite a valiant defense, the island surrendered to Japanese forces on May 6, 1942, marking a dark chapter in the Pacific War.</p>
             </div>
-        </section>
-    </main>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 800,
-            once: true,
-            offset: 100
-        });
-    </script>
+          </div>
+        </div>
+
+        <!-- ITEM 2 -->
+        <div class="timeline-item visible" data-scroll data-scroll-speed="0.5">
+          <div class="timeline-image" data-scroll data-scroll-speed="-0.5">
+            <img src="images/JapaneseOccupation.jpg" alt="Japanese Occupation" />
+          </div>
+          <div class="timeline-drag-handle">
+            <span class="handle-icon">&gt;</span>
+            <span class="handle-tip">Show Info</span>
+          </div>
+          <div class="timeline-content">
+            <div class="timeline-header" data-scroll-ignore>
+              <h3 data-scroll data-scroll-speed="0.3" data-scroll-call="fadeIn">Japanese Occupation</h3>
+              <span class="toggle-indicator">+</span>
+            </div>
+            <div class="timeline-description">
+              <p data-scroll data-scroll-speed="0.2" data-scroll-call="fadeIn">Following its capture, the Japanese fortified Corregidor to secure control of Manila Bay. The tunnels and fortifications were repurposed for the Japanese Imperial Army's strategic operations in the Philippines.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ITEM 3 -->
+        <div class="timeline-item visible" data-scroll data-scroll-speed="0.5">
+          <div class="timeline-image" data-scroll data-scroll-speed="-0.5">
+            <img src="images/recapture.jpg" alt="Recapture of Corregidor" />
+          </div>
+          <div class="timeline-drag-handle">
+            <span class="handle-icon">&gt;</span>
+            <span class="handle-tip">Show Info</span>
+          </div>
+          <div class="timeline-content">
+            <div class="timeline-header" data-scroll-ignore>
+              <h3 data-scroll data-scroll-speed="0.3" data-scroll-call="fadeIn">Recapture of Corregidor (February 1945)</h3>
+              <span class="toggle-indicator">+</span>
+            </div>
+            <div class="timeline-description">
+              <p data-scroll data-scroll-speed="0.2" data-scroll-call="fadeIn">In a daring combined assault of paratroopers and amphibious forces, U.S. troops retook Corregidor in February 1945. This victory reopened Manila Bay to Allied shipping and marked a symbolic reversal of Japan's earlier triumph.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

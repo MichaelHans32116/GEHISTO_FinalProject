@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intro Quiz</title>
+
+<style>
+
+body {
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    background: linear-gradient(45deg, #c6c3c3, #2b2a2a, #030303);
+    background-size: 1200% 1200%;
+    animation: color 8s ease-in-out infinite;
+}
+
+@keyframes color {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+    h1 {
+  text-align: center;
+  font-size: 48px;
+  color: #333;
+  margin-top: 40px;
+}
+
+    .block {
+  height: 200px;
+  width: 200px; 
+  margin: 50px;
+  border: 0.5mm solid black;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  background-size: cover; 
+  background-position: center; 
+}
+
+.block:nth-child(1) {
+  background-image: url('../Pictures/ad.png'); 
+  background-color: rgb(169, 169, 169); 
+  height: 400px;
+}
+.block:nth-child(2) {
+  background-image: url('../Pictures/Doug.jpeg'); 
+  background-color: rgb(192, 192, 192); 
+  height: 350px;
+}
+.block:nth-child(3) {
+  background-image: url('../Pictures/March.jpeg'); 
+  background-color: rgb(169, 169, 169); 
+  height: 300px;
+}
+.block:nth-child(4) {
+  background-image: url('../Pictures/Bat.jpeg'); 
+  background-color: rgb(211, 211, 211);
+  width: 500px; 
+  height: 500px;
+}
+.block:nth-child(5) {
+  background-image: url('../Pictures/Jap.jpg'); 
+  background-color: rgb(192, 192, 192); 
+}
+.block:nth-child(6) {
+  background-image: url('../Pictures/Kamikaze.jpeg'); 
+  background-color: rgb(169, 169, 169); 
+  width: 600px; 
+  height: 600px;
+}
+.block:nth-child(7) {
+  background-image: url('../Pictures/king.jpg'); 
+  background-color: rgb(211, 211, 211); 
+  height: 500px;
+}
+.block:nth-child(8) {
+  background-image: url('../Pictures/jonathan.jpeg'); 
+  background-color: rgb(169, 169, 169); 
+  height: 500px;
+  
+}
+.block:nth-child(9) {
+  background-image: url('../Pictures/Open.jpeg');
+  background-color: rgb(192, 192, 192); 
+  width: 700px;
+  height: 700px;
+}
+.block:nth-child(10) {
+  background-image: url('../Pictures/huks.png'); 
+  background-color: rgb(211, 211, 211); 
+  width: 300px;
+}
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+    .block {
+      animation: appear linear;
+      animation-timeline: view();
+      animation-range: entry 0% cover 40%;
+
+    }
+
+    .view {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+    button {
+      padding: 10px 20px;
+      border-radius: 20px;
+      background-color: #555;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #777;
+    }
+
+    .button-container {
+      text-align: center;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+
+<body>
+    <h1>WELCOME TO HISTORY</h1>
+
+  <div class="view">
+    <div class="block"></div>
+    <div class="block"></div>
+    <div class="block"></div>
+    <div class="block"></div>
+    <div class="block"></div>
+    <div class="block"></div>
+    <div class="block"></div>
+    <div class="block"></div>
+    <div class="block"></div>
+    <div class="block"></div>
+  </div>
+
+  <div class="button-container">
+    <a href="Front.html"><button>Go to Front Page</button></a>
+  </div>
+
+</body>
+</html>

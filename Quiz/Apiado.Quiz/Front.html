@@ -6,13 +6,44 @@
   <title>Quiz - Welcome</title>
   <link rel="stylesheet" href="Quiz.css" />
 </head>
+
+<script>
+  document.addEventListener('mousemove', function (e) {
+    const spotlight = document.getElementById('spotlight');
+    const x = e.clientX;
+    const y = e.clientY;
+    spotlight.style.background = `radial-gradient(circle at ${x}px ${y}px, transparent 100px, rgba(0, 0, 0, 0.95) 200px)`;
+  });
+</script>
+
+<style>
+
+  .light {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    background: radial-gradient(circle at 50% 50%, transparent 100px, rgba(0, 0, 0, 0.95) 200px);
+    transition: background-position 0.05s;
+    z-index: 9999;
+  }
+</style>
+
 <body>
 
+  <div class="light" id="spotlight"></div>
+  
   <div class="container" style="display: block; text-align: center; opacity: 1;">
     <h2>Welcome to the Quiz!</h2>
     <p style="font-size: 18px;">
+      In April 1942, after intense fighting in Bataan, over 76,000 Filipino and American soldiers were forced by the Japanese to march more than 100 kilometers from Mariveles, Bataan to Capas, Tarlac. Known as the Bataan Death March, thousands died from hunger, disease, exhaustion, and brutal executions. During the Japanese occupation, the Philippines suffered under harsh military rule—freedom was suppressed, resources were seized, and civilians were often punished or killed. In response, guerrilla groups like the Hukbalahap (People’s Army Against the Japanese) emerged, made up mostly of peasants and communists in Central Luzon. They fought back through ambushes, sabotage, and by protecting rural communities. Though controversial after the war, the Hukbalahap played a key role in resisting the enemy. These events are remembered every Day of Valor (Araw ng Kagitingan), honoring the courage and sacrifices of Filipinos during World War II.
+    </p>  
+      
+    <p> 
       Test your knowledge on key events in Philippine history. This quiz has 10 questions.
-    </p>
+    </p> 
     <a href="Quiz.html"><button>Start Quiz</button></a>
   </div>
 </body>

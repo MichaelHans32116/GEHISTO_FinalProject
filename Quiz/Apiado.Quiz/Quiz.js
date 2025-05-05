@@ -6,6 +6,18 @@ function updatePositions() {
   document.getElementById("killer").style.left = killerPos + "%";
 }
 
+let canvas = document.getElementById("fireflyCanvas");
+let c = canvas.getContext("2d");
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  w = canvas.width;
+  h = canvas.height;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
 window.onload = function () {
   const containers = document.getElementsByClassName('container');
   containers[0].style.display = "block";
@@ -37,6 +49,55 @@ function killSteve() {
     restartQuiz();
   });
 }
+
+class firefly {
+  constructor() {
+    this.x = Math.random() * w;
+    this.y = Math.random() * h;
+    this.s = Math.random() * 2 + 1;
+    this.ang = Math.random() * 2 * Math.PI;
+    this.v = (this.s * this.s) / 4;
+  }
+
+  move() {
+    this.x += Math.cos(this.ang) * this.v;
+    this.y += Math.sin(this.ang) * this.v;
+    this.ang += (Math.random() * 20 * Math.PI) / 100 - (10 * Math.PI / 100);
+  }
+
+  show() {
+    c.beginPath();
+    c.arc(this.x, this.y, this.s, 0, 2 * Math.PI);
+    c.fillStyle = "#fddba3";
+    c.fill();
+  }
+}
+
+let f = [];
+
+function animate() {
+  c.clearRect(0, 0, w, h);
+
+  if (f.length < 100) {
+    for (let j = 0; j < 2; j++) {
+      f.push(new firefly());
+    }
+  }
+
+  for (let i = f.length - 1; i >= 0; i--) {
+    f[i].move();
+    f[i].show();
+    if (f[i].x < 0 || f[i].x > w || f[i].y < 0 || f[i].y > h) {
+      f.splice(i, 1);
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+
+
 
 function goBack() {
   window.location.href = "Front.html";

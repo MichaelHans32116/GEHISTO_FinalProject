@@ -609,3 +609,119 @@ body {
         transform: none;
    }
 }
+/* References Section Styles */
+.references-section {
+  padding: 4rem 2rem;
+  background: #181818;
+  color: #fff;
+  margin: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 2;
+}
+
+.references-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.references-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.references-header h2 {
+  font-size: 2.5rem;
+  font-weight: 300;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  color: #fff;
+  font-family: 'Georgia', 'Merriweather', serif;
+  text-transform: uppercase;
+}
+
+.references-divider {
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #d4c9a8, transparent);
+  margin: 0 auto;
+}
+
+.references-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 20px;
+}
+
+.reference-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 25px;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 201, 168, 0.1);
+}
+
+.reference-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(212, 201, 168, 0.3);
+}
+
+.reference-icon {
+  font-size: 2rem;
+  min-width: 50px;
+  text-align: center;
+  color: #d4c9a8;
+}
+
+.reference-text {
+  flex: 1;
+}
+
+.reference-text h3 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #fff;
+  font-family: 'Georgia', 'Merriweather', serif;
+}
+
+.reference-text p {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 8px;
+  font-family: 'Georgia', 'Merriweather', serif;
+}
+
+.reference-source {
+  font-size: 0.9rem;
+  color: rgba(212, 201, 168, 0.8);
+  font-style: italic;
+  font-family: 'Georgia', 'Merriweather', serif;
+}
+
+@media (max-width: 768px) {
+  .references-section {
+    margin: 1rem;
+  }
+  
+  .references-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .references-header h2 {
+    font-size: 2rem;
+  }
+  
+  .reference-card {
+    padding: 20px;
+  }
+}

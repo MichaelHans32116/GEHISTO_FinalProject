@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Corregidor Island - Chapter 3</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style3.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat&display=swap" rel="stylesheet">
+</head>
+<body data-scroll-container>
+  <div class="sticky-header-group">
+    <!-- Lingayen-style NAVBAR at the top -->
+    <nav class="navbar lingayen-navbar" data-scroll data-scroll-sticky data-scroll-target=".sticky-header-group">
+      <ul>
+        <li><a href="/HomePage/HomePage.html" data-scroll data-scroll-speed="1">Home</a></li>
+        <li><a href="/InteractiveMap/InteractiveMap.html" data-scroll data-scroll-speed="1.2">HistoMap</a></li>
+        <li><a href="/about/developers.html" data-scroll data-scroll-speed="1.4">Developers</a></li>
+        <li><a href="/VictimsPage/Victims.html" data-scroll data-scroll-speed="1.6">Victims</a></li>
+      </ul>
+    </nav>
+
+    <!-- SELECT A CHAPTER button just below the navbar -->
+    <div class="select-chapter-below-navbar" data-scroll data-scroll-sticky data-scroll-target=".sticky-header-group" data-scroll-speed="-1">
+      <div class="navbar-content small-navbar-content">
+        <div class="navbar-icon small-navbar-icon">
+          <svg width="18" height="18" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="4" cy="4" r="2" fill="#e0e0e0"/>
+            <circle cx="14" cy="4" r="2" fill="#e0e0e0"/>
+            <circle cx="24" cy="4" r="2" fill="#e0e0e0"/>
+            <circle cx="4" cy="14" r="2" fill="#e0e0e0"/>
+            <circle cx="14" cy="14" r="2" fill="#e0e0e0"/>
+            <circle cx="24" cy="14" r="2" fill="#e0e0e0"/>
+            <circle cx="4" cy="24" r="2" fill="#e0e0e0"/>
+            <circle cx="14" cy="24" r="2" fill="#e0e0e0"/>
+            <circle cx="24" cy="24" r="2" fill="#e0e0e0"/>
+          </svg>
+        </div>
+        <div class="navbar-title small-navbar-title" id="open-chapter-selector">SELECT A CHAPTER</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chapter Indicator Bar -->
+  <div class="chapter-indicator-bar" data-scroll data-scroll-speed="0.5">
+    <div class="chapter-indicator-left">CHAPTER III</div>
+    <div class="chapter-indicator-right">
+      <span class="chapter-title">Liberation Landings</span>
+      <span class="chapter-year">1945</span>
+    </div>
+  </div>
+
+  <!-- Hero Section with Parallax -->
+  <section class="hero-section" data-scroll data-scroll-speed="0.5">
+    <div class="hero-content">
+      <h1 class="scroll-fade-up" data-scroll data-scroll-class="is-inview" data-scroll-repeat>The Liberation<br>of Corregidor</h1>
+      <p class="hero-text scroll-fade-up" data-scroll data-scroll-class="is-inview" data-scroll-repeat>On February 16, 1945, American forces launched Operation Topside, beginning the liberation of Corregidor from Japanese control.</p>
+    </div>
+  </section>
+
+  <!-- Timeline Section -->
+  <section class="timeline-section" data-scroll data-scroll-speed="0.8">
+    <div class="timeline-item scroll-fade-up" data-scroll data-scroll-class="is-inview" data-scroll-repeat>
+      <div class="timeline-date">February 16, 1945</div>
+      <div class="timeline-content">
+        <h3>Operation Topside Begins</h3>
+        <p>American paratroopers of the 503rd Parachute Infantry Regiment drop onto the Topside plateau of Corregidor, initiating the assault to reclaim the island. Despite strong winds and rugged terrain, the airborne troops manage to secure critical high ground, catching the Japanese defenders by surprise.</p>
+      </div>
+    </div>
+    <div class="timeline-item scroll-fade-up" data-scroll data-scroll-class="is-inview" data-scroll-repeat>
+      <div class="timeline-date">February 17, 1945</div>
+      <div class="timeline-content">
+        <h3>Beach Landings</h3>
+        <p>Amphibious forces from the 34th Infantry Regiment land at San Jose beach on the southeastern shore. The joint operation between airborne and seaborne units begins to squeeze Japanese positions from multiple directions, establishing a firm Allied foothold on the island.</p>
+      </div>
+    </div>
+    <div class="timeline-item scroll-fade-up" data-scroll data-scroll-class="is-inview" data-scroll-repeat>
+      <div class="timeline-date">February 26, 1945</div>
+      <div class="timeline-content">
+        <h3>Final Victory</h3>
+        <p>After ten days of brutal combat, including cave-to-cave fighting and massive underground explosions set off by trapped Japanese forces, Corregidor is officially secured. The island's liberation reopens Manila Bay to Allied naval operations and delivers a symbolic blow to Japanese control in the Philippines.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mini Game Section -->
+  <section class="game-section" data-scroll data-scroll-speed="0.5">
+    <div class="game-container">
+      <h2 class="game-title scroll-fade-up" data-scroll data-scroll-class="is-inview" data-scroll-repeat>Liberation Mission</h2>
+      <p class="game-description scroll-fade-up" data-scroll data-scroll-class="is-inview" data-scroll-repeat>Guide the paratroopers to safe landing zones while avoiding obstacles. Use arrow keys to move.</p>
+      
+      <div class="game-wrapper">
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
+        <div class="game-controls">
+          <button id="startGame" class="game-button">Start Mission</button>
+          <div class="game-score">Score: <span id="scoreValue">0</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Image Grid Section -->
+  <section class="image-grid-section" data-scroll data-scroll-speed="0.5">
+    <div class="grid-item large" data-scroll data-scroll-speed="1.2">
+      <img src="./images/land on corregidor.jpg" alt="Liberation" class="fade-scroll" data-scroll data-scroll-class="is-inview">
+      <div class="grid-caption">American forces advancing through Corregidor</div>
+    </div>
+    <div class="grid-item" data-scroll data-scroll-speed="0.8">
+      <img src="./images/regiment land.jpg" alt="Artillery" class="fade-scroll" data-scroll data-scroll-class="is-inview">
+      <div class="grid-caption">Liberated artillery positions</div>
+    </div>
+    <div class="grid-item" data-scroll data-scroll-speed="1.4">
+      <img src="./images/recapture.jpg" alt="Victory" class="fade-scroll" data-scroll data-scroll-class="is-inview">
+      <div class="grid-caption">Celebration of victory</div>
+    </div>
+  </section>
+
+  <!-- Chapter Selector Overlay -->
+  <div id="chapter-selector-overlay" class="chapter-selector-overlay">
+    <div class="chapter-selector-content">
+      <button id="close-chapter-selector" class="close-chapter-selector">&times;</button>
+      <ul class="chapter-list">
+        <li class="chapter-item"><a href="./corregidor.html"><span class="chapter-year">1942</span> <span class="chapter-title">THE JAPANESE LANDINGS</span></a></li>
+        <li class="chapter-item"><a href="./Chapter2.html"><span class="chapter-year">1942 - 1945</span> <span class="chapter-title">OCCUPATION AND STRATEGIC IMPORTANCE</span></a></li>
+        <li class="chapter-item active"><a href="./Chapter3.html"><span class="chapter-year">1945</span> <span class="chapter-title">LIBERATION LANDINGS</span></a></li>
+        <li class="chapter-item"><a href="./references.html"><span class="chapter-year">REF</span> <span class="chapter-title">REFERENCES</span></a></li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+  <script src="script.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

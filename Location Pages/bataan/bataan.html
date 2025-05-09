@@ -2,175 +2,340 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Survive Bataan – Branching Version</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Survive Bataan - Branching Version</title>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f5f5f5;
-      padding: 2rem;
-      max-width: 700px;
-      margin: auto;
-      text-align: center;
+
+    html, body {
+      height: 100vh;
+      overflow: hidden;
     }
 
-    #character img {
-      width: 100px;
-      border-radius: 50%;
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #1a1a1a;
+      padding: 1rem;
+      max-width: 100%;
+      margin: 0 auto;
+      text-align: center;
+      color: #e0e0e0;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1 {
+      color: #cc0000;
+      border-bottom: 2px solid #cc0000;
+      padding-bottom: 10px;
+      margin: 0.5rem 0 0.5rem 0;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+    }
+
+    .subtitle {
+      color: #999;
+      margin-bottom: 1rem;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+
+    #health-container {
+      margin: 0.5rem auto;
+      width: 90%;
+      max-width: 500px;
+    }
+
+    #health-label {
+      font-size: 1rem;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #999;
+      letter-spacing: 1px;
     }
 
     #health-bar {
-      background: #ccc;
-      width: 200px;
-      height: 20px;
-      margin: 1rem auto;
-      border-radius: 10px;
+      background: #555;
+      width: 100%;
+      height: 30px;
+      border-radius: 15px;
       overflow: hidden;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+      border: 1px solid #333;
     }
 
     #health-fill {
       height: 100%;
       width: 100%;
-      background-color: #28a745;
-      transition: width 0.3s ease;
+      background: #a0a0a0;
+      transition: width 0.5s ease;
+    }
+
+    #scene-text {
+      padding: 1rem;
+      margin: 0.5rem 0;
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #333;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      border-left: 4px solid #cc0000;
+    }
+
+    #choices {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin: 1rem 0;
+      width: 100%;
     }
 
     .button {
-      background-color: #007bff;
+      background-color: #cc0000;
       color: white;
-      padding: 10px;
+      padding: 12px 20px;
       border: none;
       border-radius: 5px;
-      margin: 10px auto;
-      display: block;
-      width: 80%;
-      max-width: 300px;
+      margin: 0;
+      width: 90%;
+      max-width: 350px;
       cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s, transform 0.2s;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    }
+
+    .button:hover {
+      background-color: #e60000;
+      transform: translateY(-2px);
+    }
+
+    .button:active {
+      transform: translateY(0);
+    }
+
+    #result-container {
+      display: none;
+      width: 100%;
+      margin-top: 1rem;
+      padding-bottom: 1rem;
     }
 
     .result {
       font-weight: bold;
-      font-size: 1.2rem;
-      margin-top: 1rem;
+      font-size: clamp(1rem, 3vw, 1.1rem);
+      padding: 1rem;
+      border-radius: 8px;
+      background-color: #333;
+      width: 90%;
+      max-width: 600px;
+      margin: 0 auto;
+      border-left: 4px solid #cc0000;
+      line-height: 1.6;
     }
 
-    #restart {
+    .result.success {
+      background-color: #1a331a;
+      border-left: 4px solid #28a745;
+    }
+
+    .result.failure {
+      background-color: #cc0000;
+      border-left: 4px solid #990000;
+    }
+
+    .result.warning {
+      background-color: #33311a;
+      border-left: 4px solid #ffcc00;
+    }
+
+    #end-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      width: 90%;
+      max-width: 600px;
+      margin: 0.5rem auto 0 auto;
+    }
+
+    #restart, #learn-more {
       display: none;
-      margin-top: 1rem;
+      flex: 1;
+      min-width: 200px;
+      max-width: 250px;
+    }
+
+    #learn-more {
+      background-color: #333;
+      border: 1px solid #cc0000;
+    }
+
+    #learn-more:hover {
+      background-color: #444;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 500px) {
+      #scene-text, .result {
+        padding: 0.8rem;
+      }
+      
+      .button {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+      }
+
+      #end-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      #restart, #learn-more {
+        min-width: 90%;
+      }
     }
   </style>
 </head>
 <body>
   <h1>Survive Bataan</h1>
+  <div class="subtitle">April 1942: Make choices to survive the Japanese invasion of the Philippines</div>
 
-  <div id="character">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Philippine_soldier_ww2.jpg" alt="Soldier" />
+  <div id="health-container">
+    <div id="health-label">WILL TO SURVIVE</div>
     <div id="health-bar"><div id="health-fill"></div></div>
   </div>
 
-  <div id="scene-text"></div>
+  <div id="scene-text" class="fade-in"></div>
   <div id="choices"></div>
-  <div class="result" id="result"></div>
-  <button id="restart" onclick="startGame()">Play Again</button>
+  
+  <div id="result-container">
+    <div id="result" class="result"></div>
+    <div id="end-buttons">
+      <button id="restart" class="button" onclick="startGame()">Play Again</button>
+      <button id="learn-more" class="button" onclick="window.location.href='bataan_history.html'">Learn About Bataan's History</button>
+    </div>
+  </div>
 
   <script>
     const scenes = {
       start: {
-        text: "You're starving in the jungle of Bataan. What do you do?",
+        text: "April 1942: After months of fighting, the Allied forces on Bataan are starving and exhausted. You're a Filipino soldier hiding in the jungle after the surrender. What do you do?",
         choices: [
-          { text: "Forage for roots", next: "sick", effect: -1 },
-          { text: "Steal from a camp", next: "caught", effect: -2 },
-          { text: "Conserve energy", next: "weak", effect: 0 },
+          { text: "Forage for roots and berries", next: "sick", effect: -1 },
+          { text: "Attempt to steal food from a Japanese camp", next: "caught", effect: -2 },
+          { text: "Conserve energy and look for fellow soldiers", next: "weak", effect: 0 },
         ]
       },
       sick: {
-        text: "You find roots, but they make you sick. You're dizzy and dehydrated.",
+        text: "You find some wild roots and berries, but they make you violently ill. As you vomit in the bushes, you realize you're becoming dangerously dehydrated.",
         choices: [
-          { text: "Look for clean water", next: "waterFound", effect: +1 },
-          { text: "Lie down and rest", next: "hallucinate", effect: -2 }
+          { text: "Search desperately for clean water", next: "waterFound", effect: +1 },
+          { text: "Lie down and try to rest through the sickness", next: "hallucinate", effect: -2 }
         ]
       },
       waterFound: {
-        text: "You find a muddy stream. It’s risky, but you drink. You feel stronger but may have parasites.",
+        text: "After hours of searching, you find a muddy stream. The water looks questionable, but your thirst is unbearable. You drink deeply, knowing you might get parasites.",
         choices: [
-          { text: "Push forward and find your unit", next: "survive", effect: +1 },
-          { text: "Rest beside the stream", next: "die", effect: -2 }
+          { text: "Push forward to try finding your unit", next: "survive", effect: +1 },
+          { text: "Rest beside the stream to recover strength", next: "die", effect: -2 }
         ]
       },
       hallucinate: {
-        text: "You fall into fevered dreams. You see family. You hear voices. No one comes.",
+        text: "As fever takes hold, you collapse under a tree. You see visions of your family calling to you. You hear voices speaking in Tagalog and English. Hours pass. No one comes.",
         choices: [],
-        end: `❌ <strong>You Died in Delirium</strong><br>
-          Fever and disease consumed many. Their final moments were haunted by visions, alone in the jungle.`
+        end: {
+          text: "<strong>You Died in Delirium</strong><br>Thousands perished from disease and starvation during the Bataan campaign. Many spent their final moments hallucinating from fever, alone in the jungle.",
+          type: "failure"
+        }
       },
       caught: {
-        text: "You're caught by guards. They beat you and take your boots.",
+        text: "While trying to steal food from a Japanese supply depot, guards spot you. They beat you with rifle butts and take your boots, leaving you barefoot in the jungle.",
         choices: [
-          { text: "Run into the forest", next: "escapeInjured", effect: -1 },
-          { text: "Beg for mercy", next: "pleadHelp", effect: -1 }
+          { text: "Run into the forest despite your injuries", next: "escapeInjured", effect: -1 },
+          { text: "Beg for mercy in broken Japanese", next: "pleadHelp", effect: -1 }
         ]
       },
       escapeInjured: {
-        text: "You escape, but thorns tear your feet. You're bleeding and weak.",
+        text: "You escape into the dense foliage, but thorns and sharp rocks tear at your bare feet. Blood trails behind you as you struggle forward, growing weaker by the minute.",
         choices: [
           { text: "Keep walking toward the mountains", next: "lost", effect: -1 },
-          { text: "Climb a tree and rest", next: "die", effect: -2 }
+          { text: "Climb a tree to hide and rest", next: "die", effect: -2 }
         ]
       },
       pleadHelp: {
-        text: "One guard gives you water in secret, but warns you to flee by night.",
+        text: "To your surprise, one young guard secretly gives you water. In hushed tones, he tells you to flee by night or you'll be forced into the prisoner march.",
         choices: [
-          { text: "Escape under moonlight", next: "survive", effect: +1 },
-          { text: "Stay hoping they change their minds", next: "captured", effect: -2 }
+          { text: "Attempt escape under moonlight", next: "survive", effect: +1 },
+          { text: "Stay, hoping for more help", next: "captured", effect: -2 }
         ]
       },
       weak: {
-        text: "You are too weak to stand. A fellow soldier finds you.",
+        text: "You're too weak to stand when a fellow Filipino soldier from your unit finds you hiding in a thicket. His uniform is torn but he appears in better condition than you.",
         choices: [
-          { text: "Ask for food", next: "shareFood", effect: +1 },
-          { text: "Tell him to leave you", next: "abandoned", effect: -2 }
+          { text: "Ask if he has any food to share", next: "shareFood", effect: +1 },
+          { text: "Tell him to leave you and save himself", next: "abandoned", effect: -2 }
         ]
       },
       shareFood: {
-        text: "He gives you hardtack and water. It’s barely enough.",
+        text: "He gives you a small piece of hardtack and sips from his canteen. 'The Death March has started,' he whispers. 'We must move or be captured.'",
         choices: [
-          { text: "Follow him back to camp", next: "survive", effect: +1 },
-          { text: "Stay and rest more", next: "die", effect: -2 }
+          { text: "Follow him to try reaching Allied lines", next: "survive", effect: +1 },
+          { text: "Stay hidden to rest more", next: "die", effect: -2 }
         ]
       },
       abandoned: {
-        text: "He walks away, unsure what else to do. Night falls. You hear rustling.",
+        text: "With tears in his eyes, your comrade walks away. As night falls, you hear rustling in the bushes. Are they Japanese patrols? Guerrillas? Or just jungle animals?",
         choices: [],
-        end: `❌ <strong>Left Behind</strong><br>
-          Many soldiers were left behind — not out of cruelty, but desperation. Those left were often never seen again.`
+        end: {
+          text: "<strong>Left Behind</strong><br>Many Filipino soldiers were abandoned during the retreat, not from cruelty but necessity. Those left behind often disappeared into the jungle, their fates unknown.",
+          type: "failure"
+        }
       },
       survive: {
-        text: "You survive the day. Reinforcements arrive days later.",
+        text: "Against all odds, you survive the next few days. American submarines eventually evacuate some personnel to Corregidor. Your war isn't over, but you've survived Bataan.",
         choices: [],
-        end: `✅ <strong>You Survived</strong><br>
-          You endured hunger, fear, and exhaustion. Like many Filipino and American soldiers,
-          you waited for reinforcements that never came until it was almost too late. Your resilience is
-          a symbol of the real sacrifices made on Bataan.`
+        end: {
+          text: "<strong>You Survived Bataan</strong><br>You endured unimaginable hunger, fear, and exhaustion. Like the real defenders of Bataan, your resilience symbolizes the sacrifice of 76,000 Filipino and American soldiers who fought against overwhelming odds, only to face the horrors of the Death March when they surrendered on April 9, 1942.",
+          type: "success"
+        }
       },
       die: {
-        text: "Your strength fades. No help comes.",
+        text: "As the tropical sun beats down, your strength fades completely. The sounds of the jungle grow distant. Your final thoughts are of home as darkness takes you.",
         choices: [],
-        end: `❌ <strong>You Died in the Jungle</strong><br>
-          Starvation and disease claimed many lives during the retreat to Bataan.
-          Thousands perished alone, unrecorded, and unburied — victims not of battle, but of neglect and suffering.`
+        end: {
+          text: "<strong>You Died in the Jungle</strong><br>Starvation and disease claimed thousands of lives during the Bataan campaign. Many perished alone, their bodies left unburied in the dense foliage, victims not just of war but of the brutal conditions and lack of supplies.",
+          type: "failure"
+        }
       },
       lost: {
-        text: "You run but get lost in enemy territory.",
+        text: "In your panic, you become completely disoriented. The jungle looks the same in every direction. You hear Japanese patrols shouting nearby, but have no strength left to run.",
         choices: [],
-        end: `⚠️ <strong>Lost Without a Trace</strong><br>
-          In the chaos of war, many were separated from their units and disappeared forever.
-          Your story mirrors those who went missing in action — a fate faced by hundreds in 1942.`
+        end: {
+          text: "<strong>Lost Without a Trace</strong><br>Hundreds of soldiers disappeared in Bataan's jungles during the chaotic retreat. Some were captured, some joined guerrilla units, and some simply vanished, their stories ending in the dense Philippine wilderness.",
+          type: "warning"
+        }
       },
       captured: {
-        text: "You're forced into a POW group. The march begins.",
+        text: "At dawn, Japanese soldiers kick you awake. You're forced to join thousands of other prisoners starting the march north. The guards shout as they beat stragglers with rifle butts.",
         choices: [],
-        end: `⚠️ <strong>Captured & Enslaved</strong><br>
-          You are now part of the Bataan Death March — a 100 km forced march under extreme heat, 
-          with no food or water. Thousands died along the way. Your survival depends on endurance and luck.`
+        end: {
+          text: "<strong>The Bataan Death March Begins</strong><br>You are now among the 60,000-80,000 prisoners forced on the 65-mile Bataan Death March to Camp O'Donnell. Without food or water in blistering heat, thousands will die along the way. Those who survive face years of brutal captivity.",
+          type: "warning"
+        }
       }
     };
 
@@ -178,25 +343,35 @@
 
     function startGame() {
       score = 0;
+      document.getElementById('result-container').style.display = 'none';
       document.getElementById('restart').style.display = 'none';
+      document.getElementById('learn-more').style.display = 'none';
       document.getElementById('result').innerHTML = '';
+      document.getElementById('result').className = 'result';
       showScene('start');
       updateHealthBar();
     }
 
     function showScene(sceneId) {
       const scene = scenes[sceneId];
-      document.getElementById('scene-text').textContent = scene.text;
+      const sceneText = document.getElementById('scene-text');
+      sceneText.textContent = scene.text;
+      sceneText.className = 'fade-in';
+      
       const choicesDiv = document.getElementById('choices');
       choicesDiv.innerHTML = '';
 
       if (scene.end) {
-        document.getElementById('result').innerHTML = scene.end;
-        document.getElementById('restart').style.display = 'inline-block';
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = scene.end.text;
+        resultDiv.className = `result ${scene.end.type}`;
+        
+        document.getElementById('result-container').style.display = 'block';
+        document.getElementById('restart').style.display = 'block';
+        document.getElementById('learn-more').style.display = 'block';
 
         if (["die", "lost", "captured", "hallucinate", "abandoned"].includes(sceneId)) {
           document.getElementById('health-fill').style.width = '0%';
-          document.getElementById('health-fill').style.backgroundColor = '#dc3545';
         }
 
         return;
@@ -218,9 +393,6 @@
     function updateHealthBar() {
       const percent = Math.max(0, Math.min(100, 100 + score * 20));
       document.getElementById('health-fill').style.width = percent + '%';
-      document.getElementById('health-fill').style.backgroundColor =
-        percent > 60 ? '#28a745' :
-        percent > 30 ? '#ffc107' : '#dc3545';
     }
 
     startGame();

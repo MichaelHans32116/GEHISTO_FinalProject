@@ -1,83 +1,134 @@
 @import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&display=swap');
 
-body {
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+body {
+  font-family: 'League Spartan', Arial, sans-serif;
   background: url('/GEHISTO_FinalProject/Location Pages/Platon/VisayasCode/Visayas.picture/background1.png') no-repeat center center/cover;
   height: 100vh;
-  display: flex;
-  align-items: center;
-  font-family: 'League Spartan', Arial, sans-serif;
   overflow: hidden;
   position: relative;
 }
 
+
+/* Human image styling */
+.human-img {
+  position: absolute;
+  left: 570px;
+  top: 50%;
+ 
+  transform: translateY(-50%);
+ 
+  width: 400px;
+  height: auto;
+ 
+  opacity: 0;
+  z-index: 0;
+ 
+  transition: opacity 1s ease;
+  pointer-events: none;
+}
+
+body:hover .human-img {
+  opacity: 0.2;
+}
+
+/* Text Content Styling */
 .content {
   position: absolute;
   left: 440px;
+  top: 30%;
   text-align: center;
   color: white;
   text-shadow: 0 0 10px white;
-  transition: transform 1s ease;
+  transition: transform 3s ease;
+  z-index: 1;
 }
 
 .general {
-  font-size: 120px; 
+  font-size: 120px;
   font-weight: bold;
   text-shadow: 0 0 13px white;
-  margin-bottom: -75px; 
+  margin-bottom: 5px;
+}
+
+/* Grouped region container fix */
+
+.visayas, .region {
+  font-size: 80px;
+  font-weight: bold;
+  display: inline-block;
+  padding: 5px 15px;
 }
 
 .visayas {
-  font-size: 80px; 
-  color: red; 
+  color: red;
   text-shadow: 0 0 13px red;
-  margin-bottom: 0px;
-  padding: 5px;
-  display: inline-block;
 }
 
 .region {
-  font-size: 80px; 
-  color: white; 
+  color: white;
   text-shadow: 0 0 13px white;
-  margin-top: 20px;
-  padding: 15px;
-  display: inline-block;
 }
 
-.general:hover {
+/* Hover effects */
+.general:hover { 
   color: red; 
   text-shadow: 0 0 13px red; 
 }
 
-.region:hover {
+.region:hover { 
   color: red; 
   text-shadow: 0 0 13px red; 
 }
 
-.visayas:hover {
+.visayas:hover { 
   color: white; 
   text-shadow: 0 0 13px white; 
 }
 
+/* Info Box */
 .information {
   position: absolute;
-  right: 150px;
   background-color: rgba(0, 0, 0, 0.5);
+
+  right: 100px;
+  top:10%;
+  
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+
   padding: 30px;
   border-radius: 15px;
-  max-width: 600px;
+  
   color: white;
   text-align: justify;
+  
   opacity: 0;
-  transform: translateX(100px);
-  transition: transform 1s ease, opacity 1s ease;
+  
+  transform: translateX(670px);
+  transition: transform 3s ease, opacity 2s ease;
+  z-index: 1;
+}
+
+body:hover .content {
+  transform: translateX(-400px);
+  transition: transform 2s ease, opacity 3s ease;
+}
+
+body:hover .information {
+  opacity: 1;
+  transform: translateX(0);
+  transition: transform 1s ease, opacity 2s ease;
 }
 
 .information h2 {
   font-size: 40px;
-  margin-top: 0;
   margin-bottom: 20px;
   font-family: 'Oswald', sans-serif;
   text-shadow: 0 0 10px rgb(26, 20, 20);
@@ -86,6 +137,7 @@ body {
 .information p {
   font-size: 21px;
   line-height: 1.6;
+  opacity: 0.8;
 }
 
 .black-army {
@@ -102,9 +154,10 @@ body {
 }
 
 .black-army:hover {
-  background-color: #222;
+  background-color: #f30000;
 }
 
+/* Back Button */
 .back {
   position: absolute;
   bottom: 40px;
@@ -115,59 +168,188 @@ body {
   text-decoration: none;
   font-size: 20px;
   transition: background-color 0.3s ease;
+  z-index: 1;
 }
-  
+
 .back:hover {
   background-color: #fff;
   color: #000;
 }
 
-body:hover .content {
-  transform: translateX(-400px);
-}
+/* ✅ Responsive Media Queries */
+@media (max-width: 1300px) {
+  .general { 
+    font-size: 100px; 
+  }
+  
+  .visayas, .region { 
+    font-size: 60px;
+    padding: 5px; 
+  }
+  
+  .content { 
+    left: 30%; 
+    transition: transform 2.5s ease;
+  }
+  
+  .information {
+    right: 50px;
+    top: 15%;
+    max-width: 90%;
+    max-height: 70vh;
 
-body:hover .information {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.human-img {
-  position: absolute;
-  left: -200px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 1350px; 
-  height: auto;
-  opacity: 0;
-  z-index: 0;
-  transition: opacity 1s ease;
-  pointer-events: none; 
-}
-
-.content {
-  z-index: 1;
-}
-
-body:hover .human-img {
-  opacity: 0.3;
-}
-
+   transform: translateX(780px);
+  transition: transform 1s ease, opacity 1s ease;
+  }
+  
   .human-img {
-  position: absolute;
-  left: 570px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 400px;
-  opacity: 0;
-  z-index: 0;
-  transition: opacity 1s ease;
-  pointer-events: none; 
+    display: none;
+  }
+
+  body:hover .information {
+    opacity: 5;
+    transform: translateX(0);
+    transition: transform 5.2s ease, opacity 4s ease;
+    top: 20%;
+  }
+
+  body:hover .content {
+    transform: translatey(-160px);
+    transition: transform 3s ease, opacity 5s ease;
+
+    left: 40%;
+  }
+
+  body:hover .general{
+    margin-bottom: 0px;
+    font-size: 30px;
+  }
+
+   body:hover .visayas{
+    margin-bottom: 0px;
+    font-size: 30px;
+  }
+
+   body:hover .region{
+    margin-bottom: 0px;
+    font-size: 30px;
+  }
 }
 
-.content {
-  z-index: 1;
+
+@media (max-width: 900px) {
+  .general { 
+    font-size: 100px; 
+  }
+  
+  .visayas, .region { 
+    font-size: 60px;
+    padding: 5px; 
+  }
+  
+  .content { 
+    left: 200px; 
+    transition: transform 2.5s ease;
+  }
+  
+  .information {
+    right: 30px;
+    top: 15%;
+    max-width: 90%;
+    max-height: 70vh;
+
+   transform: translateX(780px);
+  transition: transform 1s ease, opacity 1s ease;
+  }
+  
+  .human-img {
+    display: none;
+  }
+
+  body:hover .information {
+    opacity: 5;
+    transform: translateX(0);
+    transition: transform 5.2s ease, opacity 4s ease;
+    top: 20%;
+  }
+
+  body:hover .content {
+    transform: translatey(-5%);
+    transition: transform 3s ease, opacity 5s ease;
+
+    left: 300px;
+  }
+
+  body:hover .general{
+    margin-bottom: 0px;
+    font-size: 30px;
+  }
+
+   body:hover .visayas{
+    margin-bottom: 0px;
+    font-size: 30px;
+  }
+
+   body:hover .region{
+    margin-bottom: 0px;
+    font-size: 30px;
+  }
 }
 
-body:hover .human-img {
-  opacity: 0.3;
+@media (max-width: 768px) {
+  .content {
+    left: 55%;
+    right: 45%;
+    top: 35%;
+    transform: translateX(-50%);
+    width: 90%;
+  }
+
+  body:hover .content {
+    transform: translateX(-35%) translateY(-180px);
+  }
+
+  .information {
+    top: auto;
+    bottom: 140px;
+    right: 20px;
+    max-width: 90%;
+  }
+
+  .general { font-size: 60px; margin-bottom: 5px; }
+  .visayas, .region { font-size: 35px; }
+
+  .information h2 { font-size: 28px; }
+  .information p { font-size: 16px; }
+
+  .back {
+    bottom: 20px;
+    right: 20px;
+    font-size: 16px;
+    padding: 8px 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .general { font-size: 40px; margin-bottom: -30px; }
+  .visayas, .region { font-size: 28px; }
+
+  .information {
+    bottom: 120px;
+    padding: 18px;
+  }
+
+  .information h2 { font-size: 24px; }
+  .information p { font-size: 15px; }
+
+  .black-army {
+    font-size: 13px;
+    padding: 6px 12px;
+  }
+
+  .back {
+    bottom: 20px;
+    font-size: 14px;
+    padding: 6px 24px;
+  }
 }

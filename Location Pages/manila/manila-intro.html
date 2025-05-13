@@ -59,7 +59,8 @@
             position: absolute;
             width: 40px;
             height: 60px;
-            background: #555 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="black" x="10" y="30" width="80" height="40"/><rect fill="gray" x="20" y="40" width="60" height="20"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
             cursor: pointer;
             z-index: 10;
             transition: transform 0.1s;
@@ -72,11 +73,11 @@
             position: absolute;
             width: 30px;
             height: 50px;
-            background: #8B0000 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle fill="darkred" cx="50" cy="30" r="20"/><rect fill="maroon" x="40" y="50" width="20" height="40"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
             z-index: 5;
         }
         .enemy.elite {
-            background: #4d0000 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle fill="%234d0000" cx="50" cy="30" r="20"/><rect fill="%23300" x="40" y="50" width="20" height="40"/><rect fill="gold" x="45" y="35" width="10" height="5"/></svg>');
             width: 35px;
         }
         #controls {
@@ -116,8 +117,8 @@
             position: absolute;
             width: 60px;
             height: 60px;
-            background: radial-gradient(circle, rgba(255,100,0,0.8) 0%, rgba(255,50,0,0) 70%);
-            border-radius: 50%;
+            background-size: contain;
+            background-repeat: no-repeat;
             z-index: 20;
             animation: explode 0.5s forwards;
         }
@@ -183,6 +184,19 @@
         .hidden {
             display: none;
         }
+        .bullet {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            z-index: 8;
+        }
+        @keyframes run {
+            0% { background-image: var(--run-frame1); }
+            50% { background-image: var(--run-frame2); }
+            100% { background-image: var(--run-frame1); }
+        }
     </style>
 </head>
 <body>
@@ -230,6 +244,24 @@
     </div>
 
     <script>
+        // CONFIGURABLE IMAGE SETTINGS - EDIT THESE TO CHANGE APPEARANCE
+        const gameImages = {
+            barricade: 'images/barricade.png',
+            molotov: 'images/Molotov.png',
+            bullet: 'images/bullet.png',
+            explosion: 'images/explosion.png',
+            enemy: {
+                run1: 'images/soldier_running.png',
+                run2: 'images/soldier_standing.png', // Using standing as second frame
+                standing: 'images/soldier_standing.png'
+            },
+            eliteEnemy: {
+                run1: 'images/elite_running.png',
+                run2: 'images/elite_standing.png', // Using standing as second frame
+                standing: 'images/elite_standing.png'
+            }
+        };
+
         // Enhanced Game State
         const game = {
             wave: 0,
@@ -242,8 +274,26 @@
             gameEnded: false,
             lanes: 5,
             enemyTypes: [
-                { class: '', speed: 1.2, health: 2, maxHealth: 2, points: 15 },
-                { class: 'elite', speed: 0.8, health: 3, maxHealth: 3, points: 25 }
+                { 
+                    class: '', 
+                    speed: 1.2, 
+                    health: 2, 
+                    maxHealth: 2, 
+                    points: 15, 
+                    run1: gameImages.enemy.run1,
+                    run2: gameImages.enemy.run2,
+                    standing: gameImages.enemy.standing
+                },
+                { 
+                    class: 'elite', 
+                    speed: 0.8, 
+                    health: 3, 
+                    maxHealth: 3, 
+                    points: 25, 
+                    run1: gameImages.eliteEnemy.run1,
+                    run2: gameImages.eliteEnemy.run2,
+                    standing: gameImages.eliteEnemy.standing
+                }
             ]
         };
 
@@ -304,13 +354,22 @@
             }, enemyCount * 1200 + 3000);
         }
 
-        // Spawn an enemy with health bar
+        // Spawn an enemy with health bar and running animation
         function spawnEnemy(laneIndex, typeIndex) {
             const type = game.enemyTypes[typeIndex];
             const enemy = document.createElement('div');
             enemy.className = `enemy ${type.class}`;
             enemy.style.top = (laneIndex * 80 + 15) + 'px';
             enemy.style.left = '750px';
+            
+            // Set CSS variables for animation frames
+            enemy.style.setProperty('--run-frame1', `url('${type.run1}')`);
+            enemy.style.setProperty('--run-frame2', `url('${type.run2}')`);
+            
+            // Apply running animation
+            enemy.style.animation = 'run 0.5s steps(2) infinite';
+            enemy.style.backgroundImage = `url('${type.run1}')`;
+            
             enemy.onclick = () => useMolotov(enemy, typeIndex);
             
             // Add health bar
@@ -332,7 +391,10 @@
                 speed: type.speed,
                 health: type.health,
                 maxHealth: type.maxHealth,
-                typeIndex
+                typeIndex,
+                canShoot: true,
+                isMoving: true,
+                type: type
             };
             game.enemies.push(enemyObj);
 
@@ -352,6 +414,13 @@
                 );
 
                 if (barricadeHit) {
+                    // Stop running animation when attacking
+                    if (enemyObj.isMoving) {
+                        enemy.style.animation = 'none';
+                        enemy.style.backgroundImage = `url('${enemyObj.type.standing}')`;
+                        enemyObj.isMoving = false;
+                    }
+                    
                     // Damage barricade
                     if (Math.random() < 0.1) {
                         barricadeHit.element.style.opacity = '0.7';
@@ -364,6 +433,17 @@
                     // Push back
                     enemyObj.x += 2;
                     enemy.style.left = enemyObj.x + 'px';
+                    
+                    // Enemy shooting at barricade
+                    if (enemyObj.canShoot && Math.random() < 0.02) {
+                        enemyShoot(enemyObj, barricadeHit.element);
+                    }
+                } else {
+                    // Resume running animation when moving
+                    if (!enemyObj.isMoving) {
+                        enemy.style.animation = 'run 0.5s steps(2) infinite';
+                        enemyObj.isMoving = true;
+                    }
                 }
 
                 // Civilian casualty
@@ -376,6 +456,64 @@
                     game.enemies = game.enemies.filter(e => e !== enemyObj);
                     messageEl.textContent = `Civilian casualty! ${game.civilians} remaining`;
                     checkGameOver();
+                }
+            }, 20);
+        }
+
+        // Enemy shooting at barricade
+        function enemyShoot(enemy, target) {
+            enemy.canShoot = false;
+            
+            const bullet = document.createElement('div');
+            bullet.className = 'bullet';
+            bullet.style.backgroundImage = `url('${gameImages.bullet}')`;
+            bullet.style.top = (parseInt(enemy.element.style.top) + 15) + 'px';
+            bullet.style.left = (enemy.x - 10) + 'px';
+            mapEl.appendChild(bullet);
+            
+            const targetX = parseInt(target.style.left) + 20;
+            const targetY = parseInt(target.style.top) + 30;
+            
+            const angle = Math.atan2(
+                targetY - (parseInt(enemy.element.style.top) + 25),
+                targetX - enemy.x
+            );
+            
+            const speed = 5;
+            let bulletX = enemy.x;
+            let bulletY = parseInt(enemy.element.style.top) + 25;
+            
+            const shootInterval = setInterval(() => {
+                bulletX += Math.cos(angle) * speed;
+                bulletY += Math.sin(angle) * speed;
+                bullet.style.left = bulletX + 'px';
+                bullet.style.top = bulletY + 'px';
+                
+                // Check if bullet reached target
+                if (Math.abs(bulletX - targetX) < 10 && Math.abs(bulletY - targetY) < 10) {
+                    clearInterval(shootInterval);
+                    bullet.remove();
+                    createExplosion(bulletX, bulletY);
+                    
+                    // Damage barricade
+                    target.style.filter = 'brightness(1.5)';
+                    setTimeout(() => target.style.filter = '', 200);
+                    
+                    if (Math.random() < 0.3) {
+                        target.remove();
+                        game.barricadePositions = game.barricadePositions.filter(b => b.element !== target);
+                    }
+                    
+                    setTimeout(() => {
+                        enemy.canShoot = true;
+                    }, 1000);
+                }
+                
+                // Remove bullet if it goes off screen
+                if (bulletX < 0 || bulletX > 750 || bulletY < 0 || bulletY > 400) {
+                    clearInterval(shootInterval);
+                    bullet.remove();
+                    enemy.canShoot = true;
                 }
             }, 20);
         }
@@ -403,6 +541,7 @@
             barricade.className = 'barricade';
             barricade.style.top = (laneIndex * 80 + 10) + 'px';
             barricade.style.left = x + 'px';
+            barricade.style.backgroundImage = `url('${gameImages.barricade}')`;
             mapEl.appendChild(barricade);
 
             game.barricadePositions.push({ element: barricade, lane: laneIndex, x });
@@ -453,6 +592,7 @@
             explosion.className = 'explosion';
             explosion.style.left = (x - 30) + 'px';
             explosion.style.top = (y - 30) + 'px';
+            explosion.style.backgroundImage = `url('${gameImages.explosion}')`;
             mapEl.appendChild(explosion);
             
             setTimeout(() => explosion.remove(), 500);

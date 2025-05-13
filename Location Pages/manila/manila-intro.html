@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hidden Resistance</title>
+    <style>
+        body { 
+            font-family: 'Georgia', serif; 
+            background: #111 url('old-paper-texture.jpg');
+            color: #333;
+            text-align: center;
+        }
+        #game-container {
+            width: 600px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.8);
+            padding: 20px;
+            border: 3px solid #5c1b1a;
+        }
+        #resources { margin: 20px 0; }
+        .resource { display: inline-block; margin: 0 15px; }
+        #map {
+            width: 500px;
+            height: 300px;
+            margin: 20px auto;
+            background: url('manila-map.png');
+            position: relative;
+            border: 2px solid #000;
+        }
+        .location {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            cursor: pointer;
+        }
+        #alert {
+            color: #8B0000;
+            font-weight: bold;
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <h2>Manila Resistance Network - 1943</h2>
+        <p>Distribute supplies while avoiding Japanese patrols</p>
+        
+        <div id="resources">
+            <div class="resource">Food: <span id="food">10</span></div>
+            <div class="resource">Medicine: <span id="meds">5</span></div>
+            <div class="resource">Intel: <span id="intel">3</span></div>
+        </div>
+        
+        <div id="alert"></div>
+        
+        <div id="map">
+            <!-- Locations will be added by JavaScript -->
+        </div>
+        
+        <p id="day-counter">Day 1 of 7</p>
+    </div>
+
+    <script>
+        const locations = [
+            { name: "Tondo", top: 50, left: 100, risk: 30, food: 2, meds: 1 },
+            { name: "Intramuros", top: 120, left: 200, risk: 70, food: 1, meds: 3 },
+            { name: "Ermita", top: 200, left: 150, risk: 50, food: 3, meds: 0 }
+        ];
+        
+        let day = 1;
+        let resources = { food: 10, meds: 5, intel: 3 };
+        let patrolAlert = false;
+        
+        function setupMap() {
+            const map = document.getElementById('map');
+            locations.forEach(loc => {
+                const pin = document.createElement('div');
+                pin.className = 'location';
+                pin.style.top = loc.top + 'px';
+                pin.style.left = loc.left + 'px';
+                pin.title = loc.name;
+                pin.innerHTML = '📍';
+                pin.onclick = () => visitLocation(loc);
+                map.appendChild(pin);
+            });
+        }
+        
+        function visitLocation(loc) {
+            if (patrolAlert) return;
+            
+            // Risk detection
+            if (Math.random() * 100 < loc.risk) {
+                document.getElementById('alert').textContent = 
+                    `Japanese patrol spotted you in ${loc.name}! -2 Intel`;
+                resources.intel = Math.max(0, resources.intel - 2);
+                patrolAlert = true;
+                setTimeout(() => patrolAlert = false, 2000);
+            } else {
+                resources.food += loc.food;
+                resources.meds += loc.meds;
+                document.getElementById('alert').textContent = 
+                    `Delivered supplies to ${loc.name}`;
+            }
+            
+            updateResources();
+            checkDayEnd();
+        }
+        
+        function updateResources() {
+            document.getElementById('food').textContent = resources.food;
+            document.getElementById('meds').textContent = resources.meds;
+            document.getElementById('intel').textContent = resources.intel;
+        }
+        
+        function checkDayEnd() {
+            if (resources.food <= 0 || resources.meds <= 0 || resources.intel <= 0) {
+                alert("Game Over - Resistance network compromised!");
+                resetGame();
+            } else if (day >= 7) {
+                alert("Mission Complete! You sustained the resistance for a week!");
+                resetGame();
+            }
+        }
+        
+        function resetGame() {
+            day = 1;
+            resources = { food: 10, meds: 5, intel: 3 };
+            updateResources();
+            document.getElementById('day-counter').textContent = "Day 1 of 7";
+        }
+        
+        setupMap();
+    </script>
+</body>
+</html>

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -221,7 +222,7 @@
 
   <div id="scene-text" class="fade-in"></div>
   <div id="choices"></div>
-  
+
   <div id="result-container">
     <div id="result" class="result"></div>
     <div id="end-buttons">
@@ -229,6 +230,40 @@
       <button id="learn-more" class="button" onclick="window.location.href='bataan_history.html'">Learn About Bataan's History</button>
     </div>
   </div>
+
+  <audio id="jungleSound" preload="auto">
+    <source src="sounds/jungle_day.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="sickSound" preload="auto">
+    <source src="sounds/sick_vomit.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="waterSound" preload="auto">
+    <source src="sounds/drink_water.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="foodSound" preload="auto">
+    <source src="sounds/share_food.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="caughtSound" preload="auto">
+    <source src="sounds/caught_alert.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="escapeSound" preload="auto">
+    <source src="sounds/escape_rustle.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="battleSound" preload="auto">
+    <source src="sounds/distant_battle.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="hallucinationSound" preload="auto">
+    <source src="sounds/hallucination_echo.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="deathSound" preload="auto">
+    <source src="sounds/death_fade.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="successSound" preload="auto">
+    <source src="sounds/success_fanfare.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="warningSound" preload="auto">
+    <source src="sounds/warning_tone.mp3" type="audio/mpeg">
+  </audio>
 
   <script>
     const scenes = {
@@ -238,25 +273,29 @@
           { text: "Forage for roots and berries", next: "sick", effect: -1 },
           { text: "Attempt to steal food from a Japanese camp", next: "caught", effect: -2 },
           { text: "Conserve energy and look for fellow soldiers", next: "weak", effect: 0 },
-        ]
+        ],
+        sound: "jungleSound"
       },
       sick: {
         text: "You find some wild roots and berries, but they make you violently ill. As you vomit in the bushes, you realize you're becoming dangerously dehydrated.",
         choices: [
           { text: "Search desperately for clean water", next: "waterFound", effect: +1 },
           { text: "Lie down and try to rest through the sickness", next: "hallucinate", effect: -2 }
-        ]
+        ],
+        sound: "sickSound"
       },
       waterFound: {
         text: "After hours of searching, you find a muddy stream. The water looks questionable, but your thirst is unbearable. You drink deeply, knowing you might get parasites.",
         choices: [
           { text: "Push forward to try finding your unit", next: "survive", effect: +1 },
           { text: "Rest beside the stream to recover strength", next: "die", effect: -2 }
-        ]
+        ],
+        sound: "waterSound"
       },
       hallucinate: {
         text: "As fever takes hold, you collapse under a tree. You see visions of your family calling to you. You hear voices speaking in Tagalog and English. Hours pass. No one comes.",
         choices: [],
+        sound: "hallucinationSound",
         end: {
           text: "<strong>You Died in Delirium</strong><br>Thousands perished from disease and starvation during the Bataan campaign. Many spent their final moments hallucinating from fever, alone in the jungle.",
           type: "failure"
@@ -267,39 +306,45 @@
         choices: [
           { text: "Run into the forest despite your injuries", next: "escapeInjured", effect: -1 },
           { text: "Beg for mercy in broken Japanese", next: "pleadHelp", effect: -1 }
-        ]
+        ],
+        sound: "caughtSound"
       },
       escapeInjured: {
         text: "You escape into the dense foliage, but thorns and sharp rocks tear at your bare feet. Blood trails behind you as you struggle forward, growing weaker by the minute.",
         choices: [
           { text: "Keep walking toward the mountains", next: "lost", effect: -1 },
           { text: "Climb a tree to hide and rest", next: "die", effect: -2 }
-        ]
+        ],
+        sound: "escapeSound"
       },
       pleadHelp: {
         text: "To your surprise, one young guard secretly gives you water. In hushed tones, he tells you to flee by night or you'll be forced into the prisoner march.",
         choices: [
           { text: "Attempt escape under moonlight", next: "survive", effect: +1 },
           { text: "Stay, hoping for more help", next: "captured", effect: -2 }
-        ]
+        ],
+        sound: "waterSound"
       },
       weak: {
         text: "You're too weak to stand when a fellow Filipino soldier from your unit finds you hiding in a thicket. His uniform is torn but he appears in better condition than you.",
         choices: [
           { text: "Ask if he has any food to share", next: "shareFood", effect: +1 },
           { text: "Tell him to leave you and save himself", next: "abandoned", effect: -2 }
-        ]
+        ],
+        sound: "battleSound"
       },
       shareFood: {
         text: "He gives you a small piece of hardtack and sips from his canteen. 'The Death March has started,' he whispers. 'We must move or be captured.'",
         choices: [
           { text: "Follow him to try reaching Allied lines", next: "survive", effect: +1 },
           { text: "Stay hidden to rest more", next: "die", effect: -2 }
-        ]
+        ],
+        sound: "foodSound"
       },
       abandoned: {
         text: "With tears in his eyes, your comrade walks away. As night falls, you hear rustling in the bushes. Are they Japanese patrols? Guerrillas? Or just jungle animals?",
         choices: [],
+        sound: "escapeSound",
         end: {
           text: "<strong>Left Behind</strong><br>Many Filipino soldiers were abandoned during the retreat, not from cruelty but necessity. Those left behind often disappeared into the jungle, their fates unknown.",
           type: "failure"
@@ -308,6 +353,7 @@
       survive: {
         text: "Against all odds, you survive the next few days. American submarines eventually evacuate some personnel to Corregidor. Your war isn't over, but you've survived Bataan.",
         choices: [],
+        sound: "successSound",
         end: {
           text: "<strong>You Survived Bataan</strong><br>You endured unimaginable hunger, fear, and exhaustion. Like the real defenders of Bataan, your resilience symbolizes the sacrifice of 76,000 Filipino and American soldiers who fought against overwhelming odds, only to face the horrors of the Death March when they surrendered on April 9, 1942.",
           type: "success"
@@ -316,6 +362,7 @@
       die: {
         text: "As the tropical sun beats down, your strength fades completely. The sounds of the jungle grow distant. Your final thoughts are of home as darkness takes you.",
         choices: [],
+        sound: "deathSound",
         end: {
           text: "<strong>You Died in the Jungle</strong><br>Starvation and disease claimed thousands of lives during the Bataan campaign. Many perished alone, their bodies left unburied in the dense foliage, victims not just of war but of the brutal conditions and lack of supplies.",
           type: "failure"
@@ -324,6 +371,7 @@
       lost: {
         text: "In your panic, you become completely disoriented. The jungle looks the same in every direction. You hear Japanese patrols shouting nearby, but have no strength left to run.",
         choices: [],
+        sound: "warningSound",
         end: {
           text: "<strong>Lost Without a Trace</strong><br>Hundreds of soldiers disappeared in Bataan's jungles during the chaotic retreat. Some were captured, some joined guerrilla units, and some simply vanished, their stories ending in the dense Philippine wilderness.",
           type: "warning"
@@ -332,6 +380,7 @@
       captured: {
         text: "At dawn, Japanese soldiers kick you awake. You're forced to join thousands of other prisoners starting the march north. The guards shout as they beat stragglers with rifle butts.",
         choices: [],
+        sound: "warningSound",
         end: {
           text: "<strong>The Bataan Death March Begins</strong><br>You are now among the 60,000-80,000 prisoners forced on the 65-mile Bataan Death March to Camp O'Donnell. Without food or water in blistering heat, thousands will die along the way. Those who survive face years of brutal captivity.",
           type: "warning"
@@ -340,6 +389,21 @@
     };
 
     let score = 0;
+
+    function playSound(soundId) {
+      // Stop all currently playing sounds
+      document.querySelectorAll('audio').forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
+      
+      // Play the requested sound if it exists
+      const sound = document.getElementById(soundId);
+      if (sound) {
+        sound.currentTime = 0;
+        sound.play().catch(e => console.log("Audio play failed:", e));
+      }
+    }
 
     function startGame() {
       score = 0;
@@ -360,6 +424,11 @@
       
       const choicesDiv = document.getElementById('choices');
       choicesDiv.innerHTML = '';
+
+      // Play the scene's sound effect
+      if (scene.sound) {
+        playSound(scene.sound);
+      }
 
       if (scene.end) {
         const resultDiv = document.getElementById('result');
@@ -397,5 +466,6 @@
 
     startGame();
   </script>
+
 </body>
 </html>

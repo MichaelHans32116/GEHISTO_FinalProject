@@ -121,13 +121,13 @@
         .tooltip-container {
             position: fixed;
             top: 50%;
-            left: 60%;
+            left: 60%; /* Adjusted this slightly, you might want to center it better based on your layout */
             transform: translate(-50%, -50%);
             z-index: 1000;
-            width: 100%;
-            height: 100%;
-            display: none;
-            pointer-events: none;
+            width: auto; /* Changed from 100% to auto to fit content */
+            height: auto; /* Changed from 100% to auto */
+            display: none; /* Start as hidden, JS will show it */
+            pointer-events: none; /* Tooltip itself should not capture mouse events */
             justify-content: center;
             align-items: center;
             background-color: transparent;
@@ -138,9 +138,9 @@
             border: none;
             border-radius: 5px;
             padding: 25px;
-            width: 550px;
+            width: 550px; /* Max width */
             box-shadow: 0 0 30px rgba(139, 0, 0, 0.8);
-            pointer-events: none;
+            pointer-events: auto; /* Content inside tooltip can be interacted with if needed, but not necessary here */
             animation: fadeIn 0.2s ease-out;
         }
         
@@ -176,7 +176,6 @@
         .tooltip p strong {
             color: #d4c9a8;
         }
-        
         
         .tooltip-content {
             position: relative;
@@ -248,9 +247,13 @@
                 padding: 10px;
             }
             
-            .tooltip {
+            .tooltip-container { /* Adjust tooltip container for mobile */
+                left: 50%; 
                 width: 90%;
-                max-width: 550px;
+            }
+
+            .tooltip {
+                width: 100%; /* Tooltip takes full width of its container */
                 padding: 15px;
             }
             
@@ -286,7 +289,9 @@
         
         <div class="tooltip-container" id="tooltipContainer">
             <div class="tooltip" id="mapTooltip">
-                <div class="tooltip-content"></div>
+                <div class="tooltip-content">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
             </div>
         </div>
     </div>
@@ -298,6 +303,15 @@
     </footer>
 
     <script>
+        const defaultIntroData = {
+            title: "HistoMap: Philippine Historical Events",
+            // Maaari kang maglagay ng default image dito or hayaang walang image sa intro
+            image: "images/ph-07.png", // Example: using the main map image. Palitan kung iba ang gusto.
+                                       // Siguraduhing mayroon kang 'images/ph-07.png' o path ng default image mo.
+            description: "Welcome! Hover your mouse over the markers on the map to learn about significant historical events in different locations. Click on a marker to explore more details about that specific event or place.",
+            // Walang 'events' at 'pageUrl' para sa default intro
+        };
+
         const eventData = {
             bataan: {
                 title: "Bataan Peninsula",
@@ -362,46 +376,82 @@
         const tooltipContent = document.querySelector('.tooltip-content');
         const locations = document.querySelectorAll('.location');
         
-        function showTooltip(marker) {
-            const eventType = marker.getAttribute('data-event');
-            const data = eventData[eventType];
-    
+        // Function to update the content of the tooltip
+        function updateTooltipContent(data) {
+            let imgHtml = '';
+            if (data.image) {
+                // Siguraduhing tama ang path ng image. Kung ang base ng page ay /InteractiveMap/InteractiveMap.html
+                // at ang images ay nasa /InteractiveMap/images/, ang path ay dapat relative sa HTML file.
+                // Kung ang images/ ay nasa kaparehong folder ng InteractiveMap.html, "images/..." ay tama.
+                // Kung ang script ay nasa loob ng /InteractiveMap/ at ang images ay /InteractiveMap/images/
+                // ang `data.image` na "images/bataan.png" ay magiging "/InteractiveMap/images/bataan.png" kung ang base URL mo ay tama.
+                // Kung nagkakaproblema sa image path, subukan ang absolute path mula sa root e.g. "/InteractiveMap/images/bataan.png"
+                // o relative path from HTML: "images/bataan.png"
+                imgHtml = `<img src="${data.image}" alt="${data.title}">`;
+            }
+
+            let eventsHtml = '';
+            if (data.events) {
+                eventsHtml = `<p><strong>Events:</strong> ${data.events}</p>`;
+            }
+
             tooltipContent.innerHTML = `
-                <img src="${data.image}" alt="${data.title}">
+                ${imgHtml}
                 <h3>${data.title}</h3>
-                <p><strong>Events:</strong> ${data.events}</p>
+                ${eventsHtml}
                 <p style="margin-top: 15px;">${data.description}</p>
             `;
     
-            tooltipContainer.style.display = 'flex';
+            tooltipContainer.style.display = 'flex'; // Ensure tooltip container is visible
             
-            // Add fade-in animation
-            tooltip.style.animation = 'none';
-            setTimeout(() => {
-                tooltip.style.animation = 'fadeIn 0.2s ease-out';
-            }, 10);
+            // Re-trigger fade-in animation
+            tooltip.style.animation = 'none'; // Reset animation
+            // Force reflow/repaint before re-applying animation for it to play again
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    tooltip.style.animation = 'fadeIn 0.2s ease-out';
+                });
+            });
+        }
+
+        // Function to show tooltip for a specific marker
+        function showMarkerTooltip(marker) {
+            const eventType = marker.getAttribute('data-event');
+            const data = eventData[eventType];
+            if (data) {
+                updateTooltipContent(data);
+            }
         }
     
-        function hideTooltip() {
-            tooltipContainer.style.display = 'none';
+        // Function to show the initial/default information
+        function showInitialInfo() {
+            updateTooltipContent(defaultIntroData);
         }
-    
+
         function redirectToEventPage(eventType) {
-            const pageUrl = eventData[eventType].pageUrl;
-            if (pageUrl) {
-                window.location.href = pageUrl;
+            const data = eventData[eventType];
+            if (data && data.pageUrl) {
+                window.location.href = data.pageUrl;
             } else {
                 console.error(`No page URL defined for ${eventType}`);
             }
         }
     
-        // Event listeners for markers using hover
-        locations.forEach(location => {
-            const eventType = location.getAttribute('data-event');
-    
-            location.addEventListener('mouseenter', () => showTooltip(location));
-            location.addEventListener('mouseleave', hideTooltip);
-            location.addEventListener('click', () => redirectToEventPage(eventType));
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            showInitialInfo(); // Show default info when the page loads
+
+            locations.forEach(location => {
+                const eventType = location.getAttribute('data-event');
+        
+                // Show info on hover
+                location.addEventListener('mouseenter', () => showMarkerTooltip(location));
+                
+                // No mouseleave listener to hide the tooltip, so it stays
+        
+                // Redirect on click
+                location.addEventListener('click', () => redirectToEventPage(eventType));
+            });
         });
     </script>    
 </body>

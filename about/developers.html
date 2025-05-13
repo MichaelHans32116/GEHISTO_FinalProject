@@ -11,8 +11,8 @@
       box-sizing: border-box;
       font-family: 'Georgia', serif;
       color: white;
-      
     }
+
 
     body {
       margin: 0;
@@ -25,36 +25,41 @@
       background-position: center;
     }
 
-    /* Navigation from HomePage.css */
+
     .navbar {
       display: flex;
       justify-content: center;
       padding: 30px 0;
-      background-color: rgba(0, 0, 0, 0.6); /* dark transparent overlay */
+      background-color: rgba(0, 0, 0, 0.6);
     }
-    
+
+
     .navbar ul {
       display: flex;
       list-style: none;
       gap: 30px;
       font-size: 1.5rem;
     }
-    
+
+
     .navbar li {
       cursor: pointer;
       position: relative;
     }
-    
+
+
     .navbar li a {
       color: white;
       text-decoration: none;
       position: relative;
     }
-    
+
+
     .navbar li a:hover {
       color: red;
     }
-    
+
+
     .navbar li a.active::after {
       content: "";
       position: absolute;
@@ -65,7 +70,7 @@
       left: 0;
     }
 
-    /* Header styles */
+
     header.dev-header {
       background: url('l.jpg') center/cover no-repeat;
       height: 300px;
@@ -74,10 +79,12 @@
       color: white;
     }
 
+
     header.dev-header h1 {
       font-size: 3em;
       margin-bottom: 0;
     }
+
 
     header.dev-header p {
       margin-top: 5px;
@@ -85,17 +92,19 @@
       letter-spacing: 2px;
     }
 
-    /* Developer section styles */
+
     .dev-section {
       padding: 40px 20px;
       text-align: center;
       background: linear-gradient(to bottom, #333, #111);
     }
 
+
     .dev-section h2 {
       font-size: 2em;
       margin-bottom: 30px;
     }
+
 
     .dev-cards {
       display: flex;
@@ -104,14 +113,17 @@
       gap: 25px;
     }
 
+
     .dev-card {
-      
       background-color: #222;
       border-radius: 10px;
       width: 150px;
       padding: 15px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+      position: relative;
+      overflow: hidden;
     }
+
 
     .dev-card img {
       width: 100%;
@@ -120,25 +132,65 @@
       border-radius: 10px;
     }
 
+
     .dev-card h3 {
       margin: 10px 0 5px;
     }
+
 
     .dev-card p {
       margin: 0;
       font-size: 0.9em;
       color: #bbb;
     }
-    
-    /* Responsive styles */
+
+
+    /* Hover info for developer card */
+    .info-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+      text-align: center;
+      border-radius: 10px;
+      text-decoration: none;
+    }
+
+
+    .dev-card:hover .info-overlay {
+      opacity: 1;
+    }
+
+
+    .info-overlay p {
+      color: #bbb;
+      font-size: 0.9em;
+    }
+
+
+    .info-overlay:hover {
+      color: red;
+    }
+
+
     @media (max-width: 768px) {
       .dev-cards {
         flex-direction: column;
         align-items: center;
       }
 
+
       .dev-card {
-        width: 90%; /* Adjust width for smaller screens */
+        width: 90%;
       }
     }
   </style>
@@ -147,7 +199,7 @@
   <header>
     <nav class="navbar">
       <ul>
-        <li><a href="/Index.html">Home</a></li>
+        <li><a href="/HomePage/HomePage.html">Home</a></li>
         <li><a href="/InteractiveMap/InteractiveMap.html">HistoMap</a></li>
         <li><a href="/about/developers.html" class="active">Developers</a></li>
         <li><a href="/VictimsPage/Victims.html">Victims</a></li>
@@ -155,56 +207,143 @@
     </nav>
   </header>
 
+
   <header class="dev-header">
     <p>JAPANESE INVASION</p>
     <h1>THE BSIT WARRIOR CODES</h1>
     <p>PHILIPPINES HISTORY</p>
   </header>
 
+
   <section class="dev-section">
     <h2>Meet the Developers</h2>
     <div class="dev-cards">
-      <div class="dev-card">
-        <img src="hans.jpeg" alt="Hans">
-        <h3>Hans</h3>
-      </div>
-      <div class="dev-card">
-        <img src="alex.jpg" alt="Alex">
-        <h3>Alex</h3>
-      </div>
-      <div class="dev-card">
-        <img src="kiel.jpg" alt="Kiel">
-        <h3>Kiel</h3>
-      </div>
-      <div class="dev-card">
-        <img src="june.jpeg" alt="June">
-        <h3>June</h3>
-      </div>
-      <div class="dev-card">
-        <img src="miro.jpg" alt="Miro">
-        <h3>Miro</h3>
-      </div>
-      <div class="dev-card">
-        <img src="lio.jpg" alt="Lio">
-        <h3>Lio</h3>
-      </div>
-      <div class="dev-card">
-        <img src="lexter.jpg" alt="Lexter">
-        <h3>Lexter</h3>
-      </div>
-      <div class="dev-card">
-        <img src="joaquin.jpeg" alt="Joaquin">
-        <h3>Joaquin</h3>
-      </div>
-      <div class="dev-card">
-        <img src="jazric.jpg" alt="Jazric">
-        <h3>Jazric</h3>
-      </div>
-      <div class="dev-card">
-        <img src="rob.jpeg" alt="Rob">
-        <h3>Rob</h3>
-      </div>
-    </div>
+      <!-- Hans with GitHub link on hover -->
+      <div class="dev-cards">
+  <!-- Hans -->
+  <div class="dev-card">
+    <img src="hans.jpeg" alt="Hans">
+    <a href="https://github.com/MichaelHans32116" target="_blank" class="info-overlay">
+      <h3>Hans</h3>
+      <p>GitHub: MichaelHans32116</p>
+    </a>
+  </div>
+
+
+  <!-- Lexter -->
+  <div class="dev-card">
+    <img src="lexter.jpg" alt="Lexter">
+    <a href="https://github.com/lexterlimbaga" target="_blank" class="info-overlay">
+      <h3>Lexter</h3>
+      <p>GitHub: lexterlimbaga</p>
+    </a>
+  </div>
+
+
+  <!-- Alex -->
+  <div class="dev-card">
+    <img src="alex.jpg" alt="Alex">
+    <a href="https://github.com/Axel0Tell" target="_blank" class="info-overlay">
+      <h3>Alex</h3>
+      <p>GitHub: Axel0Tell</p>
+    </a>
+  </div>
+
+
+  <!-- Lio -->
+  <div class="dev-card">
+    <img src="lio.jpg" alt="Lio">
+    <a href="https://github.com/Liooouu" target="_blank" class="info-overlay">
+      <h3>Lio</h3>
+      <p>GitHub: Liooouu</p>
+    </a>
+  </div>
+
+
+  <!-- Miro -->
+  <div class="dev-card">
+    <img src="miro.jpg" alt="Miro">
+    <a href="https://github.com/StudentMiro" target="_blank" class="info-overlay">
+      <h3>Miro</h3>
+      <p>GitHub: Mgnzls</p>
+    </a>
+  </div>
+
+
+  <!-- Rob -->
+  <div class="dev-card">
+    <img src="rob.jpeg" alt="Rob">
+    <a href="https://github.com/iguessrob" target="_blank" class="info-overlay">
+      <h3>Rob</h3>
+      <p>GitHub: iguessrob</p>
+    </a>
+  </div>
+
+
+  <!-- June -->
+  <div class="dev-card">
+    <img src="june.jpeg" alt="June">
+    <a href="https://github.com/P-june" target="_blank" class="info-overlay">
+      <h3>June</h3>
+      <p>GitHub: P-june</p>
+    </a>
+  </div>
+
+
+  <!-- Jazric -->
+  <div class="dev-card">
+    <img src="jazric.jpg" alt="Jazric">
+    <a href="https://github.com/JazricForte" target="_blank" class="info-overlay">
+      <h3>Jazric</h3>
+      <p>GitHub: JazricForte</p>
+    </a>
+  </div>
+
+
+  <!-- Kiel -->
+  <div class="dev-card">
+    <img src="kiel.jpg" alt="Kiel">
+    <a href="https://github.com/johnkielkondo" target="_blank" class="info-overlay">
+      <h3>Kiel</h3>
+      <p>GitHub: johnkielkondo</p>
+    </a>
+  </div>
+
+
+  <!-- Joaquin (no GitHub link provided, regular card shown) -->
+  <div class="dev-card">
+  <img src="joaquin.jpeg" alt="Joaquin">
+  <a href="https://github.com/Reiljoaquin" target="_blank" class="info-overlay">
+    <h3>Joaquin</h3>
+    <p>GitHub: Reiljoaquin</p>
+  </a>
+</div>
+
+
+
+
+    <section class="dev-section">
+      <h2>Our Vision</h2>
+      <p style="max-width: 800px; margin: 0 auto 40px; font-size: 1.1em; line-height: 1.6; color: #ccc;">
+        To become pioneers in digital historical education by developing immersive, interactive platforms that preserve and promote Philippine history for future generations.
+      </p>
+
+
+      <h2>Our Mission</h2>
+      <p style="max-width: 800px; margin: 0 auto; font-size: 1.1em; line-height: 1.6; color: #ccc;">
+        To inspire learning through technology by creating engaging and educational experiences that highlight the resilience, bravery, and identity of the Filipino people during critical moments in history.
+
+
+
+
+         <h2>About Us</h2>
+      <p style="max-width: 800px; margin: 0 auto; font-size: 1.1em; line-height: 1.6; color: #ccc;">
+        We are a dedicated team of developers and educators committed to advancing historical awareness through innovative digital solutions. This platform was established to promote a deeper understanding of Philippine history by making it accessible, engaging, and relevant to today’s generation. Through well-crafted content and interactive experiences, we aim to foster a lasting appreciation for the nation’s rich cultural and historical legacy.
+      </p>
+    </section>
   </section>
 </body>
 </html>
+
+
+

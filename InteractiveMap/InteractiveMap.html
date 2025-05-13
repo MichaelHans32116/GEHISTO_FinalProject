@@ -10,8 +10,8 @@
 </head>
 <body>
     <audio autoplay loop>
-  <source src="/HomePage/pictures/Pearl Harbor - Japanese Empire - Theme Suite.mp3" type="audio/mpeg">
-</audio>
+        <source src="/HomePage/pictures/Pearl Harbor - Japanese Empire - Theme Suite.mp3" type="audio/mpeg">
+    </audio>
     <div id="map"></div>
     <div class="map-overlay"></div>
     
@@ -23,6 +23,15 @@
             <li><a href="/VictimsPage/Victims.html">Victims</a></li>
         </ul>
     </nav>
+
+    <!-- =========== NEW LOCATIONS SIDEBAR =========== -->
+    <div id="locations-sidebar">
+        <h3>Historical Locations</h3>
+        <ul id="location-list">
+            <!-- Location items will be dynamically added here by JavaScript -->
+        </ul>
+    </div>
+    <!-- ============================================= -->
     
     <div class="story-container">
         <section id="intro">
@@ -30,8 +39,9 @@
             <p>Scroll to explore the rich history of the Philippine archipelago</p>
             <div class="scroll-indicator">↓</div>
         </section>
+        <!-- Story sections will be dynamically added here -->
     </div>
 
     <script src="script.js"></script>
 </body>
-</html> 
+</html>

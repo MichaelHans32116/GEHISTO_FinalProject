@@ -66,7 +66,7 @@ const locations = [
         zoom: 12,
         pitch: 45,
         bearing: 0,
-        pageUrl: "../Location Pages/manila/manila.html"
+        pageUrl: "../Location Pages/manila/manila-intro.html"
     },
     {
         name: "Leyte",

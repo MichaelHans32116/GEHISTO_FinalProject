@@ -1,134 +1,573 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hidden Resistance</title>
+    <title>Last Stand at Intramuros - 1945</title>
     <style>
-        body { 
-            font-family: 'Georgia', serif; 
-            background: #111 url('old-paper-texture.jpg');
-            color: #333;
+        body {
+            font-family: 'Georgia', serif;
+            background: #111 url('https://i.imgur.com/6VY6DfB.jpg') no-repeat center/cover;
+            color: #ddd;
             text-align: center;
+            margin: 0;
+            padding: 20px;
+            text-shadow: 1px 1px 2px #000;
         }
         #game-container {
-            width: 600px;
+            width: 800px;
             margin: 0 auto;
-            background: rgba(255,255,255,0.8);
+            background: rgba(20, 20, 20, 0.85);
             padding: 20px;
-            border: 3px solid #5c1b1a;
+            border: 3px solid #8B0000;
+            box-shadow: 0 0 15px rgba(139, 0, 0, 0.6);
+            border-radius: 5px;
         }
-        #resources { margin: 20px 0; }
-        .resource { display: inline-block; margin: 0 15px; }
+        h2 {
+            color: #ff5555;
+            border-bottom: 1px dashed #8B0000;
+            padding-bottom: 10px;
+        }
+        #resources {
+            margin: 20px 0;
+            background: rgba(40, 40, 40, 0.7);
+            padding: 10px;
+            border: 1px solid #8B0000;
+            border-radius: 3px;
+        }
+        #score {
+            font-weight: bold;
+            font-size: 24px;
+            color: #ffaa00;
+        }
         #map {
-            width: 500px;
-            height: 300px;
+            width: 750px;
+            height: 400px;
             margin: 20px auto;
-            background: url('manila-map.png');
+            background: rgba(10, 10, 10, 0.7) url('https://i.imgur.com/JDYAz9m.png') no-repeat center/cover;
             position: relative;
-            border: 2px solid #000;
+            border: 2px solid #8B0000;
+            overflow: hidden;
+            box-shadow: inset 0 0 20px #000;
         }
-        .location {
-            width: 40px;
-            height: 40px;
+        .lane {
             position: absolute;
-            cursor: pointer;
+            width: 750px;
+            height: 80px;
+            border-bottom: 1px dashed rgba(139, 0, 0, 0.3);
         }
-        #alert {
+        .lane:nth-child(odd) { background: rgba(70, 0, 0, 0.1); }
+        .barricade {
+            position: absolute;
+            width: 40px;
+            height: 60px;
+            background: #555 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="black" x="10" y="30" width="80" height="40"/><rect fill="gray" x="20" y="40" width="60" height="20"/></svg>');
+            cursor: pointer;
+            z-index: 10;
+            transition: transform 0.1s;
+        }
+        .barricade:hover {
+            transform: scale(1.05);
+            filter: brightness(1.2);
+        }
+        .enemy {
+            position: absolute;
+            width: 30px;
+            height: 50px;
+            background: #8B0000 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle fill="darkred" cx="50" cy="30" r="20"/><rect fill="maroon" x="40" y="50" width="20" height="40"/></svg>');
+            z-index: 5;
+        }
+        .enemy.elite {
+            background: #4d0000 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle fill="%234d0000" cx="50" cy="30" r="20"/><rect fill="%23300" x="40" y="50" width="20" height="40"/><rect fill="gold" x="45" y="35" width="10" height="5"/></svg>');
+            width: 35px;
+        }
+        #controls {
+            margin: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        button {
+            background: linear-gradient(to bottom, #333, #222);
+            color: #ddd;
+            border: 1px solid #8B0000;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-weight: bold;
+            transition: all 0.2s;
+            min-width: 120px;
+        }
+        button:hover {
+            background: linear-gradient(to bottom, #8B0000, #600);
+            box-shadow: 0 0 8px rgba(255, 50, 50, 0.6);
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        #message {
+            min-height: 24px;
+            color: #ff5555;
+            font-weight: bold;
+            margin: 10px;
+            text-shadow: 0 0 3px #000;
+        }
+        .explosion {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, rgba(255,100,0,0.8) 0%, rgba(255,50,0,0) 70%);
+            border-radius: 50%;
+            z-index: 20;
+            animation: explode 0.5s forwards;
+        }
+        @keyframes explode {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+        #wave-indicator {
+            font-size: 18px;
+            margin: 10px;
+            color: #ffaa00;
+        }
+        #historical-note {
+            font-style: italic;
+            font-size: 14px;
+            margin-top: 20px;
+            color: #aaa;
+            border-top: 1px dashed #444;
+            padding-top: 10px;
+        }
+        #civilians {
+            font-size: 18px;
+            color: #ddd;
+            margin-bottom: 10px;
+        }
+        .health-bar {
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #333;
+        }
+        .health-fill {
+            height: 100%;
+            background: #ff5555;
+        }
+        #game-end-message {
+            font-size: 18px;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(0,0,0,0.7);
+            border: 1px solid #8B0000;
+            border-radius: 5px;
+        }
+        #victory-message {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        #defeat-message {
             color: #8B0000;
             font-weight: bold;
-            height: 20px;
+        }
+        #learn-more-btn {
+            background: linear-gradient(to bottom, #1a3e72, #0d2352);
+            border: 1px solid #3a6ea5;
+            margin-top: 10px;
+        }
+        #learn-more-btn:hover {
+            background: linear-gradient(to bottom, #2a4e82, #1a3372);
+            box-shadow: 0 0 8px rgba(58, 110, 165, 0.6);
+        }
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
     <div id="game-container">
-        <h2>Manila Resistance Network - 1943</h2>
-        <p>Distribute supplies while avoiding Japanese patrols</p>
+        <h2>LAST STAND AT INTRAMUROS - FEBRUARY 1945</h2>
+        <p>Defend civilians against Japanese forces during the Battle of Manila</p>
         
         <div id="resources">
-            <div class="resource">Food: <span id="food">10</span></div>
-            <div class="resource">Medicine: <span id="meds">5</span></div>
-            <div class="resource">Intel: <span id="intel">3</span></div>
+            <div id="civilians">Civilians: <span id="civilians-count">20</span></div>
+            <div id="score">Points: <span id="points">50</span></div>
         </div>
         
-        <div id="alert"></div>
+        <div id="wave-indicator">Wave: <span id="wave-number">0</span>/5</div>
+        <div id="message"></div>
         
         <div id="map">
-            <!-- Locations will be added by JavaScript -->
+            <!-- Lanes and game elements added by JS -->
         </div>
         
-        <p id="day-counter">Day 1 of 7</p>
+        <div id="controls">
+            <button id="start-wave">START WAVE</button>
+            <button id="place-barricade">BUILD BARRICADE (30 pts)</button>
+            <button id="use-molotov">THROW MOLOTOV (5 pts)</button>
+        </div>
+        
+        <div id="historical-note">
+            Historical Note: In February 1945, Filipino guerrillas and civilians defended Intramuros against Japanese forces 
+            during the brutal Battle of Manila. Over 100,000 civilians died in the month-long siege.
+        </div>
+        
+        <div id="game-end-message" class="hidden"></div>
+        <div id="history-section" class="hidden">
+            <h3>The Battle of Manila (1945)</h3>
+            <p>The month-long battle to recapture Manila from Japanese forces resulted in the near-total destruction of the city and over 100,000 civilian deaths. Key facts:</p>
+            <ul style="text-align: left; max-width: 600px; margin: 0 auto;">
+                <li>⚔️ Fought from February 3 - March 3, 1945</li>
+                <li>🔥 One of the most devastating urban battles in WWII</li>
+                <li>🕊️ Japanese forces committed mass atrocities against civilians</li>
+                <li>✝️ Over 1,000 civilians were killed in the San Agustin Church massacre alone</li>
+                <li>🏙️ 80% of Manila's buildings were destroyed</li>
+                <li>🇵🇭 Marked the end of three years of brutal Japanese occupation</li>
+            </ul>
+            <button id="back-to-game" style="margin-top: 20px;">Back to Game</button>
+        </div>
     </div>
 
     <script>
-        const locations = [
-            { name: "Tondo", top: 50, left: 100, risk: 30, food: 2, meds: 1 },
-            { name: "Intramuros", top: 120, left: 200, risk: 70, food: 1, meds: 3 },
-            { name: "Ermita", top: 200, left: 150, risk: 50, food: 3, meds: 0 }
-        ];
-        
-        let day = 1;
-        let resources = { food: 10, meds: 5, intel: 3 };
-        let patrolAlert = false;
-        
-        function setupMap() {
-            const map = document.getElementById('map');
-            locations.forEach(loc => {
-                const pin = document.createElement('div');
-                pin.className = 'location';
-                pin.style.top = loc.top + 'px';
-                pin.style.left = loc.left + 'px';
-                pin.title = loc.name;
-                pin.innerHTML = '📍';
-                pin.onclick = () => visitLocation(loc);
-                map.appendChild(pin);
+        // Enhanced Game State
+        const game = {
+            wave: 0,
+            maxWaves: 5,
+            civilians: 20,
+            points: 50,
+            enemies: [],
+            barricadePositions: [],
+            isWaveActive: false,
+            gameEnded: false,
+            lanes: 5,
+            enemyTypes: [
+                { class: '', speed: 1.2, health: 2, maxHealth: 2, points: 15 },
+                { class: 'elite', speed: 0.8, health: 3, maxHealth: 3, points: 25 }
+            ]
+        };
+
+        // DOM elements
+        const mapEl = document.getElementById('map');
+        const civiliansCountEl = document.getElementById('civilians-count');
+        const pointsEl = document.getElementById('points');
+        const waveNumberEl = document.getElementById('wave-number');
+        const messageEl = document.getElementById('message');
+        const startWaveBtn = document.getElementById('start-wave');
+        const placeBarricadeBtn = document.getElementById('place-barricade');
+        const useMolotovBtn = document.getElementById('use-molotov');
+        const gameEndMessageEl = document.getElementById('game-end-message');
+        const historySection = document.getElementById('history-section');
+        const backToGameBtn = document.getElementById('back-to-game');
+
+        // Initialize lanes
+        function initLanes() {
+            mapEl.innerHTML = '';
+            for (let i = 0; i < game.lanes; i++) {
+                const lane = document.createElement('div');
+                lane.className = 'lane';
+                lane.style.top = (i * 80) + 'px';
+                lane.onclick = (e) => placeBarricade(e, i);
+                mapEl.appendChild(lane);
+            }
+        }
+
+        // Start a new wave
+        function startWave() {
+            if (game.isWaveActive || game.wave >= game.maxWaves || game.gameEnded) return;
+            
+            game.wave++;
+            waveNumberEl.textContent = game.wave;
+            game.isWaveActive = true;
+            startWaveBtn.disabled = true;
+            placeBarricadeBtn.disabled = true;
+            useMolotovBtn.disabled = false;
+            messageEl.textContent = `WAVE ${game.wave} - DEFEND THE CIVILIANS!`;
+
+            // Spawn enemies with increasing difficulty
+            const enemyCount = 3 + game.wave * 2;
+            for (let i = 0; i < enemyCount; i++) {
+                setTimeout(() => {
+                    const type = Math.random() < (game.wave * 0.15) ? 1 : 0; // Elite chance increases per wave
+                    spawnEnemy(Math.floor(Math.random() * game.lanes), type);
+                }, i * 1200);
+            }
+
+            // Check wave end
+            setTimeout(() => {
+                const waveCheck = setInterval(() => {
+                    if (game.enemies.length === 0) {
+                        clearInterval(waveCheck);
+                        endWave();
+                    }
+                }, 500);
+            }, enemyCount * 1200 + 3000);
+        }
+
+        // Spawn an enemy with health bar
+        function spawnEnemy(laneIndex, typeIndex) {
+            const type = game.enemyTypes[typeIndex];
+            const enemy = document.createElement('div');
+            enemy.className = `enemy ${type.class}`;
+            enemy.style.top = (laneIndex * 80 + 15) + 'px';
+            enemy.style.left = '750px';
+            enemy.onclick = () => useMolotov(enemy, typeIndex);
+            
+            // Add health bar
+            const healthBar = document.createElement('div');
+            healthBar.className = 'health-bar';
+            const healthFill = document.createElement('div');
+            healthFill.className = 'health-fill';
+            healthFill.style.width = '100%';
+            healthBar.appendChild(healthFill);
+            enemy.appendChild(healthBar);
+            
+            mapEl.appendChild(enemy);
+
+            const enemyObj = { 
+                element: enemy,
+                healthBar: healthFill,
+                lane: laneIndex, 
+                x: 750, 
+                speed: type.speed,
+                health: type.health,
+                maxHealth: type.maxHealth,
+                typeIndex
+            };
+            game.enemies.push(enemyObj);
+
+            // Animate movement
+            const moveInterval = setInterval(() => {
+                if (!game.isWaveActive || game.gameEnded) {
+                    clearInterval(moveInterval);
+                    return;
+                }
+
+                enemyObj.x -= enemyObj.speed;
+                enemy.style.left = enemyObj.x + 'px';
+
+                // Check barricade collision
+                const barricadeHit = game.barricadePositions.find(b => 
+                    b.lane === laneIndex && enemyObj.x < b.x + 40 && enemyObj.x > b.x - 30
+                );
+
+                if (barricadeHit) {
+                    // Damage barricade
+                    if (Math.random() < 0.1) {
+                        barricadeHit.element.style.opacity = '0.7';
+                        if (Math.random() < 0.3) {
+                            barricadeHit.element.remove();
+                            game.barricadePositions = game.barricadePositions.filter(b => b !== barricadeHit);
+                        }
+                    }
+                    
+                    // Push back
+                    enemyObj.x += 2;
+                    enemy.style.left = enemyObj.x + 'px';
+                }
+
+                // Civilian casualty
+                if (enemyObj.x < 0) {
+                    clearInterval(moveInterval);
+                    game.civilians--;
+                    updateUI();
+                    createExplosion(enemyObj.x, laneIndex * 80 + 40);
+                    enemy.remove();
+                    game.enemies = game.enemies.filter(e => e !== enemyObj);
+                    messageEl.textContent = `Civilian casualty! ${game.civilians} remaining`;
+                    checkGameOver();
+                }
+            }, 20);
+        }
+
+        // Place barricade
+        function placeBarricade(e, laneIndex) {
+            if (game.points < 30 || game.isWaveActive || game.gameEnded) {
+                messageEl.textContent = game.isWaveActive ? 
+                    "Cannot build during combat!" : 
+                    game.gameEnded ? "The battle is over!" : "Need 30 points to build barricade!";
+                return;
+            }
+
+            const rect = mapEl.getBoundingClientRect();
+            const x = e.clientX - rect.left - 20;
+
+            // Prevent stacking
+            const existing = game.barricadePositions.filter(b => b.lane === laneIndex);
+            if (existing.some(b => Math.abs(b.x - x) < 50)) {
+                messageEl.textContent = "Too close to another barricade!";
+                return;
+            }
+
+            const barricade = document.createElement('div');
+            barricade.className = 'barricade';
+            barricade.style.top = (laneIndex * 80 + 10) + 'px';
+            barricade.style.left = x + 'px';
+            mapEl.appendChild(barricade);
+
+            game.barricadePositions.push({ element: barricade, lane: laneIndex, x });
+            game.points -= 30;
+            updateUI();
+            messageEl.textContent = `Barricade built in Lane ${laneIndex + 1} (-30 pts)`;
+        }
+
+        // Use Molotov
+        function useMolotov(enemyElement, typeIndex) {
+            if (game.points < 5 || game.gameEnded) {
+                messageEl.textContent = game.gameEnded ? "The battle is over!" : "Need 5 points to throw Molotov!";
+                return;
+            }
+
+            const enemyObj = game.enemies.find(e => e.element === enemyElement);
+            if (!enemyObj) return;
+
+            enemyObj.health--;
+            game.points -= 5;
+            
+            // Update health bar
+            enemyObj.healthBar.style.width = `${(enemyObj.health / enemyObj.maxHealth) * 100}%`;
+            
+            // Visual explosion
+            createExplosion(
+                enemyObj.x + 15, 
+                parseInt(enemyElement.style.top) + 25
+            );
+
+            if (enemyObj.health <= 0) {
+                enemyElement.remove();
+                game.enemies = game.enemies.filter(e => e !== enemyObj);
+                game.points += game.enemyTypes[typeIndex].points;
+                messageEl.textContent = `Enemy destroyed! +${game.enemyTypes[typeIndex].points} pts`;
+            } else {
+                enemyElement.style.filter = 'brightness(1.5)';
+                setTimeout(() => enemyElement.style.filter = '', 200);
+                messageEl.textContent = "Enemy damaged! (-5 pts)";
+            }
+
+            updateUI();
+        }
+
+        // Create explosion effect
+        function createExplosion(x, y) {
+            const explosion = document.createElement('div');
+            explosion.className = 'explosion';
+            explosion.style.left = (x - 30) + 'px';
+            explosion.style.top = (y - 30) + 'px';
+            mapEl.appendChild(explosion);
+            
+            setTimeout(() => explosion.remove(), 500);
+        }
+
+        // End wave
+        function endWave() {
+            game.isWaveActive = false;
+            startWaveBtn.disabled = game.wave >= game.maxWaves || game.gameEnded;
+            placeBarricadeBtn.disabled = game.gameEnded;
+            useMolotovBtn.disabled = true;
+
+            // Reward player
+            game.points += game.civilians * 5; // Bonus for saved civilians
+            
+            updateUI();
+            
+            if (game.wave >= game.maxWaves) {
+                showVictory();
+            } else {
+                messageEl.textContent = `Wave ${game.wave} survived! +${game.civilians * 5} bonus points`;
+            }
+        }
+
+        // Show victory message
+        function showVictory() {
+            game.gameEnded = true;
+            gameEndMessageEl.innerHTML = `
+                <div id="victory-message">
+                    <h3>VICTORY! ${game.civilians} CIVILIANS SAVED</h3>
+                    <p>Final score: ${game.points} points</p>
+                    <p>The Battle of Manila (February-March 1945) was one of the most brutal urban battles of WWII. 
+                    Your victory honors the real resistance fighters who defended the city against overwhelming odds.</p>
+                    <button id="learn-more-btn">LEARN MORE ABOUT THE BATTLE</button>
+                </div>
+            `;
+            gameEndMessageEl.classList.remove('hidden');
+            document.getElementById('learn-more-btn').addEventListener('click', showHistory);
+            disableAllControls();
+        }
+
+        // Show defeat message
+        function showDefeat() {
+            game.gameEnded = true;
+            gameEndMessageEl.innerHTML = `
+                <div id="defeat-message">
+                    <h3>DEFEAT - ALL CIVILIANS LOST</h3>
+                    <p>Final score: ${game.points} points</p>
+                    <p>This tragic outcome mirrors the fate of over 100,000 civilians who perished during the actual 
+                    Battle of Manila. We remember their sacrifice as we strive to build a more peaceful future.</p>
+                    <button id="learn-more-btn">LEARN MORE ABOUT THE BATTLE</button>
+                </div>
+            `;
+            gameEndMessageEl.classList.remove('hidden');
+            document.getElementById('learn-more-btn').addEventListener('click', showHistory);
+            disableAllControls();
+        }
+
+        // Show history section
+        function showHistory() {
+            document.querySelector('#game-container > *:not(#history-section)').classList.add('hidden');
+            historySection.classList.remove('hidden');
+        }
+
+        // Back to game from history
+        backToGameBtn.addEventListener('click', () => {
+            historySection.classList.add('hidden');
+            document.querySelectorAll('#game-container > *').forEach(el => el.classList.remove('hidden'));
+        });
+
+        // Disable all controls when game ends
+        function disableAllControls() {
+            startWaveBtn.disabled = true;
+            placeBarricadeBtn.disabled = true;
+            useMolotovBtn.disabled = true;
+            
+            // Disable lane clicks
+            const lanes = document.querySelectorAll('.lane');
+            lanes.forEach(lane => {
+                lane.onclick = null;
+                lane.style.cursor = 'default';
             });
         }
-        
-        function visitLocation(loc) {
-            if (patrolAlert) return;
-            
-            // Risk detection
-            if (Math.random() * 100 < loc.risk) {
-                document.getElementById('alert').textContent = 
-                    `Japanese patrol spotted you in ${loc.name}! -2 Intel`;
-                resources.intel = Math.max(0, resources.intel - 2);
-                patrolAlert = true;
-                setTimeout(() => patrolAlert = false, 2000);
-            } else {
-                resources.food += loc.food;
-                resources.meds += loc.meds;
-                document.getElementById('alert').textContent = 
-                    `Delivered supplies to ${loc.name}`;
-            }
-            
-            updateResources();
-            checkDayEnd();
-        }
-        
-        function updateResources() {
-            document.getElementById('food').textContent = resources.food;
-            document.getElementById('meds').textContent = resources.meds;
-            document.getElementById('intel').textContent = resources.intel;
-        }
-        
-        function checkDayEnd() {
-            if (resources.food <= 0 || resources.meds <= 0 || resources.intel <= 0) {
-                alert("Game Over - Resistance network compromised!");
-                resetGame();
-            } else if (day >= 7) {
-                alert("Mission Complete! You sustained the resistance for a week!");
-                resetGame();
+
+        // Check game over
+        function checkGameOver() {
+            if (game.civilians <= 0) {
+                showDefeat();
             }
         }
-        
-        function resetGame() {
-            day = 1;
-            resources = { food: 10, meds: 5, intel: 3 };
-            updateResources();
-            document.getElementById('day-counter').textContent = "Day 1 of 7";
+
+        // Update UI
+        function updateUI() {
+            civiliansCountEl.textContent = game.civilians;
+            pointsEl.textContent = game.points;
+            
+            // Disable buttons when requirements aren't met
+            placeBarricadeBtn.disabled = game.points < 30 || game.isWaveActive || game.gameEnded;
+            useMolotovBtn.disabled = game.points < 5 || !game.isWaveActive || game.gameEnded;
         }
-        
-        setupMap();
+
+        // Event listeners
+        startWaveBtn.addEventListener('click', startWave);
+        placeBarricadeBtn.addEventListener('click', () => {
+            messageEl.textContent = "Click on a lane to place barricade (Cost: 30 pts)";
+        });
+        useMolotovBtn.addEventListener('click', () => {
+            messageEl.textContent = "Click on an enemy to throw Molotov (Cost: 5 pts)";
+        });
+
+        // Initialize
+        initLanes();
+        updateUI();
+        waveNumberEl.textContent = game.wave;
+        messageEl.textContent = "You start with 50 points. Build defenses before starting waves!";
     </script>
 </body>
 </html>

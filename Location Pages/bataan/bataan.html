@@ -391,13 +391,11 @@
     let score = 0;
 
     function playSound(soundId) {
-      // Stop all currently playing sounds
       document.querySelectorAll('audio').forEach(audio => {
         audio.pause();
         audio.currentTime = 0;
       });
       
-      // Play the requested sound if it exists
       const sound = document.getElementById(soundId);
       if (sound) {
         sound.currentTime = 0;
@@ -425,7 +423,6 @@
       const choicesDiv = document.getElementById('choices');
       choicesDiv.innerHTML = '';
 
-      // Play the scene's sound effect
       if (scene.sound) {
         playSound(scene.sound);
       }

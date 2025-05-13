@@ -1,38 +1,234 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Japanese Occupation</title>
     <link rel="stylesheet" href="HomePage.css">
-    </head>
-    <body>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+</head>
+<body>
     <header>
         <nav class="navbar">
             <ul>
-              <li><a href="/HomePage/HomePage.html" class="active">Home</a></li>
-              <li><a href="/InteractiveMap/InteractiveMap.html">HistoMap</a></li>
-              <li><a href="/about/developers.html">Developers</a></li>
-              <li><a href="/VictimsPage/Victims.html">Victims</a></li>
+                <li><a href="/HomePage/HomePage.html" class="active">Home</a></li>
+                <li><a href="/InteractiveMap/images/InteractiveMap.html">HistoMap</a></li>
+                <li><a href="/about/developers.html">Developers</a></li>
+                <li><a href="/VictimsPage/Victims.html">Victims</a></li>
             </ul>
-          </nav>
-    </header> 
+        </nav>
+    </header>
 
-    <main class="hero">
-        
-        <div class="overlay">
-            
-        <div class="left-content">
-            <h1>The Japanese<br><span>Occupation</span></h1>
-            <p>
-            Experience history like never before—explore battles, resistance movements, 
-            and the resilience of the Filipino spirit through interactive maps, quizzes, 
-            and multimedia content.
-            </p>
-            <button onclick="location.href='/InteractiveMap/InteractiveMap.html'">Explore</button>
-        </div>
-        </div>      
-        
+    <main>
+        <section class="hero">
+            <div class="overlay">
+                <div class="left-content">
+                    <h1>The Japanese<br><span>Occupation</span></h1>
+                    <p>
+                        Experience history like never before—explore battles, resistance movements,
+                        and the resilience of the Filipino spirit through interactive maps, quizzes,
+                        and multimedia content.
+                    </p>
+                    <button onclick="location.href='/InteractiveMap/images/InteractiveMap.html'">Explore</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="swiper-section">
+             <h2>Key Events & Locations</h2>
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    <!-- Slide 1 -->
+                    <div class="swiper-slide swiper-slide--one">
+                        <div class="card-inner">
+                            <div class="card-front"> 
+                                <span>Battle</span>
+                                <div>
+                                    <h2>Japanese Invasion and Initial Occupation</h2>
+                                    <p>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                                        </svg>
+                                        Bataan Peninsula, Philippines (1942)
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="card-back"> 
+                                <h3>Invasion Details</h3>
+                                <p>The Japanese invasion of the Philippines started on December 8, 1941. General Douglas MacArthur declared Manila an open city to spare it from destruction.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="swiper-slide swiper-slide--two">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <span>Resistance</span>
+                                <div>
+                                    <h2>Life Under Japanese Rule</h2>
+                                    <p>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                                        </svg>
+                                        Across the Archipelago
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="card-back">
+                                <h3>Life Under Occupation</h3>
+                                <p>Life was difficult. There were food shortages, strict curfews, and the Kempeitai (Japanese military police) instilled fear. Propaganda was widespread.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="swiper-slide swiper-slide--three">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <span>Tragedy</span>
+                                <div>
+                                    <h2>The Resistance and Guerrilla Movement</h2>
+                                    <p>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                                        </svg>
+                                        Luzon, Philippines (April 1942)
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="card-back">
+                                <h3>Guerrilla Warfare</h3>
+                                <p>Filipino guerrillas bravely fought against the Japanese throughout the occupation, providing intelligence to Allies and disrupting enemy operations. The Bataan Death March was a horrific event where many prisoners of war perished.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 4 -->
+                    <div class="swiper-slide swiper-slide--four">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <span>Liberation</span>
+                                <div>
+                                    <h2>Japanese Atrocities and Human Rights Violations</h2>
+                                    <p>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                                        </svg>
+                                        Manila, Philippines (1945)
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="card-back">
+                                <h3>Human Cost</h3>
+                                <p>The occupation saw widespread atrocities, including the Manila Massacre in 1945, where an estimated 100,000 civilians were killed. Comfort women were also a tragic reality.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 5 -->
+                    <div class="swiper-slide swiper-slide--five">
+                         <div class="card-inner">
+                            <div class="card-front">
+                                <span>Impact</span>
+                                <div>
+                                    <h2>Liberation and Aftermath</h2>
+                                    <p>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                                        </svg>
+                                        Philippines
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="card-back">
+                                <h3>Road to Recovery</h3>
+                                <p>The Philippines was liberated in 1945, but the country was devastated. The period marked a long road to rebuilding and eventual independence from the U.S. in 1946.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </section>
+
+        <section class="test-yourself">
+            <div class="test-container">
+                <div class="test-image">
+                    <img src="/HomePage/pictures/testimage.jpg" alt="Test Yourself">
+                </div>
+                <div class="test-text">
+                    <h2>Test Yourself!</h2>
+                    <p>
+                        Ready to challenge your knowledge about the Japanese Occupation? Click below to take the quiz and see how much you’ve learned!
+                    </p>
+                    <button onclick="location.href='/quiz/quiz.html'">Take the Quiz</button>
+                </div>
+            </div>
+        </section>
     </main>
-    </body>
-    </html>
+
+    <section class="references-section">
+        <h2>References</h2>
+        <div class="references-content">
+            <p>The information presented on the flashcards is based on general historical knowledge of the Japanese Occupation of the Philippines. For detailed study and specific citations, please consult scholarly works such as:</p>
+            <ul>
+                <li>Agoncillo, T. A. (1990). <em>History of the Filipino People</em> (8th ed.). Garotech Publishing.</li>
+                <li>Constantino, R. (1975). <em>The Philippines: A Past Revisited</em> (Vol. 1). Tala Publishing Services. (See chapters pertaining to World War II and the Japanese Occupation).</li>
+                <li>National Historical Commission of the Philippines. (n.d.). Historical Articles and Resources. Retrieved [Insert Date of Your Last Major Update, e.g., October 26, 2023], from <a href="https://nhcp.gov.ph/" target="_blank" rel="noopener noreferrer">https://nhcp.gov.ph/</a></li>
+                <li>Official Gazette of the Republic of the Philippines. (n.d.). World War II in the Philippines. Retrieved [Insert Date of Your Last Major Update, e.g., October 26, 2023], from <a href="https://www.officialgazette.gov.ph/featured/world-war-ii/" target="_blank" rel="noopener noreferrer">https://www.officialgazette.gov.ph/featured/world-war-ii/</a></li>
+            </ul>
+            <p class="note"><strong>Note:</strong> For precise academic citation, specific page numbers and articles from these and other peer-reviewed sources should be consulted for each fact presented.</p>
+        </div>
+    </section>
+    <!-- END NEW REFERENCES SECTION -->
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script>
+        // ... Your existing Swiper JS ...
+        var swiper = new Swiper(".swiper", {
+          effect: "coverflow",
+          grabCursor: true,
+          centeredSlides: true,
+          slidesPerView: "auto",
+          speed: 600,
+          loop: true,
+          autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+          },
+          coverflowEffect: {
+            rotate: 0,
+            stretch: 0,
+            depth: 150,
+            modifier: 1.5,
+            slideShadows: true
+          },
+          spaceBetween: 50, // Responsive: May need adjustment for smaller screens
+          pagination: {
+            el: ".swiper-pagination",
+            clickable: true
+          },
+          on: {
+            click: function (swiperInstance, event) {
+              const clickedSlideEl = event.target.closest('.swiper-slide');
+              if (clickedSlideEl) {
+                clickedSlideEl.classList.toggle('is-flipped');
+                if (clickedSlideEl.classList.contains('is-flipped')) {
+                  this.autoplay.stop();
+                } else {
+                  if (this.params.autoplay.disableOnInteraction === false) {
+                      const anyFlipped = document.querySelector('.swiper-slide.is-flipped');
+                      if (!anyFlipped) {
+                          this.autoplay.start();
+                      }
+                  }
+                }
+              }
+            }
+          }
+        });
+    </script>
+</body>
+</html>

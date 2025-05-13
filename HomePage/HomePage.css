@@ -1,156 +1,780 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Georgia', serif;
-  }
-  
-  body {
-    color: white;
-    background-color: black;
-    background-image: url('pictures/bg.png');
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    background-position: center;   
-  }
-  
-  .navbar {
-    display: flex;
-    justify-content: center;
-    padding: 30px 0;
-    background-color: rgba(0, 0, 0, 0.6); /* dark transparent overlay */
-    
-  }
-  
-  .navbar ul {
-    display: flex;
-    list-style: none;
-    gap: 30px;
-    font-size: 1.5rem;
-  }
-  
-  .navbar li {
-    cursor: pointer;
-    position: relative;
-  }
-  
-  .navbar li.active::after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    background: red;
-    bottom: -5px;
-    left: 0;
-  }
-  
-  .hero {
-    height: calc(100vh - 80px);
-    background: url('your-map-background.jpg') no-repeat center center/cover;
-    position: relative;
-  }
-  
-  .overlay {
-    background: rgba(0, 0, 0, 0.6); /* dark transparent overlay */
-    height: 100%;
-    display: flex;
-    align-items: center;
-    padding: 0 60px;
-    padding-bottom: 10px;
-  }
-  
-  .left-content {
-    max-width: 40%;
-  }
-  
-  .left-content h1 {
-    font-size: 3rem;
-    margin-bottom: 20px;
-  }
-  
-  .left-content span {
-    display: inline-block;
-    font-size: 2.5rem;
-    margin-top: 10px;
-  }
-  
-  .left-content p {
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 30px;
-    color: #eee;
-  }
-  
-  button {
-    background-color: #5c1b1a;
-    color: white;
-    font-size: 1.2rem;
-    padding: 10px 50px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Georgia', serif;
+} /* Added missing closing brace */
 
-  button {
-    background-color: #5c1b1a;
-    color: white; /* Default text color */
-    border: none;
-    padding: 10px 50px;
-    font-size: 24px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+body {
+  color: white;
+  background-color: black;
+  background-image: url('pictures/bg.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;   
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  padding: 30px 0;
+  background-color: rgba(0, 0, 0, 0.6); /* dark transparent overlay */
+  
+}
+
+.navbar ul {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+  font-size: 1.5rem;
+}
+
+.navbar li {
+  cursor: pointer;
+  position: relative;
+}
+
+.navbar li.active::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: red;
+  bottom: -5px;
+  left: 0;
+}
+
+.hero {
+  height: calc(100vh - 80px);
+  background: url('your-map-background.jpg') no-repeat center center/cover;
+  position: relative;
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.6); /* dark transparent overlay */
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 60px;
+  padding-bottom: 10px;
+}
+
+.left-content {
+  max-width: 40%;
+}
+
+.left-content h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.left-content span {
+  display: inline-block;
+  font-size: 2.5rem;
+  margin-top: 10px;
+}
+
+.left-content p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  color: #eee;
+}
+
+button {
+  background-color: #5c1b1a;
+  color: white; /* Default text color */
+  border: none;
+  padding: 10px 50px;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  -webkit-transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for WebKit browsers */
+  -moz-transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for Mozilla browsers */
+  -webkit-transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for WebKit browsers */
+  -moz-transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for Mozilla browsers */
+  -o-transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for Opera browsers */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
 }
 
 button:hover {
-  background-color: #400e0e;
+background-color: #400e0e;
 
-    transform: scale(1.05); /* Slightly enlarge the button */
+  transform: scale(1.05); /* Slightly enlarge the button */
 }
-  
-  .right-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 20px;
-    margin-left: auto;
+
+.right-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  margin-left: auto;
+}
+.navbar li a {
+  color: white;
+  text-decoration: none;
+  position: relative;
+}
+
+.navbar li a:hover {
+  color: red;
+}
+.navbar li a {
+  color: white;
+  text-decoration: none;
+  position: relative;
+}
+
+.navbar li a:hover {
+  color: red;
+}
+
+.navbar li a.active::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: red;
+  bottom: -5px;
+  left: 0;
+}
+/* .navbar li a { ... existing styles ... } */
+
+/* Remove Old Carousel Styles (Delete these lines from your CSS): */
+/* .carousel-section { ... } */
+/* .carousel-container { ... } */
+/* .carousel-track { ... } */
+/* .carousel-image { ... } */
+/* .carousel-controls { ... } */
+/* .prev, .next { ... } */
+
+
+/* --- NEW SWIPER STYLES --- */
+
+/* Container for the Swiper section */
+/* --- SWIPER STYLES --- */
+
+/* Container for the Swiper section - UPDATED */
+.swiper-section {
+  position: relative;
+  width: 100%;
+  /* Make section take full viewport height */
+  height: 100vh;
+  /* Remove padding, rely on flexbox for centering */
+  /* padding: 60px 0; */
+  background-color: rgba(0, 0, 0, 0.7); /* Dark overlay */
+  overflow: hidden; /* Prevent content overflow */
+  color: white;
+
+  /* Use Flexbox to center the swiper container vertically and horizontally */
+  display: flex;
+  flex-direction: column; /* Stack heading and swiper vertically */
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+}
+
+/* Optional heading for the section */
+.swiper-section h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 20px; /* Reduced margin slightly */
+    font-family: 'Georgia', serif;
+    /* Ensure heading doesn't prevent swiper centering if it gets too tall */
+    flex-shrink: 0;
+}
+
+/* Swiper container */
+.swiper {
+  width: 100%; /* Takes full width available */
+  max-width: 1200px; /* Optional: constrain max width on very wide screens */
+  /* Adjust padding - Less top padding needed due to flex centering */
+  padding-top: 10px;
+  padding-bottom: 50px; /* Keep space for pagination */
+  /* Ensure swiper takes up the remaining space if needed */
+  flex-grow: 1;
+  display: flex; /* Needed for vertical centering of swiper-wrapper inside */
+  align-items: center; /* Vertically center slides if swiper container is tall */
+}
+
+/* Individual slide styling - UPDATED SIZE */
+.swiper-slide {
+  background-position: center;
+  background-size: cover;
+  /* --- REDUCED SIZE --- */
+  width: 280px;   /* Example: Reduced width */
+  height: 380px;  /* Example: Reduced height */
+  /* --- END REDUCED SIZE --- */
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  filter: blur(2px);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  transition: filter 0.5s ease;
+}
+
+/* Active slide */
+.swiper-slide-active {
+  filter: blur(0px);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 0, 0, 0.3);
+}
+
+/* Pagination bullets (Keep as is or adjust if needed) */
+.swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.6);
+  opacity: 1;
+  width: 10px;
+  height: 10px;
+}
+
+.swiper-pagination-bullet-active {
+  background: red;
+  width: 12px;
+  height: 12px;
+}
+
+/* Tag/Category span on the slide (Keep as is) */
+.swiper-slide span {
+  text-transform: uppercase;
+  color: white;
+  background: #5c1b1a;
+  padding: 7px 18px 7px 25px;
+  display: inline-block;
+  border-radius: 0 20px 20px 0px;
+  letter-spacing: 1.5px;
+  font-size: 0.8rem;
+  font-family: 'Georgia', serif;
+  margin-bottom: 10px;
+}
+
+/* Heading inside the slide (Keep as is) */
+.swiper-slide h2 {
+  color: #fff;
+  font-family: 'Georgia', serif;
+  font-weight: bold;
+  font-size: 1.4rem;
+  line-height: 1.3;
+  margin-bottom: 10px;
+  padding: 0 25px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+}
+
+/* Paragraph text inside the slide (Keep as is) */
+.swiper-slide p {
+  color: #eee;
+  font-family: 'Georgia', serif;
+  font-weight: normal;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  padding: 0 25px 35px 25px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+}
+
+/* SVG icon inside the paragraph (Keep as is) */
+.swiper-slide svg {
+  color: #fff;
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.swiper-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  /* UPDATED: Subtle Gradient Background */
+  background: linear-gradient(to bottom, rgba(0,0,0,0.85), rgba(0,0,0,0.70), rgba(0,0,0,0.85));
+  overflow: hidden;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Optional heading */
+.swiper-section h2 {
+    text-align: center;
+    font-size: 2.8rem; /* Slightly larger heading */
+    margin-bottom: 25px; /* Adjusted margin */
+    font-family: 'Georgia', serif;
+    flex-shrink: 0;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.5); /* Add subtle shadow */
+}
+
+/* Swiper container (mostly unchanged) */
+.swiper {
+  width: 100%;
+  max-width: 1200px;
+  padding-top: 10px;
+  padding-bottom: 50px;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+}
+
+/* Individual slide styling - UPDATED OPACITY & TRANSITION */
+.swiper-slide {
+  background-position: center;
+  background-size: cover;
+  width: 280px;
+  height: 380px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  filter: blur(2px);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  opacity: 0.55; /* Non-active slides are less visible */
+  transition: opacity 0.8s ease, filter 0.8s ease, transform 0.8s ease; /* Smooth transitions */
+}
+
+.swiper-slide-active {
+  filter: blur(0px); /* Remove blur */
+  opacity: 1; /* Fully visible */
+  transform: scale(1.05); /* Slight zoom effect */
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3), 0 0 25px rgba(255, 0, 0, 0.35); /* Enhanced shadow/glow */
+  transition: opacity 0.8s ease, filter 0.8s ease, transform 0.8s ease; /* Smooth transitions */
+}
+
+.swiper-slide--one {
+  background: linear-gradient(to top, #000000CC, #00000033, #00000000),
+    url('pictures/slide1.jpg') /* CHANGE URL */
+      no-repeat 50% 50% / cover;
+}
+
+.swiper-slide--two {
+  background: linear-gradient(to top, #000000CC, #00000033, #00000000),
+    url("pictures/slide2.jpg") /* CHANGE URL */
+      no-repeat 50% 50% / cover;
+}
+
+.swiper-slide--three {
+  background: linear-gradient(to top, #000000CC, #00000033, #00000000),
+    url("pictures/slide3.webp") /* CHANGE URL */
+      no-repeat 50% 50% / cover;
+}
+
+.swiper-slide--four {
+  background: linear-gradient(to top, #000000CC, #00000033, #00000000),
+    url("pictures/slide4(battle of bataan).jpg") /* CHANGE URL */
+      no-repeat 50% 50% / cover;
+}
+
+.swiper-slide--five {
+  background: linear-gradient(to top, #000000CC, #00000033, #00000000),
+    url("pictures/slide5.jpg") /* CHANGE URL */
+      no-repeat 50% 50% / cover;
+}
+
+/* Swiper 3D Shadows (often subtle with coverflow) */
+.swiper-3d .swiper-slide-shadow-left,
+.swiper-3d .swiper-slide-shadow-right {
+  background-image: linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0)); /* Darker shadow */
+}
+.swiper-3d .swiper-slide-shadow-right {
+    background-image: linear-gradient(to left, rgba(0,0,0,0.5), rgba(0,0,0,0)); /* Darker shadow */
+}
+
+
+/* --- END SWIPER STYLES --- */
+
+
+/* --- END SWIPER STYLES --- */
+
+
+/* .test-yourself { ... existing styles ... } */
+/* .test-container { ... existing styles ... } */
+/* .test-image img { ... existing styles ... } */
+/* .test-text { ... existing styles ... } */
+/* .test-text h2 { ... existing styles ... } */
+/* .test-text p { ... existing styles ... } */
+/* .test-text button { ... existing styles ... } */
+
+/*Section 2 */
+
+
+.test-yourself {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 60px 20px;
+  color: white;
+}
+
+.test-container {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.test-image img {
+  width: 300px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+}
+
+.test-text {
+  flex: 1;
+  min-width: 280px;
+}
+
+.test-text h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.test-text p {
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  color: #ddd;
+}
+
+.test-text button {
+  background-color: #5c1b1a;
+  color: white;
+  padding: 10px 40px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.test-text button:hover {
+  background-color: #400e0e;
+  transform: scale(1.05);
+}
+
+
+.swiper-slide {
+  perspective: 1000px; /* How "deep" the 3D effect looks */
+  /* The following styles were already on your .swiper-slide, 
+     but ensure flex properties are removed if they were directly on .swiper-slide
+     and not on .card-front. If your front card content disappears, 
+     you might need to re-add display:flex, flex-direction:column etc. here
+     OR ensure they are correctly on .card-front below.
+     For now, let's assume .card-front handles its own layout. */
+}
+
+/* The inner container that will actually flip */
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s; /* Animation speed for the flip */
+  transform-style: preserve-3d; /* Important for 3D */
+  border-radius: 10px; /* Match your slide's border radius */
+}
+
+/* When the slide has the 'is-flipped' class, rotate the inner card */
+.swiper-slide.is-flipped .card-inner {
+  transform: rotateY(180deg); /* Flip it horizontally */
+}
+
+/* Ensure a flipped card stays prominent and clear */
+.swiper-slide.is-flipped {
+    filter: none !important;
+    opacity: 1 !important;
+    transform: scale(1.05); /* Keep the active zoom effect */
+    z-index: 10; /* Bring it to the front */
+}
+
+/* Common styles for both front and back of the card */
+.card-front, .card-back {
+  position: absolute; /* Stack them on top of each other */
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* For Safari */
+  backface-visibility: hidden; /* Hides the side facing away from you */
+  border-radius: 10px; /* Match your slide's border radius */
+  box-sizing: border-box;
+  display: flex; /* Helps in centering/aligning content */
+  flex-direction: column;
+}
+
+/* Styles for the front of the card (your original slide content) */
+.card-front {
+  /* It should inherit the background image from .swiper-slide--one, .swiper-slide--two, etc. */
+  background-color: transparent; /* Make sure slide background shows */
+  color: white;
+  justify-content: flex-end; /* Align content to bottom (like original) */
+  align-items: flex-start;   /* Align content to left (like original) */
+}
+
+/* --- Styles for the content INSIDE card-front (original span, h2, p) --- */
+/* These ensure your original front content looks the same */
+.card-front span {
+  text-transform: uppercase;
+  color: white;
+  background: #5c1b1a;
+  padding: 7px 18px 7px 25px;
+  display: inline-block;
+  border-radius: 0 20px 20px 0px;
+  letter-spacing: 1.5px;
+  font-size: 0.8rem;
+  font-family: 'Georgia', serif;
+  margin-bottom: 10px;
+}
+
+.card-front > div { /* Target the div holding h2 and p */
+    padding: 0 25px 35px 25px; /* Original padding moved here */
+}
+
+.card-front h2 {
+  color: #fff;
+  font-family: 'Georgia', serif;
+  font-weight: bold;
+  font-size: 1.4rem; /* Your original size */
+  line-height: 1.3;
+  margin-bottom: 10px; /* Your original margin */
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+  /* padding: 0 25px; -- Padding is now on the parent div */
+}
+
+.card-front p {
+  color: #eee;
+  font-family: 'Georgia', serif;
+  font-weight: normal;
+  font-size: 1rem; /* Your original size */
+  display: flex;
+  align-items: center;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+  /* padding: 0 25px 35px 25px; -- Padding is now on the parent div */
+}
+
+.card-front p svg {
+  color: #fff;
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+/* --- End styles for content INSIDE card-front --- */
+
+
+/* Styles for the back of the card */
+.card-back {
+  background-color: #333; /* Dark background for the back */
+  color: white;
+  transform: rotateY(180deg); /* Start it flipped so it's hidden */
+  padding: 25px; /* Space inside the card back */
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  text-align: left; /* Text alignment for the info */
+  overflow-y: auto; /* Add scroll if content is too long */
+}
+
+.card-back h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.card-back p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+
+
+.references-section {
+  padding: 40px 20px; /* Responsive: Use % for side padding if needed */
+  background-color: #1a1a1a; /* A slightly different dark shade */
+  color: #ccc;
+  text-align: left;
+  font-family: 'Georgia', serif;
+}
+
+.references-section h2 {
+  text-align: center;
+  font-size: 2.2rem;  /* Responsive: Consider smaller rem/em or vw for smaller screens */
+  color: white;
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+
+.references-content {
+  max-width: 800px; /* Keeps content readable */
+  margin: 0 auto; /* Center the content block */
+  font-size: 0.95rem; /* Responsive: Adjust as needed */
+  line-height: 1.7;
+}
+
+.references-content p {
+  margin-bottom: 15px;
+}
+
+.references-content ul {
+  list-style-type: disc; /* Or none if you prefer */
+  margin-left: 25px; /* Indent list items */
+  margin-bottom: 20px;
+}
+
+.references-content li {
+  margin-bottom: 10px;
+}
+
+.references-content a {
+  color: #e74c3c; /* A reddish link color */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.references-content a:hover {
+  color: #c0392b;
+  text-decoration: underline;
+}
+
+.references-content .note {
+  font-style: italic;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+
+@media (max-width: 768px) {
+  .navbar ul {
+      gap: 20px;
+      font-size: 1.3rem; /* Slightly smaller nav font */
   }
-  .navbar li a {
-    color: white;
-    text-decoration: none;
-    position: relative;
+
+  .overlay {
+      padding: 0 30px; /* Less padding on sides */
   }
-  
-  .navbar li a:hover {
-    color: red;
+
+  .left-content {
+      max-width: 80%; /* Allow more width for text */
+      text-align: center; /* Center hero text on smaller screens */
   }
-  
-  .navbar li a.active::after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    background: red;
-    bottom: -5px;
-    left: 0;
+
+  .left-content h1 {
+      font-size: 2.5rem; /* Smaller hero heading */
   }
-  .navbar li a {
-    color: white;
-    text-decoration: none;
-    position: relative;
+  .left-content span {
+      font-size: 2rem;
   }
-  
-  .navbar li a:hover {
-    color: red;
+
+  .swiper-section h2 {
+      font-size: 2rem; /* Smaller swiper heading */
+      margin-bottom: 15px;
   }
-  
-  .navbar li a.active::after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    background: red;
-    bottom: -5px;
-    left: 0;
+
+  .swiper-slide {
+      width: 240px;   /* Adjust slide size for smaller screens */
+      height: 340px;
+      /* Swiper's 'slidesPerView: "auto"' and 'spaceBetween' will help,
+         but you might need to adjust spaceBetween in JS or more slide CSS here. */
   }
-    
+  /* If you have `spaceBetween` in Swiper JS, consider if it needs dynamic adjustment
+     or if CSS can manage the visual spacing sufficiently.
+     For very small screens, you might want fewer slides visible or a different effect.
+  */
+
+  .test-container {
+      flex-direction: column; /* Stack image and text */
+      gap: 30px;
+      align-items: center; /* Center items when stacked */
+  }
+  .test-image img {
+      width: 250px; /* Smaller image */
+  }
+  .test-text {
+      text-align: center;
+  }
+  .test-text h2 {
+      font-size: 2rem;
+  }
+
+  .references-section h2 {
+      font-size: 1.8rem;
+  }
+  .references-content {
+      font-size: 0.9rem;
+  }
+}
+
+/* For mobile phones (e.g., up to 480px) */
+@media (max-width: 480px) {
+  .navbar ul {
+      font-size: 1.1rem;
+      gap: 15px;
+      /* You might consider a hamburger menu for very small screens */
+  }
+   header .navbar { /* More specific selector if needed */
+      padding: 20px 0;
+  }
+
+
+  .overlay {
+      padding: 0 15px;
+  }
+  .left-content h1 {
+      font-size: 2rem;
+  }
+  .left-content span {
+      font-size: 1.7rem;
+  }
+  .left-content p {
+      font-size: 0.9rem;
+  }
+  button, .test-text button { /* Target all buttons */
+      padding: 8px 30px;
+      font-size: 1rem;
+  }
+
+  .swiper-section {
+      /* On very small screens, coverflow might be too much.
+         You might even change the Swiper effect via JS if needed,
+         or simplify the slide appearance further. */
+      height: auto; /* Allow swiper section to take natural height */
+      padding-top: 30px;
+      padding-bottom: 30px;
+  }
+   .swiper-section h2 {
+      font-size: 1.8rem;
+  }
+
+  .swiper-slide {
+      width: 200px;   /* Even smaller slides */
+      height: 300px;
+      /* Adjust card-front/back content sizes if they overflow */
+  }
+  .card-front h2, .card-back h3 {
+      font-size: 1.1rem;
+  }
+  .card-front p, .card-back p {
+      font-size: 0.85rem;
+  }
+  .card-front span {
+      font-size: 0.7rem;
+      padding: 5px 12px 5px 15px;
+  }
+
+
+  .test-text h2 {
+      font-size: 1.8rem;
+  }
+  .test-text p {
+      font-size: 0.9rem;
+  }
+
+  .references-section {
+      padding: 30px 15px;
+  }
+  .references-section h2 {
+      font-size: 1.6rem;
+  }
+  .references-content {
+      font-size: 0.85rem;
+  }
+  .references-content ul {
+      margin-left: 15px;
+  }
+}

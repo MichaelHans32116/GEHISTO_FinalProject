@@ -1,7 +1,7 @@
 // script.js
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoid2luZGlndWVzcyIsImEiOiJjbWFtbGRycmIwa2xoMnJxMGJmNjYwYjZiIn0.a6XJTM1zPHONDFb8b15IIw';
-        
+
 const map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/dark-v11',
@@ -123,8 +123,8 @@ locations.forEach((location, index) => {
         <h2>${location.name}</h2>
         <div style="color:var(--accent-red);font-size:1.1rem;font-weight:bold;margin-bottom:0.7rem;">${location.events}</div>
         <p>${location.description}</p>
-        <a class="map-button" href="${location.pageUrl}" target="_blank" rel="noopener">View Location Page</a>
-    `;
+        <a class="map-button" href="${location.pageUrl}">View Location Page</a> 
+    `; // <-- ANG PAGBABAGO AY NANDITO: Tinanggal ang target="_blank" at rel="noopener"
     storyContainer.appendChild(section);
 
     // Create sidebar list items
@@ -188,7 +188,7 @@ function transitionMap(location, isIntro = false, forceTransition = false) {
             map.flyTo(zoomInConfig);
             setTimeout(() => {
                 isAnimating = false;
-            }, zoomInConfig.duration); 
+            }, zoomInConfig.duration);
         }, zoomOutConfig.duration);
     } else {
         setTimeout(() => {
@@ -234,7 +234,7 @@ if (locationListUl) {
 }
 
 // Improved debounce function
-function debounce(func, wait) { /* ... (your existing debounce) ... */ 
+function debounce(func, wait) { /* ... (your existing debounce) ... */
     let timeout;
     return function executedFunction(...args) {
         const later = () => {
@@ -247,7 +247,7 @@ function debounce(func, wait) { /* ... (your existing debounce) ... */
 }
 
 // Throttle function for scroll events
-function throttle(func, limit) { /* ... (your existing throttle) ... */ 
+function throttle(func, limit) { /* ... (your existing throttle) ... */
     let inThrottle;
     return function(...args) {
         if (!inThrottle) {
@@ -273,7 +273,7 @@ const observer = new IntersectionObserver(debounce((entries) => {
                 }
                 return;
             }
-            
+
             const sectionIndex = Array.from(sections).indexOf(entry.target); // Simpler way to get index
 
             if (sectionIndex !== -1) {
@@ -343,7 +343,7 @@ window.addEventListener('scroll', throttle(() => {
     const scrollPosition = window.scrollY;
     const introPosition = intro.offsetTop;
     const scrollIndicator = document.querySelector('.scroll-indicator');
-    
+
     if (scrollPosition < introPosition + 100) {
         // Only transition if not already at intro or transitioning to intro
         if (currentLocationIndex !== -1 || (map.getZoom() > 5.5 || map.getPitch() !== 0)) {
@@ -389,7 +389,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 currentLocationIndex = i;
                 initialSectionFound = true;
             }
-            break; 
+            break;
         }
     }
     // If no story section is initially visible (e.g. page loaded at the very top, showing intro)

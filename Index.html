@@ -236,45 +236,95 @@
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <script>
+        const swiperSection = document.querySelector('.swiper-section'); // Get the section element
+
         var swiper = new Swiper(".swiper", {
-          effect: "coverflow",
+          effect: "coverflow", // Keep coverflow, we'll tweak its params
           grabCursor: true,
           centeredSlides: true,
-          slidesPerView: "auto",
-          speed: 600,
+          slidesPerView: "auto", // Important for coverflow to work well with different slide widths
+          speed: 800, // Slightly faster transition
           loop: true,
           autoplay: {
-            delay: 3000,
+            delay: 3500, // Slightly longer delay
             disableOnInteraction: false,
           },
           coverflowEffect: {
-            rotate: 0,
-            stretch: 0,
-            depth: 150,
-            modifier: 1.5,
-            slideShadows: true
+            rotate: 40,        // Rotate angle of non-active slides
+            stretch: 0,        // Stretch space between slides (0 means no stretch)
+            depth: 200,        // Depth of the effect (how far back non-active slides appear)
+            modifier: 1,       // Effect multiplier (1 is normal)
+            slideShadows: true, // Enable shadows on sides of slides
           },
-          spaceBetween: 50,
+          // watchSlidesProgress: true, // May need this if doing complex custom transitions per slide
+          // watchSlidesVisibility: true, // May need this as well
+
+          spaceBetween: 60, // Increase space between slides for more depth perception
+
           pagination: {
             el: ".swiper-pagination",
             clickable: true
           },
           on: {
+            // --- EVENT TO UPDATE BACKGROUND ---
+            slideChangeTransitionStart: function () {
+                // Get the current active slide
+                const activeSlide = this.slides[this.activeIndex];
+                if (activeSlide && swiperSection) {
+                    // Get the computed background image style of the active slide
+                    const computedStyle = window.getComputedStyle(activeSlide);
+                    const backgroundImage = computedStyle.backgroundImage;
+
+                    // Set the CSS variable on the swiper-section
+                    // This will make the ::before pseudo-element update its background
+                    if (backgroundImage && backgroundImage !== 'none') {
+                        swiperSection.style.setProperty('--swiper-section-bg', backgroundImage);
+                    } else {
+                        // Fallback if no image (e.g., if it's just a color)
+                        swiperSection.style.setProperty('--swiper-section-bg', "url('pictures/bg.png')"); // Your default
+                    }
+                }
+                // Reset flip state of all cards when slide changes
+                this.slides.forEach(slide => {
+                    slide.classList.remove('is-flipped');
+                });
+            },
             click: function (swiperInstance, event) {
+              // Your existing card flip logic
               const clickedSlideEl = event.target.closest('.swiper-slide');
               if (clickedSlideEl) {
-                clickedSlideEl.classList.toggle('is-flipped');
-                if (clickedSlideEl.classList.contains('is-flipped')) {
-                  this.autoplay.stop();
-                } else {
-                  if (this.params.autoplay.disableOnInteraction === false) {
-                      const anyFlipped = document.querySelector('.swiper-slide.is-flipped');
-                      if (!anyFlipped) {
-                          this.autoplay.start();
-                      }
-                  }
+                // Only flip if the clicked slide is the active one or if you allow flipping non-active
+                if (clickedSlideEl.classList.contains('swiper-slide-active') || true) { // set to true to allow flipping any visible slide
+                    clickedSlideEl.classList.toggle('is-flipped');
+                    if (clickedSlideEl.classList.contains('is-flipped')) {
+                        this.autoplay.stop();
+                        // Optional: if a non-active card is flipped, bring it to center?
+                        // if (!clickedSlideEl.classList.contains('swiper-slide-active')) {
+                        //   const slideIndex = Array.from(this.slides).indexOf(clickedSlideEl);
+                        //   if (slideIndex !== -1) this.slideToLoop(slideIndex);
+                        // }
+                    } else {
+                        // Only restart autoplay if no cards are flipped AND autoplay was not manually disabled
+                        if (this.params.autoplay.disableOnInteraction === false) {
+                            const anyFlipped = document.querySelector('.swiper-slide.is-flipped');
+                            if (!anyFlipped) {
+                                this.autoplay.start();
+                            }
+                        }
+                    }
                 }
               }
+            },
+            // --- INITIAL BACKGROUND SET ---
+            init: function () {
+                const initialActiveSlide = this.slides[this.activeIndex];
+                 if (initialActiveSlide && swiperSection) {
+                    const computedStyle = window.getComputedStyle(initialActiveSlide);
+                    const backgroundImage = computedStyle.backgroundImage;
+                     if (backgroundImage && backgroundImage !== 'none') {
+                        swiperSection.style.setProperty('--swiper-section-bg', backgroundImage);
+                    }
+                }
             }
           }
         });

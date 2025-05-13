@@ -1,5 +1,5 @@
 let stevePos = 40; 
-let killerPos = 0;
+let killerPos = 20;
 
 function updatePositions() {
   document.getElementById("steve").style.left = stevePos + "%";
@@ -38,7 +38,7 @@ function killSteve() {
   killer.classList.add("shake");
 
   killer.style.left = steve.style.left;
-  steve.src = "../Pictures/Dsteve.png";
+  steve.src = "../Pictures/D.png";
 
   Swal.fire({
     title: "Game Over!",
@@ -97,20 +97,37 @@ function animate() {
 
 animate();
 
-
-
 function goBack() {
   window.location.href = "Front.html";
 }
 
+function goBackIntro() {
+  window.location.href = "Intro.html";
+}
+
 function next(id) {
   const containers = document.getElementsByClassName('container');
+  const currentContainer = containers[id - 1];
+  const radioButtons = currentContainer.querySelectorAll('input[type="radio"]');
   const correctAnswer = document.getElementById('correct' + id);
 
+ 
+  const isAnswered = Array.from(radioButtons).some(r => r.checked);
+
+  if (!isAnswered) {
+    Swal.fire({
+      title: "Hold on!",
+      text: "Please select an answer before moving on.",
+      icon: "warning",
+      confirmButtonText: "OK"
+    });
+    return; 
+  }
+
   const transitionToNext = () => {
-    containers[id - 1].style.opacity = 0;
+    currentContainer.style.opacity = 0;
     setTimeout(() => {
-      containers[id - 1].style.display = "none";
+      currentContainer.style.display = "none";
       containers[id].style.display = "block";
       containers[id].style.opacity = 1;
     }, 500);
@@ -118,13 +135,12 @@ function next(id) {
 
   if (correctAnswer.checked) {
     stevePos += 5;
-    if (stevePos > 90) stevePos = 90; 
+    if (stevePos > 90) stevePos = 90;
     updatePositions();
 
-    
     const steve = document.getElementById("steve");
     steve.classList.remove("jump");
-    void steve.offsetWidth; 
+    void steve.offsetWidth;
     steve.classList.add("jump");
 
     Swal.fire({
@@ -152,22 +168,23 @@ function next(id) {
   }
 }
 
+
 function result() {
   let score = 0;
-  for (let i = 1; i <= 10; i++) {
+  for (let i = 1; i <= 7; i++) {
     if (document.getElementById('correct' + i)?.checked) {
       score++;
     }
   }
 
-  if (score <= 3) {
+  if (score <= 0) {
     killSteve(); 
     return;
   }
 
   Swal.fire({
     title: "Quiz Complete!",
-    text: "Your score is: " + score + "/10",
+    text: "Your score is: " + score + "/7",
     icon: "info",
     showCancelButton: true,
     confirmButtonText: "Restart Quiz",
@@ -176,17 +193,17 @@ function result() {
     cancelButtonColor: "#d33"
   }).then((result) => {
     if (result.isConfirmed) {
-      window.location.href = "Front.html";
+      window.location.href = "Quiz.html";
     }
   });
 }
 
 function restartQuiz() {
-  lives = 10;
+  lives = 7;
   updateHearts();
 
   stevePos = 40;
-  killerPos = 0;
+  killerPos = 20;
   updatePositions();
 
   const radios = document.querySelectorAll('input[type="radio"]');
@@ -201,5 +218,5 @@ function restartQuiz() {
   containers[0].style.display = "block";
   containers[0].style.opacity = 1;
 
-  document.getElementById("steve").src = "../Pictures/FRsteve.png"; 
+  document.getElementById("steve").src = "../Pictures/RUN.png"; 
 }

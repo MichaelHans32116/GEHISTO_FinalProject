@@ -1,4 +1,4 @@
-let lives = 10;
+let lives = 7;
 
 window.addEventListener("load", () => {
   updateHearts();
@@ -9,7 +9,7 @@ function updateHearts() {
   if (!heartDisplay) return;
   heartDisplay.innerHTML = "";
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 7; i++) {
     const img = document.createElement("img");
     img.width = 24;
     img.style.marginRight = "5px";

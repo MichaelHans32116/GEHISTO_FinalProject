@@ -51,7 +51,7 @@ h1, h2, h3 {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Optional: Add text shadow */
 }
 
-p {
+.progressText {
     text-align: justify;
     color: white;
     margin: 20px 50px;
@@ -59,6 +59,18 @@ p {
     font-size: 1.2em; /* Adjust size as needed */
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Optional: Add text shadow */
 }
+
+.contentText {
+    text-align: justify;
+    color: white;
+    line-height: 1.6;
+    font-size: 1.2em; /* Adjust size as needed */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Optional: Add text shadow */
+    width: 60%;
+    margin: 20px auto; /* Center the paragraph */
+}
+
+
 
 /* Center the minigame section */
 /* Center the minigame section */
@@ -128,4 +140,63 @@ p {
     left: calc(50% + 200px); /* Position the icon to the right of the progress bar */
     transform: translateY(-50%); /* Adjust for vertical centering */
     z-index: 10; /* Ensure the icon is above other elements */
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px); /* Optional: Adds a slight upward motion */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#content {
+    opacity: 0; /* Initially hidden */
+    visibility: hidden; /* Make it invisible but still part of the layout */
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+}
+
+#content.show {
+    opacity: 1; /* Fully visible after animation */
+    visibility: visible; /* Make it visible */
+    animation: fadeIn 1s ease-in-out;
+}
+
+.restoreAndMoreButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    font-size: 1.5rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    z-index: 10;
+    margin: 0 auto; /* Center the button */
+}
+
+#content-text {
+    max-height: 300px; /* Set a fixed height for the container */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 10px; /* Add padding for better readability */
+    border: 1px solid #ccc; /* Optional: Add a border for clarity */
+    border-radius: 5px; /* Optional: Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+}
+
+/* Optional: Add a scrollbar style for better appearance */
+#content-text::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+}
+
+#content-text::-webkit-scrollbar-thumb {
+    background-color: #880808; /* Color of the scrollbar thumb */
+    border-radius: 4px; /* Rounded corners for the scrollbar thumb */
+}
+
+#content-text::-webkit-scrollbar-thumb:hover {
+    background-color: #a00a0a; /* Darker color on hover */
 }

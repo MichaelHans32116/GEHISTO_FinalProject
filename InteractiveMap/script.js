@@ -187,7 +187,7 @@
                 zoom: 5,
                 pitch: 0,
                 bearing: 0,
-                duration: 500, // Faster zoom out
+                duration: 800, // Faster zoom out
                 essential: true
             };
 
@@ -196,7 +196,7 @@
                 zoom: location.zoom,
                 pitch: location.pitch,
                 bearing: location.bearing,
-                duration: 800, // Faster zoom in
+                duration: 1300, // Faster zoom in
                 essential: true
             } : null;
 

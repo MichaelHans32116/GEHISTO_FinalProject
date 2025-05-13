@@ -5,8 +5,26 @@ document.addEventListener("DOMContentLoaded", () => {
     const progressText = document.getElementById("progress-text");
     const enemyArea = document.getElementById("enemy-area");
 
+    // Create audio element for background music
+    const bgm = new Audio("../audioVictims/funeral-electro-bgm.mp3");
+    bgm.loop = true; // Make the music loop
+    bgm.volume = 0.1; // Set volume to 10% for subtle background effect
+
+    // Add audio event listeners for debugging
+    bgm.addEventListener('canplaythrough', () => {
+        console.log('Audio is ready to play');
+    });
+
+    bgm.addEventListener('error', (e) => {
+        console.error('Audio error:', e);
+    });
+
+    bgm.addEventListener('playing', () => {
+        console.log('Audio is playing');
+    });
+
     let progress = 0;
-    const decrementRate = 1;
+    const decrementRate = 4;
     const decrementInterval = 1000;
 
     let gameInterval;
@@ -35,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
         fire.style.left = `${Math.random() * (window.innerWidth - 60)}px`;
 
         fire.onclick = () => {
-            progress += 5;
+            progress += 13;
             if (progress > 100) progress = 100;
             updateProgress();
             fire.remove();
@@ -45,6 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 clearInterval(spawnInterval);
                 minigame.style.display = "none";
                 content.style.display = "block";
+                bgm.pause(); // Stop the music when game is complete
             }
         };
 
@@ -52,8 +71,32 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => fire.remove(), 2000);
     };
 
+    // Create initial centered fire
+    const initialFire = document.createElement("img");
+    initialFire.src = "../Images/fire.png";
+    initialFire.classList.add("fire");
+    initialFire.style.position = "absolute";
+    initialFire.style.top = "50%";
+    initialFire.style.left = "50%";
+    initialFire.style.transform = "translate(-50%, -50%)";
+    initialFire.style.cursor = "pointer"; // Add pointer cursor to indicate clickable
+
+    // Start game when initial fire is clicked
+    initialFire.onclick = () => {
+        initialFire.remove(); // Remove the centered fire
+        gameInterval = setInterval(decrementProgress, decrementInterval);
+        spawnInterval = setInterval(spawnFire, 1000); // every second
+    };
+
+    enemyArea.appendChild(initialFire);
+
     // Start the mini-game immediately
     minigame.style.display = "flex";
-    gameInterval = setInterval(decrementProgress, decrementInterval);
-    spawnInterval = setInterval(spawnFire, 1000);
+    
+    // Start playing background music with user interaction
+    document.addEventListener('click', () => {
+        bgm.play().catch(error => {
+            console.log("Audio playback failed:", error);
+        });
+    }, { once: true }); // Only trigger once on first click
 });

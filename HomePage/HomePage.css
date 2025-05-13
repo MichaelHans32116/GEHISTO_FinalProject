@@ -92,8 +92,6 @@ button {
   cursor: pointer;
   -webkit-transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for WebKit browsers */
   -moz-transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for Mozilla browsers */
-  -webkit-transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for WebKit browsers */
-  -moz-transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for Mozilla browsers */
   -o-transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for Opera browsers */
   transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
 }
@@ -777,4 +775,299 @@ background-color: #400e0e;
   .references-content ul {
       margin-left: 15px;
   }
+}
+
+
+
+/* ... (iyong mga existing CSS rules) ... */
+
+/* --- START NEW VOICES FROM THE PAST SECTION STYLES --- */
+.voices-section {
+  padding: 60px 20px;
+  background-color: rgba(10, 10, 10, 0.75); /* Dark overlay, slightly different for variety */
+  text-align: center;
+  color: white;
+}
+
+.voices-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  font-family: 'Georgia', serif;
+}
+
+.voices-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+  max-width: 1200px;
+  margin: 0 auto 40px auto; /* Center container and add bottom margin before button */
+}
+
+.voice-item {
+  background-color: rgba(30, 30, 30, 0.8); /* Slightly lighter card background */
+  border-radius: 8px;
+  padding: 20px;
+  width: 100%;
+  max-width: 400px; /* Max width for each item */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: left;
+  display: flex; /* For image and text alignment */
+  flex-direction: column; /* Stack image and text by default */
+  align-items: center; /* Center image */
+}
+
+.voice-item img {
+  width: 100%;
+  max-width: 200px; /* Control image size */
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  object-fit: cover; /* Ensure image covers space well */
+}
+
+.voice-item blockquote {
+  margin: 0;
+  font-style: italic;
+  color: #ddd;
+  font-size: 1.1rem; /* Slightly larger for quotes */
+  line-height: 1.6;
+  position: relative;
+  padding-left: 20px; /* Space for pseudo-element quote mark */
+}
+
+.voice-item blockquote::before {
+  content: "“"; /* Opening quote */
+  font-family: 'Georgia', serif;
+  font-size: 3rem;
+  color: #5c1b1a; /* Accent color for quote mark */
+  position: absolute;
+  left: -10px;
+  top: -10px;
+  opacity: 0.7;
+}
+
+.voice-item blockquote p {
+    margin-bottom: 10px;
+}
+
+.voice-item footer {
+  margin-top: 10px;
+  font-style: normal;
+  font-weight: bold;
+  color: #ccc;
+  font-size: 0.9rem;
+  text-align: right;
+  width: 100%;
+}
+
+/* Button in voices-section inherits general button style but can be specifically targeted if needed */
+/* --- END NEW VOICES FROM THE PAST SECTION STYLES --- */
+
+
+/* --- START NEW TIMELINE SECTION STYLES --- */
+.timeline-section {
+  padding: 60px 20px;
+  background-color: rgba(0, 0, 0, 0.7); /* Consistent dark overlay */
+  color: white;
+}
+
+.timeline-section h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  font-family: 'Georgia', serif;
+}
+
+.timeline-container {
+  max-width: 800px; /* Control the width of the timeline content */
+  margin: 0 auto;
+  position: relative; /* For pseudo-element line */
+}
+
+/* The central timeline line (optional, but adds visual structure) */
+.timeline-container::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: #5c1b1a; /* Accent color */
+  transform: translateX(-50%);
+  border-radius: 2px;
+  display: none; /* Hide by default, enable for larger screens in media query */
+}
+
+.timeline-item {
+  padding: 20px 0; /* Vertical padding for items */
+  margin-bottom: 20px;
+  position: relative; /* For positioning relative to the line */
+  background-color: rgba(255, 255, 255, 0.05); /* Subtle background for each item */
+  border-radius: 8px;
+  padding-left: 20px; /* Default padding for mobile */
+  padding-right: 20px;
+}
+
+/* For larger screens, alternate items */
+@media (min-width: 768px) {
+    .timeline-container::before {
+        display: block; /* Show the line */
+    }
+    .timeline-item {
+        width: calc(50% - 40px); /* Adjust width for spacing from center line */
+        padding: 20px;
+        margin-bottom: 40px; /* More space between items */
+    }
+    .timeline-item:nth-child(odd) {
+        float: left;
+        clear: right;
+        transform: translateX(-20px); /* Nudge towards the line */
+         margin-left: 20px; /* space from left edge */
+    }
+    .timeline-item:nth-child(even) {
+        float: right;
+        clear: left;
+        transform: translateX(20px); /* Nudge towards the line */
+        margin-right: 20px; /* space from right edge */
+    }
+    /* Clear floats after the container */
+    .timeline-container::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    /* Optional: Add connecting dots or arrows to the line */
+    .timeline-item::after { /* A small circle on the line */
+        content: '';
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: white;
+        border: 2px solid #5c1b1a;
+        top: 25px; /* Adjust vertical position */
+        z-index: 1;
+    }
+    .timeline-item:nth-child(odd)::after {
+        right: -30px; /* Position relative to the item's new placement */
+        transform: translateX(50%); /* Adjust to center on the line */
+    }
+    .timeline-item:nth-child(even)::after {
+        left: -30px; /* Position relative to the item's new placement */
+        transform: translateX(-50%); /* Adjust to center on the line */
+    }
+}
+
+
+.timeline-date {
+  font-weight: bold;
+  color: #e74c3c; /* Accent color for date */
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.timeline-event h3 {
+  font-size: 1.4rem;
+  color: #f0f0f0;
+  margin-bottom: 5px;
+}
+
+.timeline-event p {
+  font-size: 1rem;
+  color: #ccc;
+  line-height: 1.6;
+}
+/* --- END NEW TIMELINE SECTION STYLES --- */
+
+
+/* --- EXISTING MEDIA QUERIES START HERE --- */
+@media (max-width: 768px) {
+  /* ... (iyong existing responsive styles para sa navbar, hero, swiper, test, references) ... */
+
+  /* Responsive styles for Voices Section */
+  .voices-container {
+      flex-direction: column;
+      align-items: center; /* Center items when stacked */
+  }
+  .voice-item {
+      max-width: 90%; /* Allow items to take more width */
+      flex-direction: column; /* Ensure it's column for image and text */
+      align-items: center; /* Center image */
+  }
+  .voice-item img {
+      max-width: 180px; /* Adjust image size */
+  }
+  .voice-item blockquote {
+    font-size: 1rem;
+  }
+
+  /* Responsive styles for Timeline Section */
+  .timeline-section h2 {
+      font-size: 2rem;
+  }
+  .timeline-item { /* On smaller screens, timeline items stack simply */
+    width: 100%;
+    float: none !important; /* Override desktop floats */
+    transform: none !important; /* Override desktop transforms */
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 20px;
+  }
+  .timeline-container::before { /* Hide central line on small screens if too cluttered */
+    display: none;
+  }
+  .timeline-item::after { /* Hide connector dots on small screens */
+    display: none;
+  }
+  .timeline-date {
+    font-size: 1.1rem;
+  }
+  .timeline-event h3 {
+    font-size: 1.2rem;
+  }
+  .timeline-event p {
+    font-size: 0.9rem;
+  }
+
+}
+
+@media (max-width: 480px) {
+  /* ... (iyong existing responsive styles for navbar, hero, swiper, test, references) ... */
+
+  /* Responsive styles for Voices Section on very small screens */
+  .voices-section h2 {
+      font-size: 1.8rem;
+  }
+  .voice-item blockquote {
+    font-size: 0.9rem;
+    padding-left: 15px;
+  }
+  .voice-item blockquote::before {
+    font-size: 2.5rem;
+    left: -5px;
+    top: -5px;
+  }
+  .voices-section button {
+    padding: 8px 30px;
+    font-size: 1rem;
+  }
+
+
+  /* Responsive styles for Timeline Section on very small screens */
+  .timeline-section h2 {
+    font-size: 1.8rem;
+  }
+  .timeline-date {
+    font-size: 1rem;
+  }
+  .timeline-event h3 {
+    font-size: 1.1rem;
+  }
+  .timeline-event p {
+    font-size: 0.85rem;
+  }
+
 }

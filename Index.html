@@ -29,7 +29,8 @@
                         and the resilience of the Filipino spirit through interactive maps, quizzes,
                         and multimedia content.
                     </p>
-                    <button onclick="location.href='/InteractiveMap/images/InteractiveMap.html'">Explore</button>
+                    <!-- CORRECTED BUTTON LINK -->
+                    <button onclick="location.href='/InteractiveMap/InteractiveMap.html'">Explore</button>
                 </div>
             </div>
         </section>
@@ -41,7 +42,7 @@
                     <!-- Slide 1 -->
                     <div class="swiper-slide swiper-slide--one">
                         <div class="card-inner">
-                            <div class="card-front"> 
+                            <div class="card-front">
                                 <span>Battle</span>
                                 <div>
                                     <h2>Japanese Invasion and Initial Occupation</h2>
@@ -54,7 +55,7 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="card-back"> 
+                            <div class="card-back">
                                 <h3>Invasion Details</h3>
                                 <p>The Japanese invasion of the Philippines started on December 8, 1941. General Douglas MacArthur declared Manila an open city to spare it from destruction.</p>
                             </div>
@@ -153,6 +154,29 @@
             </div>
         </section>
 
+        <!-- START NEW VOICES FROM THE PAST SECTION -->
+        <section class="voices-section">
+            <h2>Mga Tinig ng Nakaraan</h2>
+            <div class="voices-container">
+                <article class="voice-item">
+                    <img src="/HomePage/pictures/placeholder-voice1.jpg" alt="Larawan na may kaugnayan sa testimonya">
+                    <blockquote>
+                        <p>"Hindi namin makakalimutan ang hirap at takot, ngunit ang pag-asa para sa kalayaan ang nagpatatag sa amin."</p>
+                        <footer>— Isang Guerilla Fighter (Halimbawa)</footer>
+                    </blockquote>
+                </article>
+                <article class="voice-item">
+                    <img src="/HomePage/pictures/placeholder-voice2.jpg" alt="Larawan na may kaugnayan sa testimonya">
+                    <blockquote>
+                        <p>"Bawat araw ay isang pakikibaka para mabuhay, para sa pamilya, para sa bayan."</p>
+                        <footer>— Isang Sibilyan na Nakaligtas (Halimbawa)</footer>
+                    </blockquote>
+                </article>
+            </div>
+            <button onclick="location.href='/VictimsPage/Victims.html'">Higit Pang Mga Kwento</button>
+        </section>
+        <!-- END NEW VOICES FROM THE PAST SECTION -->
+
         <section class="test-yourself">
             <div class="test-container">
                 <div class="test-image">
@@ -167,6 +191,50 @@
                 </div>
             </div>
         </section>
+
+        <!-- START NEW TIMELINE SECTION -->
+        <section class="timeline-section">
+            <h2>Timeline ng mga Pangunahing Kaganapan</h2>
+            <div class="timeline-container">
+                <div class="timeline-item">
+                    <div class="timeline-date">Disyembre 8, 1941</div>
+                    <div class="timeline-event">
+                        <h3>Pagsisimula ng Pambobomba</h3>
+                        <p>Sinalakay ng Japan ang Pilipinas, ilang oras lamang matapos ang pag-atake sa Pearl Harbor.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Abril 9, 1942</div>
+                    <div class="timeline-event">
+                        <h3>Pagbagsak ng Bataan</h3>
+                        <p>Sumuko ang mga pwersang Pilipino at Amerikano sa Bataan, na humantong sa Bataan Death March.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Oktubre 20, 1944</div>
+                    <div class="timeline-event">
+                        <h3>Pagbabalik ni MacArthur</h3>
+                        <p>Dumaong si General Douglas MacArthur at ang mga pwersang Alyado sa Leyte, sinisimulan ang pagpapalaya sa Pilipinas.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Pebrero - Marso 1945</div>
+                    <div class="timeline-event">
+                        <h3>Labanan sa Maynila</h3>
+                        <p>Isang buwang madugong labanan para sa pagpapalaya ng Maynila na nagresulta sa malawakang pagkawasak at pagkasawi ng mga sibilyan.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Setyembre 2, 1945</div>
+                    <div class="timeline-event">
+                        <h3>Pormal na Pagsuko ng Japan</h3>
+                        <p>Pormal na sumuko ang Japan sa mga Alyado, na opisyal na nagtapos sa Ikalawang Digmaang Pandaigdig.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- END NEW TIMELINE SECTION -->
+
     </main>
 
     <section class="references-section">
@@ -182,11 +250,9 @@
             <p class="note"><strong>Note:</strong> For precise academic citation, specific page numbers and articles from these and other peer-reviewed sources should be consulted for each fact presented.</p>
         </div>
     </section>
-    <!-- END NEW REFERENCES SECTION -->
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <script>
-        // ... Your existing Swiper JS ...
         var swiper = new Swiper(".swiper", {
           effect: "coverflow",
           grabCursor: true,
@@ -205,7 +271,7 @@
             modifier: 1.5,
             slideShadows: true
           },
-          spaceBetween: 50, // Responsive: May need adjustment for smaller screens
+          spaceBetween: 50,
           pagination: {
             el: ".swiper-pagination",
             clickable: true

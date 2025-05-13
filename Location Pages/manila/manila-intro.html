@@ -3,6 +3,10 @@
 <head>
     <title>Last Stand at Intramuros - 1945</title>
     <style>
+        *:focus {
+            outline: none;
+        }
+        
         body {
             font-family: 'Georgia', serif;
             background: #111 url('https://i.imgur.com/6VY6DfB.jpg') no-repeat center/cover;
@@ -59,6 +63,7 @@
             position: absolute;
             width: 40px;
             height: 60px;
+            background-image: url('images/barricade.png');
             background-size: contain;
             background-repeat: no-repeat;
             cursor: pointer;
@@ -76,6 +81,8 @@
             background-size: contain;
             background-repeat: no-repeat;
             z-index: 5;
+            user-select: none;
+            -webkit-user-select: none;
         }
         .enemy.elite {
             width: 35px;
@@ -117,6 +124,7 @@
             position: absolute;
             width: 60px;
             height: 60px;
+            background-image: url('images/explosion.png');
             background-size: contain;
             background-repeat: no-repeat;
             z-index: 20;
@@ -186,20 +194,47 @@
         }
         .bullet {
             position: absolute;
-            width: 10px;
-            height: 10px;
+            width: 20px;
+            height: 20px;
+            background-image: url('images/bullet.png');
             background-size: contain;
             background-repeat: no-repeat;
             z-index: 8;
+        }
+        .molotov {
+            position: absolute;
+            width: 20px;
+            height: 30px;
+            background-image: url('images/Molotov.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            z-index: 8;
+            animation: throw 0.5s linear forwards;
+        }
+        @keyframes throw {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(var(--tx), var(--ty)) rotate(360deg); }
         }
         @keyframes run {
             0% { background-image: var(--run-frame1); }
             50% { background-image: var(--run-frame2); }
             100% { background-image: var(--run-frame1); }
         }
+        #sound-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid #8B0000;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
+    <button id="sound-toggle">Sound: ON</button>
     <div id="game-container">
         <h2>LAST STAND AT INTRAMUROS - FEBRUARY 1945</h2>
         <p>Defend civilians against Japanese forces during the Battle of Manila</p>
@@ -213,7 +248,6 @@
         <div id="message"></div>
         
         <div id="map">
-            <!-- Lanes and game elements added by JS -->
         </div>
         
         <div id="controls">
@@ -228,41 +262,46 @@
         </div>
         
         <div id="game-end-message" class="hidden"></div>
-        <div id="history-section" class="hidden">
-            <h3>The Battle of Manila (1945)</h3>
-            <p>The month-long battle to recapture Manila from Japanese forces resulted in the near-total destruction of the city and over 100,000 civilian deaths. Key facts:</p>
-            <ul style="text-align: left; max-width: 600px; margin: 0 auto;">
-                <li>⚔️ Fought from February 3 - March 3, 1945</li>
-                <li>🔥 One of the most devastating urban battles in WWII</li>
-                <li>🕊️ Japanese forces committed mass atrocities against civilians</li>
-                <li>✝️ Over 1,000 civilians were killed in the San Agustin Church massacre alone</li>
-                <li>🏙️ 80% of Manila's buildings were destroyed</li>
-                <li>🇵🇭 Marked the end of three years of brutal Japanese occupation</li>
-            </ul>
-            <button id="back-to-game" style="margin-top: 20px;">Back to Game</button>
-        </div>
     </div>
 
+    <audio id="bgm" loop>
+        <source src="sounds/bgm.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="gunfire">
+        <source src="sounds/gunfire.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="barricade-sound">
+        <source src="sounds/barricade.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="death-sound">
+        <source src="sounds/death.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="explosion-sound">
+        <source src="sounds/explosion.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="molotov-sound">
+        <source src="sounds/molotov.mp3" type="audio/mpeg">
+    </audio>
+    <!-- Optional: Add a specific sound for civilian loss if desired
+    <audio id="civilian-lost-sound">
+        <source src="sounds/civilian_lost.mp3" type="audio/mpeg">
+    </audio>
+    -->
+
     <script>
-        // CONFIGURABLE IMAGE SETTINGS - EDIT THESE TO CHANGE APPEARANCE
         const gameImages = {
-            barricade: 'images/barricade.png',
-            molotov: 'images/Molotov.png',
-            bullet: 'images/bullet.png',
-            explosion: 'images/explosion.png',
             enemy: {
                 run1: 'images/soldier_running.png',
-                run2: 'images/soldier_standing.png', // Using standing as second frame
+                run2: 'images/soldier_standing.png',
                 standing: 'images/soldier_standing.png'
             },
             eliteEnemy: {
                 run1: 'images/elite_running.png',
-                run2: 'images/elite_standing.png', // Using standing as second frame
+                run2: 'images/elite_standing.png',
                 standing: 'images/elite_standing.png'
             }
         };
 
-        // Enhanced Game State
         const game = {
             wave: 0,
             maxWaves: 5,
@@ -273,6 +312,7 @@
             isWaveActive: false,
             gameEnded: false,
             lanes: 5,
+            soundEnabled: true,
             enemyTypes: [
                 { 
                     class: '', 
@@ -297,7 +337,6 @@
             ]
         };
 
-        // DOM elements
         const mapEl = document.getElementById('map');
         const civiliansCountEl = document.getElementById('civilians-count');
         const pointsEl = document.getElementById('points');
@@ -307,10 +346,14 @@
         const placeBarricadeBtn = document.getElementById('place-barricade');
         const useMolotovBtn = document.getElementById('use-molotov');
         const gameEndMessageEl = document.getElementById('game-end-message');
-        const historySection = document.getElementById('history-section');
-        const backToGameBtn = document.getElementById('back-to-game');
+        const soundToggle = document.getElementById('sound-toggle');
+        const bgm = document.getElementById('bgm');
+        const gunfire = document.getElementById('gunfire');
+        const barricadeSound = document.getElementById('barricade-sound');
+        const deathSound = document.getElementById('death-sound');
+        const explosionSound = document.getElementById('explosion-sound');
+        const molotovSound = document.getElementById('molotov-sound');
 
-        // Initialize lanes
         function initLanes() {
             mapEl.innerHTML = '';
             for (let i = 0; i < game.lanes; i++) {
@@ -322,7 +365,53 @@
             }
         }
 
-        // Start a new wave
+        function playSound(sound, volumeLevel = 0.7, durationLimitMs = null, startTimeSeconds = 0) {
+            if (!game.soundEnabled || !sound) return;
+
+            if (sound.soundTimeoutId) {
+                clearTimeout(sound.soundTimeoutId);
+                sound.soundTimeoutId = null;
+            }
+
+            sound.volume = volumeLevel;
+
+            if (isNaN(sound.duration) || sound.duration === Infinity) {
+                sound.currentTime = (startTimeSeconds > 0 && startTimeSeconds < Infinity) ? startTimeSeconds : 0;
+            } else {
+                if (startTimeSeconds > 0 && startTimeSeconds < sound.duration) {
+                    sound.currentTime = startTimeSeconds;
+                } else if (startTimeSeconds < 0) {
+                    const playFrom = sound.duration + startTimeSeconds;
+                    sound.currentTime = (playFrom > 0) ? playFrom : 0;
+                } else {
+                    sound.currentTime = 0;
+                }
+            }
+
+            sound.play().then(() => {
+            }).catch(e => console.warn("Audio play failed for:", sound.id, e));
+
+            if (durationLimitMs && durationLimitMs > 0) {
+                sound.soundTimeoutId = setTimeout(() => {
+                    sound.pause();
+                    sound.currentTime = 0;
+                }, durationLimitMs);
+            }
+        }
+
+
+        function toggleSound() {
+            game.soundEnabled = !game.soundEnabled;
+            soundToggle.textContent = `Sound: ${game.soundEnabled ? 'ON' : 'OFF'}`;
+            if (game.soundEnabled) {
+                if (bgm.paused) { 
+                    bgm.play().catch(e => console.warn("BGM play failed on toggle:", e));
+                }
+            } else {
+                bgm.pause();
+            }
+        }
+
         function startWave() {
             if (game.isWaveActive || game.wave >= game.maxWaves || game.gameEnded) return;
             
@@ -334,45 +423,43 @@
             useMolotovBtn.disabled = false;
             messageEl.textContent = `WAVE ${game.wave} - DEFEND THE CIVILIANS!`;
 
-            // Spawn enemies with increasing difficulty
             const enemyCount = 3 + game.wave * 2;
             for (let i = 0; i < enemyCount; i++) {
                 setTimeout(() => {
-                    const type = Math.random() < (game.wave * 0.15) ? 1 : 0; // Elite chance increases per wave
+                    if (!game.isWaveActive) return;
+                    const type = Math.random() < (game.wave * 0.15) ? 1 : 0;
                     spawnEnemy(Math.floor(Math.random() * game.lanes), type);
                 }, i * 1200);
             }
 
-            // Check wave end
             setTimeout(() => {
+                if (!game.isWaveActive) return;
                 const waveCheck = setInterval(() => {
-                    if (game.enemies.length === 0) {
+                    if (!game.isWaveActive || game.enemies.length === 0) {
                         clearInterval(waveCheck);
-                        endWave();
+                        if (game.isWaveActive) {
+                           endWave();
+                        }
                     }
                 }, 500);
             }, enemyCount * 1200 + 3000);
         }
 
-        // Spawn an enemy with health bar and running animation
         function spawnEnemy(laneIndex, typeIndex) {
             const type = game.enemyTypes[typeIndex];
             const enemy = document.createElement('div');
             enemy.className = `enemy ${type.class}`;
             enemy.style.top = (laneIndex * 80 + 15) + 'px';
             enemy.style.left = '750px';
-            
-            // Set CSS variables for animation frames
             enemy.style.setProperty('--run-frame1', `url('${type.run1}')`);
             enemy.style.setProperty('--run-frame2', `url('${type.run2}')`);
-            
-            // Apply running animation
             enemy.style.animation = 'run 0.5s steps(2) infinite';
             enemy.style.backgroundImage = `url('${type.run1}')`;
+            enemy.onclick = (e) => {
+                e.preventDefault();
+                useMolotov(enemy, typeIndex);
+            };
             
-            enemy.onclick = () => useMolotov(enemy, typeIndex);
-            
-            // Add health bar
             const healthBar = document.createElement('div');
             healthBar.className = 'health-bar';
             const healthFill = document.createElement('div');
@@ -398,9 +485,8 @@
             };
             game.enemies.push(enemyObj);
 
-            // Animate movement
             const moveInterval = setInterval(() => {
-                if (!game.isWaveActive || game.gameEnded) {
+                if (!game.isWaveActive || game.gameEnded || !game.enemies.includes(enemyObj)) {
                     clearInterval(moveInterval);
                     return;
                 }
@@ -408,65 +494,61 @@
                 enemyObj.x -= enemyObj.speed;
                 enemy.style.left = enemyObj.x + 'px';
 
-                // Check barricade collision
                 const barricadeHit = game.barricadePositions.find(b => 
                     b.lane === laneIndex && enemyObj.x < b.x + 40 && enemyObj.x > b.x - 30
                 );
 
                 if (barricadeHit) {
-                    // Stop running animation when attacking
                     if (enemyObj.isMoving) {
                         enemy.style.animation = 'none';
                         enemy.style.backgroundImage = `url('${enemyObj.type.standing}')`;
                         enemyObj.isMoving = false;
                     }
                     
-                    // Damage barricade
                     if (Math.random() < 0.1) {
-                        barricadeHit.element.style.opacity = '0.7';
+                        barricadeHit.element.style.opacity = '0.7'; 
                         if (Math.random() < 0.3) {
                             barricadeHit.element.remove();
                             game.barricadePositions = game.barricadePositions.filter(b => b !== barricadeHit);
                         }
                     }
                     
-                    // Push back
                     enemyObj.x += 2;
                     enemy.style.left = enemyObj.x + 'px';
                     
-                    // Enemy shooting at barricade
                     if (enemyObj.canShoot && Math.random() < 0.02) {
                         enemyShoot(enemyObj, barricadeHit.element);
                     }
                 } else {
-                    // Resume running animation when moving
                     if (!enemyObj.isMoving) {
                         enemy.style.animation = 'run 0.5s steps(2) infinite';
                         enemyObj.isMoving = true;
                     }
                 }
 
-                // Civilian casualty
                 if (enemyObj.x < 0) {
                     clearInterval(moveInterval);
                     game.civilians--;
                     updateUI();
-                    createExplosion(enemyObj.x, laneIndex * 80 + 40);
+                    playSound(gunfire, 0.65, 600); 
+                    createExplosion(enemyObj.x + 15, (laneIndex * 80 + 15) + 25 ); 
                     enemy.remove();
                     game.enemies = game.enemies.filter(e => e !== enemyObj);
-                    messageEl.textContent = `Civilian casualty! ${game.civilians} remaining`;
+                    if (!game.gameEnded) {
+                       messageEl.textContent = `Civilian casualty! ${game.civilians} remaining`;
+                    }
                     checkGameOver();
                 }
             }, 20);
         }
 
-        // Enemy shooting at barricade
         function enemyShoot(enemy, target) {
+            if(!enemy || !target) return;
             enemy.canShoot = false;
+            playSound(gunfire, 0.6, 500);
             
             const bullet = document.createElement('div');
             bullet.className = 'bullet';
-            bullet.style.backgroundImage = `url('${gameImages.bullet}')`;
             bullet.style.top = (parseInt(enemy.element.style.top) + 15) + 'px';
             bullet.style.left = (enemy.x - 10) + 'px';
             mapEl.appendChild(bullet);
@@ -489,36 +571,28 @@
                 bullet.style.left = bulletX + 'px';
                 bullet.style.top = bulletY + 'px';
                 
-                // Check if bullet reached target
                 if (Math.abs(bulletX - targetX) < 10 && Math.abs(bulletY - targetY) < 10) {
                     clearInterval(shootInterval);
                     bullet.remove();
                     createExplosion(bulletX, bulletY);
                     
-                    // Damage barricade
                     target.style.filter = 'brightness(1.5)';
                     setTimeout(() => target.style.filter = '', 200);
                     
-                    if (Math.random() < 0.3) {
-                        target.remove();
-                        game.barricadePositions = game.barricadePositions.filter(b => b.element !== target);
-                    }
                     
                     setTimeout(() => {
-                        enemy.canShoot = true;
+                        if(enemy) enemy.canShoot = true;
                     }, 1000);
                 }
                 
-                // Remove bullet if it goes off screen
                 if (bulletX < 0 || bulletX > 750 || bulletY < 0 || bulletY > 400) {
                     clearInterval(shootInterval);
                     bullet.remove();
-                    enemy.canShoot = true;
+                    if(enemy) enemy.canShoot = true;
                 }
             }, 20);
         }
 
-        // Place barricade
         function placeBarricade(e, laneIndex) {
             if (game.points < 30 || game.isWaveActive || game.gameEnded) {
                 messageEl.textContent = game.isWaveActive ? 
@@ -530,18 +604,22 @@
             const rect = mapEl.getBoundingClientRect();
             const x = e.clientX - rect.left - 20;
 
-            // Prevent stacking
+            if (x < 0 || x > mapEl.clientWidth - 40) {
+                 messageEl.textContent = "Cannot place barricade there!";
+                 return;
+            }
+
             const existing = game.barricadePositions.filter(b => b.lane === laneIndex);
             if (existing.some(b => Math.abs(b.x - x) < 50)) {
                 messageEl.textContent = "Too close to another barricade!";
                 return;
             }
 
+            playSound(barricadeSound, 0.8, 1000);
             const barricade = document.createElement('div');
             barricade.className = 'barricade';
             barricade.style.top = (laneIndex * 80 + 10) + 'px';
             barricade.style.left = x + 'px';
-            barricade.style.backgroundImage = `url('${gameImages.barricade}')`;
             mapEl.appendChild(barricade);
 
             game.barricadePositions.push({ element: barricade, lane: laneIndex, x });
@@ -550,164 +628,199 @@
             messageEl.textContent = `Barricade built in Lane ${laneIndex + 1} (-30 pts)`;
         }
 
-        // Use Molotov
         function useMolotov(enemyElement, typeIndex) {
-            if (game.points < 5 || game.gameEnded) {
-                messageEl.textContent = game.gameEnded ? "The battle is over!" : "Need 5 points to throw Molotov!";
+            if (game.points < 5 || game.gameEnded || !game.isWaveActive) {
+                messageEl.textContent = game.gameEnded ? "The battle is over!" : 
+                                        !game.isWaveActive ? "Can only use during a wave!" :
+                                        "Need 5 points to throw Molotov!";
                 return;
             }
 
             const enemyObj = game.enemies.find(e => e.element === enemyElement);
             if (!enemyObj) return;
 
-            enemyObj.health--;
-            game.points -= 5;
+            playSound(molotovSound, 0.7, 700);
+            const molotov = document.createElement('div');
+            molotov.className = 'molotov';
+            molotov.style.top = (mapEl.clientHeight - 50) + 'px'; 
+            molotov.style.left = (mapEl.clientWidth / 2 - 10) + 'px'; 
             
-            // Update health bar
-            enemyObj.healthBar.style.width = `${(enemyObj.health / enemyObj.maxHealth) * 100}%`;
-            
-            // Visual explosion
-            createExplosion(
-                enemyObj.x + 15, 
-                parseInt(enemyElement.style.top) + 25
-            );
+            const targetX = enemyObj.x + (enemyObj.element.clientWidth / 2) - (mapEl.clientWidth / 2 -10);
+            const targetY = parseInt(enemyElement.style.top) + (enemyObj.element.clientHeight / 2) - (mapEl.clientHeight - 50);
 
-            if (enemyObj.health <= 0) {
-                enemyElement.remove();
-                game.enemies = game.enemies.filter(e => e !== enemyObj);
-                game.points += game.enemyTypes[typeIndex].points;
-                messageEl.textContent = `Enemy destroyed! +${game.enemyTypes[typeIndex].points} pts`;
-            } else {
-                enemyElement.style.filter = 'brightness(1.5)';
-                setTimeout(() => enemyElement.style.filter = '', 200);
-                messageEl.textContent = "Enemy damaged! (-5 pts)";
-            }
+            molotov.style.setProperty('--tx', `${targetX}px`);
+            molotov.style.setProperty('--ty', `${targetY}px`);
+            mapEl.appendChild(molotov);
 
-            updateUI();
+            setTimeout(() => {
+                molotov.remove();
+                if (!game.enemies.includes(enemyObj)) return
+
+                enemyObj.health--;
+                game.points -= 5;
+                
+                enemyObj.healthBar.style.width = `${(enemyObj.health / enemyObj.maxHealth) * 100}%`;
+                
+                createExplosion(enemyObj.x + 15, parseInt(enemyElement.style.top) + 25);
+
+                if (enemyObj.health <= 0) {
+                    playSound(deathSound, 0.75, 1200);
+                    enemyElement.remove();
+                    game.enemies = game.enemies.filter(e => e !== enemyObj);
+                    game.points += game.enemyTypes[typeIndex].points;
+                    messageEl.textContent = `Enemy destroyed! +${game.enemyTypes[typeIndex].points} pts`;
+                } else {
+                    enemyElement.style.filter = 'brightness(1.5)';
+                    setTimeout(() => enemyElement.style.filter = '', 200);
+                    messageEl.textContent = "Enemy damaged! (-5 pts)";
+                }
+
+                updateUI();
+            }, 500);
         }
 
-        // Create explosion effect
         function createExplosion(x, y) {
+            playSound(explosionSound, 0.9, 800);
             const explosion = document.createElement('div');
             explosion.className = 'explosion';
             explosion.style.left = (x - 30) + 'px';
             explosion.style.top = (y - 30) + 'px';
-            explosion.style.backgroundImage = `url('${gameImages.explosion}')`;
             mapEl.appendChild(explosion);
             
             setTimeout(() => explosion.remove(), 500);
         }
 
-        // End wave
         function endWave() {
+            if (!game.isWaveActive || game.gameEnded) return
+
             game.isWaveActive = false;
             startWaveBtn.disabled = game.wave >= game.maxWaves || game.gameEnded;
             placeBarricadeBtn.disabled = game.gameEnded;
             useMolotovBtn.disabled = true;
 
-            // Reward player
-            game.points += game.civilians * 5; // Bonus for saved civilians
+            let bonusPoints = 0;
+            if (game.civilians > 0) {
+                bonusPoints = game.civilians * 5;
+                game.points += bonusPoints;
+            }
             
             updateUI();
             
             if (game.wave >= game.maxWaves) {
                 showVictory();
             } else {
-                messageEl.textContent = `Wave ${game.wave} survived! +${game.civilians * 5} bonus points`;
+                messageEl.textContent = `Wave ${game.wave} survived! +${bonusPoints} bonus points. Prepare for the next wave!`;
             }
         }
 
-        // Show victory message
         function showVictory() {
+            if (game.gameEnded) return;
             game.gameEnded = true;
+            messageEl.textContent = "VICTORY! INTRAMUROS STANDS!";
             gameEndMessageEl.innerHTML = `
                 <div id="victory-message">
                     <h3>VICTORY! ${game.civilians} CIVILIANS SAVED</h3>
                     <p>Final score: ${game.points} points</p>
-                    <p>The Battle of Manila (February-March 1945) was one of the most brutal urban battles of WWII. 
-                    Your victory honors the real resistance fighters who defended the city against overwhelming odds.</p>
-                    <button id="learn-more-btn">LEARN MORE ABOUT THE BATTLE</button>
+                    <p>The Battle of Manila (February-March 1945) was one of the most brutal urban battles of WWII.</p>
+                    <button id="learn-more-btn" onclick="window.location.href='manila.html'">LEARN MORE ABOUT THE BATTLE</button>
                 </div>
             `;
             gameEndMessageEl.classList.remove('hidden');
-            document.getElementById('learn-more-btn').addEventListener('click', showHistory);
             disableAllControls();
+            if (game.soundEnabled && bgm.duration > 0) {
+                playSound(bgm, 0.5, 10000, bgm.duration > 10 ? bgm.duration -10 : 0); 
+            }
         }
 
-        // Show defeat message
         function showDefeat() {
+            if (game.gameEnded) return;
             game.gameEnded = true;
+            messageEl.textContent = "DEFEAT! INTRAMUROS HAS FALLEN...";
             gameEndMessageEl.innerHTML = `
                 <div id="defeat-message">
                     <h3>DEFEAT - ALL CIVILIANS LOST</h3>
                     <p>Final score: ${game.points} points</p>
-                    <p>This tragic outcome mirrors the fate of over 100,000 civilians who perished during the actual 
-                    Battle of Manila. We remember their sacrifice as we strive to build a more peaceful future.</p>
-                    <button id="learn-more-btn">LEARN MORE ABOUT THE BATTLE</button>
+                    <p>This tragic outcome mirrors the fate of over 100,000 civilians who perished during the Battle of Manila.</p>
+                    <button id="learn-more-btn" onclick="window.location.href='manila.html'">LEARN MORE ABOUT THE BATTLE</button>
                 </div>
             `;
             gameEndMessageEl.classList.remove('hidden');
-            document.getElementById('learn-more-btn').addEventListener('click', showHistory);
             disableAllControls();
+             if (game.soundEnabled && bgm.duration > 0) {
+                playSound(bgm, 0.4, 8000, bgm.duration > 20 ? 10 : 0);
+            }
         }
 
-        // Show history section
-        function showHistory() {
-            document.querySelector('#game-container > *:not(#history-section)').classList.add('hidden');
-            historySection.classList.remove('hidden');
-        }
-
-        // Back to game from history
-        backToGameBtn.addEventListener('click', () => {
-            historySection.classList.add('hidden');
-            document.querySelectorAll('#game-container > *').forEach(el => el.classList.remove('hidden'));
-        });
-
-        // Disable all controls when game ends
         function disableAllControls() {
             startWaveBtn.disabled = true;
             placeBarricadeBtn.disabled = true;
             useMolotovBtn.disabled = true;
             
-            // Disable lane clicks
             const lanes = document.querySelectorAll('.lane');
             lanes.forEach(lane => {
                 lane.onclick = null;
                 lane.style.cursor = 'default';
             });
+            game.enemies.forEach(enemyObj => {
+            });
         }
 
-        // Check game over
         function checkGameOver() {
-            if (game.civilians <= 0) {
+            if (game.civilians <= 0 && !game.gameEnded) {
+                game.civilians = 0;
+                civiliansCountEl.textContent = game.civilians;
                 showDefeat();
             }
         }
 
-        // Update UI
         function updateUI() {
             civiliansCountEl.textContent = game.civilians;
             pointsEl.textContent = game.points;
             
-            // Disable buttons when requirements aren't met
             placeBarricadeBtn.disabled = game.points < 30 || game.isWaveActive || game.gameEnded;
             useMolotovBtn.disabled = game.points < 5 || !game.isWaveActive || game.gameEnded;
         }
 
-        // Event listeners
+        soundToggle.addEventListener('click', toggleSound);
         startWaveBtn.addEventListener('click', startWave);
         placeBarricadeBtn.addEventListener('click', () => {
-            messageEl.textContent = "Click on a lane to place barricade (Cost: 30 pts)";
+            if (game.points >= 30 && !game.isWaveActive && !game.gameEnded) {
+                 messageEl.textContent = "Click on a lane to place barricade (Cost: 30 pts)";
+            } else {
+                 messageEl.textContent = game.isWaveActive ? 
+                    "Cannot build during combat!" : 
+                    game.gameEnded ? "The battle is over!" : "Need 30 points to build barricade!";
+            }
         });
         useMolotovBtn.addEventListener('click', () => {
-            messageEl.textContent = "Click on an enemy to throw Molotov (Cost: 5 pts)";
+             if (game.points >= 5 && game.isWaveActive && !game.gameEnded) {
+                messageEl.textContent = "Click on an enemy to throw Molotov (Cost: 5 pts)";
+            } else {
+                 messageEl.textContent = game.gameEnded ? "The battle is over!" : 
+                                        !game.isWaveActive ? "Can only use during a wave!" :
+                                        "Need 5 points to throw Molotov!";
+            }
         });
 
-        // Initialize
         initLanes();
         updateUI();
         waveNumberEl.textContent = game.wave;
         messageEl.textContent = "You start with 50 points. Build defenses before starting waves!";
+        
+        if (bgm) {
+            bgm.volume = 0.3;
+            if (game.soundEnabled) {
+                const playPromise = bgm.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.warn("BGM autoplay was prevented. User interaction is needed to start audio.", error);
+                    });
+                }
+            }
+        } else {
+            console.warn("BGM audio element not found!");
+        }
+
     </script>
 </body>
 </html>

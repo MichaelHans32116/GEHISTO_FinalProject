@@ -98,7 +98,7 @@ function animate() {
 animate();
 
 function goBack() {
-  window.location.href = "Front.html";
+  window.location.href = "../../index.html";
 }
 
 function goBackIntro() {

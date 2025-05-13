@@ -200,3 +200,48 @@ h1, h2, h3 {
 #content-text::-webkit-scrollbar-thumb:hover {
     background-color: #a00a0a; /* Darker color on hover */
 }
+.references-list {
+            list-style: disc;
+            padding-left: 40px; /* Standard indentation for lists */
+            margin-top: 15px; /* Space after the H2 */
+        }
+
+        .references-list li {
+            margin-bottom: 10px; /* Space between reference items */
+            line-height: 1.6; /* Consistent with other p tags */
+        }
+
+        .references-list li em { /* Style for book/journal titles */
+            font-style: italic;
+        }
+        
+        .references-list li code { /* Style for URLs if wrapped in code tags */
+            background-color: #2a2a2a;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+            word-break: break-all;
+        }
+
+        #referencesSection > p { /* For the note at the bottom of references */
+            margin-top: 20px;
+            font-size: 0.9rem;
+            font-style: italic;
+            color: #aaa; /* Slightly dimmer text for the note */
+        }
+
+.References {
+    margin: 20px auto; /* Center the references section */
+    padding: 20px; /* Add padding for better readability */
+    background-color: rgba(51, 50, 50, 0.585); /* Semi-transparent white background */
+    border:#2a2a2a 1px solid; /* Border for the references section */
+    border-radius: 10px; /* Rounded corners */
+    border-color: #a00a0a;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    max-width: 80%; /* Set a maximum width for the references section */
+    margin-top: 500px;
+}
+.referenceTitle {
+    color: #a00a0a;
+    margin-top: 0px;
+}

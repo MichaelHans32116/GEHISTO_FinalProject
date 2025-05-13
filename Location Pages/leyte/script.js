@@ -12,6 +12,13 @@ function showFact(section) {
     factElement.style.display = factElement.style.display === 'block' ? 'none' : 'block';
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    const audio = document.getElementById('bg-music');
+    if (audio) {
+        audio.volume = 0.1;
+    }
+});
+
 // play speech
 document.getElementById('speech-btn').addEventListener('click', function() {
     const audio = document.getElementById('speech-audio');

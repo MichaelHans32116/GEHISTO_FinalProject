@@ -17,6 +17,13 @@ document.addEventListener('DOMContentLoaded', function() {
             modal.style.display = 'none';
         }
     });
+
+    document.addEventListener('DOMContentLoaded', function () {
+    const audio = document.getElementById('bg-music');
+    if (audio) {
+        audio.volume = 0.1; 
+    }
+    });
     
     // gallery
     const galleryItems = document.querySelectorAll('.gallery-item');

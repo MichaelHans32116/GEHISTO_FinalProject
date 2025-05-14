@@ -179,12 +179,23 @@
             color: #8B0000;
             font-weight: bold;
         }
-        #learn-more-btn {
+        #learn-more-btn { /* Style for button inside game-end-message */
             background: linear-gradient(to bottom, #1a3e72, #0d2352);
             border: 1px solid #3a6ea5;
             margin-top: 10px;
         }
         #learn-more-btn:hover {
+            background: linear-gradient(to bottom, #2a4e82, #1a3372);
+            box-shadow: 0 0 8px rgba(58, 110, 165, 0.6);
+        }
+        /* Style for the new skip button */
+        #skip-to-history-btn {
+            background: linear-gradient(to bottom, #1a3e72, #0d2352); /* Blue theme */
+            border: 1px solid #3a6ea5;
+            margin: 10px auto 20px auto; /* Centered with margin */
+            /* Inherits other button styles like color, padding, cursor, border-radius, font-weight, transition, min-width */
+        }
+        #skip-to-history-btn:hover {
             background: linear-gradient(to bottom, #2a4e82, #1a3372);
             box-shadow: 0 0 8px rgba(58, 110, 165, 0.6);
         }
@@ -237,6 +248,8 @@
     <div id="game-container">
         <h2>LAST STAND AT INTRAMUROS - FEBRUARY 1945</h2>
         <p>Defend civilians against Japanese forces during the Battle of Manila</p>
+        <!-- NEW SKIP BUTTON -->
+        <button id="skip-to-history-btn">Learn About the Battle of Manila Now</button>
         
         <div id="resources">
             <div id="civilians">Civilians: <span id="civilians-count">20</span></div>
@@ -346,6 +359,8 @@
         const useMolotovBtn = document.getElementById('use-molotov');
         const gameEndMessageEl = document.getElementById('game-end-message');
         const soundToggle = document.getElementById('sound-toggle');
+        const skipToHistoryBtn = document.getElementById('skip-to-history-btn'); // Get the new button
+
         const bgm = document.getElementById('bgm');
         const gunfire = document.getElementById('gunfire');
         const barricadeSound = document.getElementById('barricade-sound');
@@ -780,6 +795,7 @@
             useMolotovBtn.disabled = game.points < 5 || !game.isWaveActive || game.gameEnded;
         }
 
+        // Event Listeners
         soundToggle.addEventListener('click', toggleSound);
         startWaveBtn.addEventListener('click', startWave);
         placeBarricadeBtn.addEventListener('click', () => {
@@ -801,6 +817,12 @@
             }
         });
 
+        // Event listener for the new skip button
+        skipToHistoryBtn.addEventListener('click', () => {
+            window.location.href = 'manila.html';
+        });
+
+        // Initial Setup
         initLanes();
         updateUI();
         waveNumberEl.textContent = game.wave;
@@ -813,6 +835,7 @@
                 if (playPromise !== undefined) {
                     playPromise.catch(error => {
                         console.warn("BGM autoplay was prevented. User interaction is needed to start audio.", error);
+                        // Optionally, you could display a message to the user here.
                     });
                 }
             }

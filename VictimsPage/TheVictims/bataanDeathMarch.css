@@ -209,6 +209,7 @@ h1, h2, h3 {
         .references-list li {
             margin-bottom: 10px; /* Space between reference items */
             line-height: 1.6; /* Consistent with other p tags */
+            color: #ffffff;
         }
 
         .references-list li em { /* Style for book/journal titles */

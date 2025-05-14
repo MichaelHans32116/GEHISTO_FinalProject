@@ -45,8 +45,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const spawnFire = () => {
         const fire = document.createElement("img");
-        fire.src = "../Images/fire.png";
-        fire.classList.add("fire");
+    fire.src = "C:\Users\Michael Hans\OneDrive\Desktop\Codes\GEHISTO_FinalProject\VictimsPage\Images\fire.png"; // Correct if HTML is in VictimsPage (e.g. index.html)
+    fire.classList.add("fire");
 
         // Random position
         fire.style.top = `${Math.random() * 240}px`;

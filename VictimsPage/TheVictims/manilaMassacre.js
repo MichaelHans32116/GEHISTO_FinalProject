@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
         fire.style.left = `${Math.random() * (window.innerWidth - 60)}px`;
 
         fire.onclick = () => {
-            progress += 13;
+            progress += 30;
             if (progress > 100) progress = 100;
             updateProgress();
             fire.remove();

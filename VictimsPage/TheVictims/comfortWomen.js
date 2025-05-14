@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Increase progress
         enemy.onclick = () => {
-            progress += 13;
+            progress += 30;
             if (progress > 100) progress = 100;
             updateProgress();
             enemy.remove();

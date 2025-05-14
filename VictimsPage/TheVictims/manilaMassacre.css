@@ -126,3 +126,30 @@ p {
     position: absolute;
     cursor: pointer;
 }
+
+.references {
+    border: 1px solid #ccc;
+    padding: 1em;
+    margin-top: 2em;
+    color: white;
+}
+
+.references h3 {
+    margin-top: 0;
+}
+
+.references ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.references li {
+    margin-bottom: 1em;
+    text-indent: -2em;
+    padding-left: 2em;
+}
+
+.references a {
+    color: lightblue;
+    text-decoration: underline;
+}

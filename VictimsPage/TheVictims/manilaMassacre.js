@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const spawnFire = () => {
         const fire = document.createElement("img");
-        fire.src = "../Images/Fire.png";
+        fire.src = "../Images/fire.png";
         fire.classList.add("fire");
 
         // Random position

@@ -3,185 +3,582 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz</title>
-    <link rel="stylesheet" href="Quiz.css">
+    <title>Historical Quiz Challenge</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a; /* Dark Gray/Black */
+            color: #e0e0e0; /* Light Gray */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
+        #nightOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            opacity: 1;
+            z-index: 9999;
+            transition: opacity 2s ease-out;
+            pointer-events: none;
+        }
+
+        #fireflyCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .navigation-button {
+            background-color: #8B0000; /* Dark Red */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .navigation-button:hover {
+            background-color: #a50000; /* Lighter Red */
+        }
+        
+        .quiz-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-sizing: border-box;
+        }
+
+        .hearts-indicator {
+            display: flex;
+        }
+
+        .heart-icon {
+            width: 30px;
+            height: 30px;
+            margin-left: 5px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23FF0000"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+         .heart-icon.empty {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23555555" stroke-width="2"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
+        }
+
+
+        .chase-animation-area {
+            width: 90%;
+            max-width: 600px;
+            height: 80px;
+            background-color: #333333; /* Medium Gray */
+            margin: 10px auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 5px;
+            border: 2px solid #555555;
+        }
+
+        .chase-character, .chase-pursuer {
+            position: absolute;
+            bottom: 5px;
+            height: 60px;
+            width: auto;
+            transition: left 0.5s ease-in-out, transform 0.2s;
+        }
+
+        #runnerCharacter { /* Steve */
+            left: 10%;
+            transform: translateX(-50%);
+            content: url('../Pictures/RUN.png'); /* Original Path */
+        }
+
+        #pursuerCharacter { /* Killer plane */
+            left: 90%;
+            transform: translateX(-50%) scaleX(-1); /* Flip plane to face left */
+            content: url('../Pictures/Kplane.png'); /* Original Path */
+        }
+        /* Fallback if images don't load */
+        #runnerCharacter:after {
+            content: "🏃"; 
+            font-size: 40px;
+            display: inline-block;
+            background: #4CAF50; padding: 5px; border-radius: 50%;
+        }
+        #pursuerCharacter:after {
+            content: "✈️"; 
+            font-size: 40px;
+            display: inline-block;
+            background: #f44336; padding: 5px; border-radius: 50%;
+        }
+        img[src*="../Pictures/"] { /* Only apply to images with this path start*/
+            display: block; /* Ensure it behaves like a block for positioning */
+        }
+        img[src*="../Pictures/"]:after {
+            display: none; /* Hide text fallback if image loads */
+        }
+
+
+        .quiz-container {
+            background-color: #2b2b2b; /* Darker Gray */
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 600px;
+            text-align: left;
+            margin-top: 20px;
+            border: 1px solid #444444;
+        }
+
+        .quiz-question {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            color: #f0f0f0; /* Lighter text for question */
+            line-height: 1.5;
+        }
+
+        .quiz-options label {
+            display: block;
+            background-color: #3c3c3c; /* Gray for options */
+            margin-bottom: 10px;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border: 1px solid #555555;
+        }
+
+        .quiz-options label:hover {
+            background-color: #4f4f4f; /* Lighter Gray on hover */
+        }
+
+        .quiz-options input[type="radio"] {
+            margin-right: 10px;
+            accent-color: #8B0000; /* Dark Red for radio button */
+        }
+
+        .action-button {
+            display: block;
+            width: 100%;
+            background-color: #8B0000; /* Dark Red */
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 1.1em;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 25px;
+            transition: background-color 0.3s ease;
+        }
+
+        .action-button:hover {
+            background-color: #a50000; /* Lighter Red */
+        }
+        
+        .score-display {
+            font-size: 1.2em;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        @keyframes shakeCharacter {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        .shake-effect {
+            animation: shakeCharacter 0.5s;
+        }
+
+        @keyframes jumpCharacter {
+            0%   { transform: translateY(0); }
+            50%  { transform: translateY(-15px); }
+            100% { transform: translateY(0); }
+        }
+
+        .jump-effect {
+            animation: jumpCharacter 0.5s ease;
+        }
+    </style>
 </head>
-
-<style>
-
-#nightOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  opacity: 1;
-  z-index: 9999;
-  transition: opacity 2s ease-out;
-  pointer-events: none;
-}
-
-@keyframes shake {
-  0% { transform: translate(1px, 1px) rotate(0deg); }
-  10% { transform: translate(-1px, -2px) rotate(-1deg); }
-  20% { transform: translate(-3px, 0px) rotate(1deg); }
-  30% { transform: translate(3px, 2px) rotate(0deg); }
-  40% { transform: translate(1px, -1px) rotate(1deg); }
-  50% { transform: translate(-1px, 2px) rotate(-1deg); }
-  60% { transform: translate(-3px, 1px) rotate(0deg); }
-  70% { transform: translate(3px, 1px) rotate(-1deg); }
-  80% { transform: translate(-1px, -1px) rotate(1deg); }
-  90% { transform: translate(1px, 2px) rotate(0deg); }
-  100% { transform: translate(1px, -2px) rotate(-1deg); }
-}
-
-.shake {
-  animation: shake 0.5s;
-}
-
-@keyframes jump {
-  0%   { transform: translateY(0); }
-  50%  { transform: translateY(-20px); }
-  100% { transform: translateY(0); }
-}
-
-.jump {
-  animation: jump 0.5s ease;
-}
-
-@keyframes explode {
-  0% { opacity: 1; transform: scale(1); }
-  100% { opacity: 0; transform: scale(3); }
-}
-
-</style>
-
 <body>
+    <div id="nightOverlay"></div>
+    <canvas id="fireflyCanvas"></canvas>
 
-    <canvas id="fireflyCanvas" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1;"></canvas>
-
-    <div class="chase-scene">
-        <img id="steve" src="../Pictures/RUN.png" alt="Steve">
-        <img id="killer" src="../Pictures/Kplane.png" alt="Killer">
-      </div>
-
-    <div class="hearts-container">
-        <div id="hearts"></div>
-      </div>
-      <button onclick="goBack()" style="margin: 20px; font-size: 14px; display: block; margin-left: auto; margin-right: auto;">Back to Front Page</button>
-      
-    <div class="container" style="font-family: cursive;">
-        Q1: When did the Japanese occupation of the Philippines begin?<br>
-        <input type="radio" name="question1">April 6, 1942<br>
-        <input type="radio" name="question1" id="correct1">December 8, 1941<br>
-        <input type="radio" name="question1">March 30, 1942<br>
-        <input type="radio" name="question1">May 1, 1942<br>
-        <button class="next" onclick="next(1)">NEXT</button>
+    <div class="quiz-header">
+        <button onclick="navigateToPreviousPage()" class="navigation-button">Back to Main Page</button>
+        <div class="hearts-indicator" id="heartsIndicator"></div>
     </div>
-
-    <div class="container" style="font-family: cursive;">
-        Q2: When did the Bataan Death March take place?<br>
-        <input type="radio" name="question2">October 10, 1943<br>
-        <input type="radio" name="question2">March 11, 1912<br>
-        <input type="radio" name="question2" id="correct2">April 9, 1942<br>
-        <input type="radio" name="question2">September 9, 1932<br>
-        <button class="next" onclick="next(2)">NEXT</button>
-    </div>
-
-    <div class="container" style="font-family: cursive;">
-        Q3: When did Manila come under Japanese occupation?<br>
-        <input type="radio" name="question3">February 1, 1912<br>
-        <input type="radio" name="question3">May 3, 1982<br>
-        <input type="radio" name="question3" id="correct3">January 2, 1942<br>
-        <input type="radio" name="question3">July 4, 1932<br>
-        <button class="next" onclick="next(3)">NEXT</button>
-    </div>
-
-    <div class="container" style="font-family: cursive;">
-        Q4: Who declared Manila an open city?<br>
-        <input type="radio" name="question4">Enrile<br>
-        <input type="radio" name="question4">General Jonathan<br>
-        <input type="radio" name="question4">General Luna<br>
-        <input type="radio" name="question4" id="correct4">General Douglas MacArthur<br>
-        <button class="next" onclick="next(4)">NEXT</button>
-    </div>
-
-    <div class="container" style="font-family: cursive;">
-        Q5: When did the Battle of Manila occur?<br>
-        <input type="radio" name="question5">October 1915<br>
-        <input type="radio" name="question5" id="correct5">February 1945<br>
-        <input type="radio" name="question5">March 1983<br>
-        <input type="radio" name="question5">January 1999<br>
-        <button class="next" onclick="next(5)">NEXT</button>
-    </div>
-
-    <div class="container" style="font-family: cursive;">
-        Q6: How many phases were there in the Battle of Manila?<br>
-        <input type="radio" name="question6">Two<br>
-        <input type="radio" name="question6">Three<br>
-        <input type="radio" name="question6">Four<br>
-        <input type="radio" name="question6" id="correct6">Five<br>
-        <button class="next" onclick="next(6)">NEXT</button>
-    </div>
-
-    <div class="container" style="font-family: cursive;">
-        Q7: Who led the Filipino and American forces during the Battle of Bataan?<br>
-        <input type="radio" name="question7">General Philip Fe and General Lie Yu<br>
-        <input type="radio" name="question7">General Edward Newton and General Mascardo<br>
-        <input type="radio" name="question7">General King and General Jotahnan<br>
-        <input type="radio" name="question7" id="correct7"> General Edward King and General Jonathan Wainwright<br>
-        <button class="next" onclick="next(7)">NEXT</button>
-    </div>
-
-    <div class="container" style="font-family: cursive;">
-        Q8: How many miles did the American and Filipino forces march during the Bataan Death March?<br>
-        <input type="radio" name="question8">1500 miles<br>
-        <input type="radio" name="question8">50 miles<br>
-        <input type="radio" name="question8">75 miles<br>
-        <input type="radio" name="question8" id="correct8">65 miles<br>
-        <button class="next" onclick="next(8)">NEXT</button>
-    </div>
-
-    <div class="container" style="font-family: cursive;">
-        Q9: What symbolizes the defense of Bataan against Japanese occupation?<br>
-        <input type="radio" name="question9">Hope and Faith<br>
-        <input type="radio" name="question9">Love and peace<br>
-        <input type="radio" name="question9" id="correct9">Courage and sacrifice<br>
-        <input type="radio" name="question9">Saddness and despair<br>
-        <button class="next" onclick="next(9)">NEXT</button>
-    </div>
-
-    <div class="container" style="font-family: cursive;">
-        Q10: When was Corregidor recaptured?<br>
-        <input type="radio" name="question10">March 1852<br>
-        <input type="radio" name="question10" id="correct10">February 1945<br>
-        <input type="radio" name="question10">June 1944<br>
-        <input type="radio" name="question10">December 1933<br>
-        <button onclick="result()">Submit Quiz</button>
-    </div>
-<div id="nightOverlay"></div>
-
-<script>
-  
-  window.addEventListener("load", () => {
-    const overlay = document.getElementById("nightOverlay");
-    setTimeout(() => {
-      overlay.style.opacity = "0";
-    }, 100); 
-    setTimeout(() => {
-      overlay.style.display = "none";
-    }, 2100); 
-  });
-</script>
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="Quiz.js"></script>
-    <script src="Minecraft.js"></script>
     
+    <div class="chase-animation-area">
+        <img id="runnerCharacter" class="chase-character" src="../Pictures/RUN.png" alt="Runner">
+        <img id="pursuerCharacter" class="chase-pursuer" src="../Pictures/Kplane.png" alt="Pursuer">
+    </div>
+
+    <div class="quiz-container" id="quizContainer">
+        <div id="questionArea" class="quiz-question"></div>
+        <div id="optionsArea" class="quiz-options"></div>
+        <button id="submitAnswerButton" class="action-button" onclick="handleAnswerSubmission()">Next Question</button>
+    </div>
+    <div id="scoreArea" class="score-display">Score: 0</div>
+
+    <script>
+        const allQuizQuestions = [
+            {
+                questionText: "When did the Japanese occupation of the Philippines begin?",
+                options: ["April 6, 1942", "December 8, 1941", "March 30, 1942", "May 1, 1942"],
+                correctAnswer: "December 8, 1941"
+            },
+            {
+                questionText: "When did the Bataan Death March take place?",
+                options: ["October 10, 1943", "March 11, 1912", "April 9, 1942", "September 9, 1932"],
+                correctAnswer: "April 9, 1942"
+            },
+            {
+                questionText: "When did Manila come under Japanese occupation?",
+                options: ["February 1, 1912", "May 3, 1982", "January 2, 1942", "July 4, 1932"],
+                correctAnswer: "January 2, 1942"
+            },
+            {
+                questionText: "Who declared Manila an open city?",
+                options: ["Enrile", "General Jonathan", "General Luna", "General Douglas MacArthur"],
+                correctAnswer: "General Douglas MacArthur"
+            },
+            {
+                questionText: "When did the Battle of Manila occur?",
+                options: ["October 1915", "February 1945", "March 1983", "January 1999"],
+                correctAnswer: "February 1945"
+            },
+            {
+                questionText: "How many phases were there in the Battle of Manila?",
+                options: ["Two", "Three", "Four", "Five"],
+                correctAnswer: "Five"
+            },
+            {
+                questionText: "Who led the Filipino and American forces during the Battle of Bataan (surrender phase)?",
+                options: ["General Philip Fe and General Lie Yu", "General Edward Newton and General Mascardo", "General King (US) and General Lim (PH initially)", "General Edward King"],
+                correctAnswer: "General Edward King"
+            },
+            {
+                questionText: "Approximately how many miles did prisoners march during the Bataan Death March?",
+                options: ["150 miles", "50 miles", "75 miles", "65 miles"],
+                correctAnswer: "65 miles"
+            },
+            {
+                questionText: "What primarily symbolizes the defense of Bataan against Japanese occupation?",
+                options: ["Hope and Faith", "Love and Peace", "Courage and Sacrifice", "Sadness and Despair"],
+                correctAnswer: "Courage and Sacrifice"
+            },
+            {
+                questionText: "When was Corregidor Island recaptured by Allied forces?",
+                options: ["March 1852", "February 1945", "June 1944", "December 1933"],
+                correctAnswer: "February 1945"
+            }
+        ];
+
+        let currentQuestionSet = [];
+        let currentQuestionIndex = 0;
+        let userScore = 0;
+        let remainingLives = 3;
+        const totalLives = 3;
+
+        const questionArea = document.getElementById('questionArea');
+        const optionsArea = document.getElementById('optionsArea');
+        const submitButton = document.getElementById('submitAnswerButton');
+        const scoreArea = document.getElementById('scoreArea');
+        const heartsIndicator = document.getElementById('heartsIndicator');
+        const runnerCharacter = document.getElementById('runnerCharacter');
+        const pursuerCharacter = document.getElementById('pursuerCharacter');
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function initializeQuiz() {
+            currentQuestionSet = shuffleArray([...allQuizQuestions]);
+            currentQuestionIndex = 0;
+            userScore = 0;
+            remainingLives = totalLives;
+            updateScoreDisplay();
+            updateHeartsDisplay();
+            resetChaseAnimation();
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (currentQuestionIndex < currentQuestionSet.length && remainingLives > 0) {
+                const questionData = currentQuestionSet[currentQuestionIndex];
+                questionArea.textContent = `Q${currentQuestionIndex + 1}: ${questionData.questionText}`;
+                
+                optionsArea.innerHTML = '';
+                const shuffledOptions = shuffleArray([...questionData.options]);
+
+                shuffledOptions.forEach((option, index) => {
+                    const label = document.createElement('label');
+                    const radioButton = document.createElement('input');
+                    radioButton.type = 'radio';
+                    radioButton.name = 'quizOption';
+                    radioButton.value = option;
+                    radioButton.id = `option${index}`;
+                    
+                    label.appendChild(radioButton);
+                    label.appendChild(document.createTextNode(option));
+                    label.htmlFor = `option${index}`;
+                    optionsArea.appendChild(label);
+                });
+
+                submitButton.textContent = (currentQuestionIndex === currentQuestionSet.length - 1) ? 'Submit Quiz' : 'Next Question';
+            } else {
+                displayFinalResults();
+            }
+        }
+
+        function handleAnswerSubmission() {
+            const selectedOption = document.querySelector('input[name="quizOption"]:checked');
+            if (!selectedOption) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'No Answer Selected',
+                    text: 'Please select an answer before proceeding.',
+                    confirmButtonColor: '#8B0000'
+                });
+                return;
+            }
+
+            const userAnswer = selectedOption.value;
+            const correctAnswer = currentQuestionSet[currentQuestionIndex].correctAnswer;
+
+            if (userAnswer === correctAnswer) {
+                userScore++;
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Correct!',
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true
+                });
+                runnerCharacter.classList.add('jump-effect');
+                setTimeout(() => runnerCharacter.classList.remove('jump-effect'), 500);
+            } else {
+                remainingLives--;
+                updateHeartsDisplay();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Incorrect!',
+                    text: `The correct answer was: ${correctAnswer}`,
+                    confirmButtonColor: '#8B0000',
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true
+                });
+                runnerCharacter.classList.add('shake-effect');
+                setTimeout(() => runnerCharacter.classList.remove('shake-effect'), 500);
+                advancePursuer();
+            }
+            
+            updateScoreDisplay();
+            currentQuestionIndex++;
+
+            if (remainingLives === 0) {
+                displayFinalResults("caught");
+            } else {
+                loadQuestion();
+            }
+        }
+
+        function updateScoreDisplay() {
+            scoreArea.textContent = `Score: ${userScore}`;
+        }
+
+        function updateHeartsDisplay() {
+            heartsIndicator.innerHTML = '';
+            for (let i = 0; i < totalLives; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart-icon');
+                if (i >= remainingLives) {
+                    heart.classList.add('empty');
+                }
+                heartsIndicator.appendChild(heart);
+            }
+        }
+        
+        function advancePursuer() {
+            const currentPursuerPos = parseFloat(pursuerCharacter.style.left || "90");
+            const currentRunnerPos = parseFloat(runnerCharacter.style.left || "10");
+            const step = (currentPursuerPos - currentRunnerPos) / (remainingLives + 1); // +1 because lives just decreased
+
+            let newPursuerPos = currentPursuerPos - step;
+            if (newPursuerPos <= currentRunnerPos + 10) { // Catch condition visual buffer
+                 newPursuerPos = currentRunnerPos + 10;
+            }
+            pursuerCharacter.style.left = `${Math.max(currentRunnerPos + 5, newPursuerPos)}%`;
+
+            if (remainingLives === 0 && newPursuerPos <= currentRunnerPos + 10) {
+                 setTimeout(() => { // delay for animation
+                    pursuerCharacter.style.left = `${currentRunnerPos + 2}%`; // visually 'catch'
+                }, 300);
+            }
+        }
+
+        function resetChaseAnimation() {
+            runnerCharacter.style.left = '10%';
+            pursuerCharacter.style.left = '90%';
+        }
+
+        function displayFinalResults(status = "completed") {
+            let titleText = 'Quiz Completed!';
+            let messageText = `You scored ${userScore} out of ${currentQuestionSet.length}.`;
+            let iconType = 'success';
+
+            if (status === "caught" || remainingLives === 0) {
+                titleText = 'Caught!';
+                messageText = `The pursuer caught you! Your final score is ${userScore} out of ${currentQuestionSet.length}.`;
+                iconType = 'error';
+                pursuerCharacter.style.left = `${parseFloat(runnerCharacter.style.left || "10") + 2}%`;
+            }
+
+            Swal.fire({
+                icon: iconType,
+                title: titleText,
+                html: `${messageText}<br><br>Would you like to try again?`,
+                showCancelButton: true,
+                confirmButtonText: 'Restart Quiz',
+                cancelButtonText: 'Close',
+                confirmButtonColor: '#8B0000',
+                cancelButtonColor: '#555555'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    initializeQuiz();
+                } else {
+                    submitButton.textContent = 'Quiz Over';
+                    submitButton.disabled = true;
+                }
+            });
+        }
+
+        function navigateToPreviousPage() {
+            window.location.href = "../../index.html"; // Adjust the path as needed
+        }
+        
+        window.addEventListener("load", () => {
+            const overlay = document.getElementById("nightOverlay");
+            setTimeout(() => {
+                overlay.style.opacity = "0";
+            }, 100);
+            setTimeout(() => {
+                if (overlay) overlay.style.display = "none";
+            }, 2100);
+            initializeQuiz();
+            startFireflyAnimation();
+        });
+
+        const fireflyCanvas = document.getElementById('fireflyCanvas');
+        const fireflyCtx = fireflyCanvas.getContext('2d');
+        let fireflies = [];
+        const numFireflies = 50;
+
+        function setupFireflyCanvas() {
+            fireflyCanvas.width = window.innerWidth;
+            fireflyCanvas.height = window.innerHeight;
+        }
+
+        class Firefly {
+            constructor() {
+                this.x = Math.random() * fireflyCanvas.width;
+                this.y = Math.random() * fireflyCanvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+                this.opacity = Math.random() * 0.5 + 0.3;
+                this.opacityDirection = 1;
+                this.opacitySpeed = 0.01 + Math.random() * 0.01;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.opacity >= 0.8 || this.opacity <= 0.2) {
+                    this.opacityDirection *= -1;
+                }
+                this.opacity += this.opacitySpeed * this.opacityDirection;
+                this.opacity = Math.max(0.1, Math.min(0.9, this.opacity));
+
+
+                if (this.x > fireflyCanvas.width || this.x < 0) this.speedX *= -1;
+                if (this.y > fireflyCanvas.height || this.y < 0) this.speedY *= -1;
+            }
+
+            draw() {
+                fireflyCtx.beginPath();
+                fireflyCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                fireflyCtx.fillStyle = `rgba(255, 255, 100, ${this.opacity})`; // Yellowish
+                fireflyCtx.fill();
+            }
+        }
+
+        function initFireflies() {
+            fireflies = [];
+            for (let i = 0; i < numFireflies; i++) {
+                fireflies.push(new Firefly());
+            }
+        }
+
+        function animateFireflies() {
+            fireflyCtx.clearRect(0, 0, fireflyCanvas.width, fireflyCanvas.height);
+            fireflies.forEach(firefly => {
+                firefly.update();
+                firefly.draw();
+            });
+            requestAnimationFrame(animateFireflies);
+        }
+        
+        function startFireflyAnimation() {
+            setupFireflyCanvas();
+            initFireflies();
+            animateFireflies();
+            window.addEventListener('resize', () => {
+                setupFireflyCanvas();
+                initFireflies(); // Re-initialize to distribute them on new canvas size
+            });
+        }
+
+    </script>
 </body>
 </html>
